@@ -1,0 +1,28 @@
+{
+  "GetStart": {
+    "title": "Distribute your App with MirrorChyan",
+    "description": "MirrorChyan is an open-source App distribution platform that you can use to distribute your App.",
+    "getStart": "Get Started",
+    "readDoc": "Read Documentation"
+  },
+  "GetKey": {
+    "title": "Welcome to MirrorChyan",
+    "orderId": "Order ID",
+    "getKey": "Get API Key",
+    "becomeSponsor": "Sponsor on AFDian"
+  },
+  "ShowKey": {
+    "thanksForSponsor": "Thank you for your sponsorship",
+    "yourKey": "Your CDKey",
+    "invalidOrderId": "Order does not exist",
+    "orderExpired": "CDKey has expired",
+    "expireAt": "Valid for {time}",
+    "goBack": "Go Back"
+  },
+  "Component": {
+    "CopyButton": {
+      "copy": "Copy",
+      "copied": "Copied"
+    }
+  }
+}

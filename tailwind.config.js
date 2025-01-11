@@ -1,4 +1,5 @@
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 export const content = [
@@ -13,7 +14,7 @@ export const darkMode = "class";
 export const theme = {
   extend: {},
 };
-export const plugins = [addVariablesForColors];
+export const plugins = [addVariablesForColors, daisyui];
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
 function addVariablesForColors({ addBase, theme }) {
