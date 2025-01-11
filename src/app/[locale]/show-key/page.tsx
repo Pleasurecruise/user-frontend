@@ -5,14 +5,14 @@ import CopyButton from "@/components/CopyButton"
 import { Link } from "@/i18n/routing"
 
 type Props = {
-  searchParams: Promise<{ orderId: string }>
+  searchParams: Promise<{ order_id: string }>
 }
 
 export default async function ShowKey({ searchParams }: Props) {
   const t = await getTranslations('ShowKey')
   const format = await getFormatter()
-  const { orderId } = await searchParams
-  const response = await fetch(`https://mirrorc.top/api/billing/order/afdian?order_id=${orderId}`)
+  const { order_id } = await searchParams
+  const response = await fetch(`https://mirrorc.top/api/billing/order/afdian?order_id=${order_id}`)
 
   const { ec, msg, data } = await response.json()
   const isSuccessful = ec === 200
