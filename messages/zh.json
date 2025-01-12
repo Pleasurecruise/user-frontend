@@ -3,7 +3,7 @@
     "title": "使用MirrorChyan分发你的App",
     "description": "MirrorChyan是一个开源的App分发平台，你可以使用它来分发你的App。",
     "getStart": "开始使用",
-    "readDoc": "阅读文档"
+    "apiDoc": "API文档"
   },
   "GetKey": {
     "title": "欢迎使用MirrorChyan",

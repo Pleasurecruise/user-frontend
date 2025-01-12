@@ -30,12 +30,12 @@ WORKDIR /app
 
 # Copy only the necessary files from the build stage
 COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
+# Install only production dependencies
+RUN pnpm install --prod
+
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./
-
-# Install only production dependencies
-RUN pnpm install --prod
 
 # Expose the port the app runs on
 EXPOSE 3000
