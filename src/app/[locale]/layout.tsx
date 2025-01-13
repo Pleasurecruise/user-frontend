@@ -3,6 +3,8 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
+import { Providers } from './provider';
+
 export default async function LocaleLayout({
   children,
   params,
@@ -21,11 +23,13 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html>
-      <body className="antialiased">
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+    <html lang={locale}>
+      <body>
+        <Providers>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -7,9 +7,10 @@ import { Link } from "@/i18n/routing"
 export default function GetKey() {
   const t = useTranslations('GetKey')
   const [orderId, setOrderId] = useState('')
+
   return (
     <>
-      <div className="flex min-h-screen flex-1 flex-col justify-center relative">
+      <div className="px-3 flex min-h-screen flex-1 flex-col justify-center relative">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
             {t('title')}
@@ -40,12 +41,6 @@ export default function GetKey() {
               </button>
             </Link>
           </form>
-
-          <p className="mt-10 text-center text-sm/6 text-gray-400">
-            <a href="https://afdian.com/a/misteo?tab=shop" className="font-semibold text-indigo-400 hover:text-indigo-300">
-              {t('becomeSponsor')}
-            </a>
-          </p>
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 {
   "GetStart": {
     "title": "Distribute your App with MirrorChyan",
-    "description": "MirrorChyan is an open-source App distribution platform that you can use to distribute your App.",
+    "description": "MirrorChyan is an App distribution platform that you can use to distribute your App.",
     "getStart": "Get Started",
     "apiDoc": "API Documentation"
   },
