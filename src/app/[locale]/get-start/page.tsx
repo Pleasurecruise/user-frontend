@@ -9,36 +9,28 @@ export default function GetStart() {
   const t = useTranslations('GetStart')
 
   const plans = [
-    {
-      name: 'Mirror酱日卡',
-      price: '￥2.37',
-      itemId: '83f9d3b8cac611ef8fc352540025c377',
-      description: '感谢投喂',
-      tmoji: '( •̀ ω •́ )✧',
-      mostPopular: false,
-    },
+    // {
+    //   name: 'Mirror酱日卡',
+    //   price: '￥3.9',
+    //   itemId: '83f9d3b8cac611ef8fc352540025c377',
+    //   mostPopular: false,
+    // },
     {
       name: 'Mirror酱月卡',
-      price: '￥2.97',
+      price: '￥6.9',
       itemId: '3134f94ac9aa11ef9d725254001e7c00',
-      description: 'Mirror酱的零食罐头',
-      tmoji: 'o((>ω< ))o',
       mostPopular: false,
     },
     {
       name: 'Mirror酱季卡',
-      price: '￥3.87',
+      price: '￥12.9',
       itemId: '9e6c7b28c9aa11efb47452540025c377',
-      description: 'Mirror酱的午餐盒',
-      tmoji: 'o(≧▽≦)o',
       mostPopular: false,
     },
     {
       name: 'Mirror酱年卡',
-      price: '￥5.97',
+      price: '￥29.9',
       itemId: '69c45576c9aa11ef9ace52540025c377',
-      description: '老板大气',
-      tmoji: 'ヾ(≧▽≦*)o',
       mostPopular: true,
     },
   ]
@@ -54,20 +46,9 @@ export default function GetStart() {
             <p className="mx-auto mt-6 max-w-xl text-pretty text-lg/8 text-gray-600">
               {t('description')}
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="/get-key"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                {t('getStart')}
-              </Link>
-              <a href="https://apifox.com/apidoc/shared-ffdc8453-597d-4ba6-bd3c-5e375c10c789/253583257e0" target="_blank" className="text-sm/6 font-semibold">
-                {t('apiDoc')}<span aria-hidden="true">&nbsp;→</span>
-              </a>
-            </div>
           </div>
         </div>
-        <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:max-w-6xl self-center">
+        <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-3 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:max-w-6xl self-center">
           {plans.map((plan) => (
             <div
               key={plan.itemId}
@@ -85,9 +66,6 @@ export default function GetStart() {
               >
                 {plan.name}
               </h3>
-              <div className="mt-4 text-sm/6 text-gray-600 dark:text-gray-300">
-                {plan.description}<FlipWords words={[plan.tmoji, plan.tmoji]} />
-              </div>
               <p className="mt-6 flex items-baseline gap-x-1">
                 <span className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">
                   {plan.price}
@@ -104,7 +82,7 @@ export default function GetStart() {
                   'mt-6 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
                 )}
               >
-                {t('becomeSponsor')}
+                {t('buyAtAfdian')}
               </a>
               {/* <ul role="list" className="mt-8 space-y-3 text-sm/6 text-gray-600">
                   {plan.features.map((feature) => (
@@ -116,6 +94,17 @@ export default function GetStart() {
                 </ul> */}
             </div>
           ))}
+        </div>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <Link
+            href="/get-key"
+            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            {t('getKey')}
+          </Link>
+          <a href="https://apifox.com/apidoc/shared-ffdc8453-597d-4ba6-bd3c-5e375c10c789/253583257e0" target="_blank" className="text-sm/6 font-semibold">
+            {t('apiDoc')}<span aria-hidden="true">&nbsp;→</span>
+          </a>
         </div>
       </div>
     </BackgroundBeamsWithCollision>

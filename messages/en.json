@@ -1,19 +1,18 @@
 {
   "GetStart": {
-    "title": "Distribute your App with MirrorChyan",
-    "description": "MirrorChyan is an App distribution platform that you can use to distribute your App.",
-    "getStart": "Get Started",
+    "title": "Update your App with MirrorChyan",
+    "description": "MirrorChyan is an App distribution platform that you can use it to easily get updates.",
+    "getKey": "Get CDKey",
     "apiDoc": "API Documentation",
-    "becomeSponsor": "Sponsor on afdian.net"
+    "buyAtAfdian": "Buy at afdian.net"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
     "orderId": "Order ID",
-    "getKey": "Get API Key",
-    "becomeSponsor": "Sponsor on AFDian"
+    "getKey": "Get CDKey"
   },
   "ShowKey": {
-    "thanksForSponsor": "Thank you for your sponsorship",
+    "thanksForBuying": "Thanks for buying",
     "yourKey": "Your CDKey",
     "invalidOrderId": "Order does not exist",
     "orderExpired": "CDKey has expired",
