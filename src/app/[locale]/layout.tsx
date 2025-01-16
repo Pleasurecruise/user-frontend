@@ -1,9 +1,17 @@
+import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import { Providers } from './provider';
+
+import "@/app/globals.css";
+
+export const metadata: Metadata = {
+  title: "MirrorChyan",
+  description: "Next generation of CDN for developers",
+};
 
 export default async function LocaleLayout({
   children,
@@ -23,7 +31,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <Providers>
           <NextIntlClientProvider messages={messages}>
