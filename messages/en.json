@@ -1,7 +1,7 @@
 {
   "GetStart": {
     "title": "Update your App with MirrorChyan",
-    "description": "MirrorChyan is a third-party application distribution platform that makes it easier to update open source applications.<br></br>Users pay for use, and the revenue is shared with application developers. In addition, MirrorChyan itself is also completely open source.",
+    "description": "MirrorChyan is a third-party application distribution platform that makes it easier to update open source applications.<br></br>Users pay for use, and the revenue is shared with developers. In addition, MirrorChyan itself is also open source.",
     "getKey": "Get CDKey",
     "apiDoc": "API Documentation",
     "openSource": "MirrorChyan Open Source",
