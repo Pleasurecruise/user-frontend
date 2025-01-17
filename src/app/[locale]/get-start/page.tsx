@@ -105,6 +105,9 @@ export default function GetStart() {
           <a href="https://apifox.com/apidoc/shared-ffdc8453-597d-4ba6-bd3c-5e375c10c789/253583257e0" target="_blank" className="text-sm/6 font-semibold">
             {t('apiDoc')}<span aria-hidden="true">&nbsp;→</span>
           </a>
+          <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold">
+            {t('openSource')}<span aria-hidden="true">&nbsp;→</span>
+          </a>
         </div>
       </div>
     </BackgroundBeamsWithCollision>
