@@ -44,7 +44,9 @@ export default function GetStart() {
               {t('title')}
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-pretty text-lg/8 text-gray-600">
-              {t('description')}
+            {t.rich('description', {
+                br: () => <br />
+              })}
             </p>
           </div>
         </div>
