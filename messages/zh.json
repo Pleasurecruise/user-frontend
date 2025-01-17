@@ -1,7 +1,7 @@
 {
   "GetStart": {
     "title": "使用Mirror酱更新你的App",
-    "description": "Mirror酱是一个App分发平台，你可以使用它来方便的获取更新",
+    "description": "Mirror酱是一个第三方App分发平台，用于解决开源应用更新不便的问题。用户付费使用，收益分红给应用开发者。同时Mirror酱本身也是完全的开源项目。",
     "getKey": "获取CDK",
     "apiDoc": "API文档",
     "buyAtAfdian": "到爱发电赞助"
