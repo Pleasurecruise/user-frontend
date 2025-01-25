@@ -1,39 +1,52 @@
 import { BackgroundBeamsWithCollision } from "@/components/BackgroundBeamsWithCollision"
 import { FlipWords } from "@/components/FlipWord"
 import { Link } from "@/i18n/routing"
-import { cn } from "@/lib/utils/css"
 import { useTranslations } from "next-intl"
+import PlanCard from "./plan-card"
 // import { CheckIcon } from '@heroicons/react/20/solid'
+
+type Plan = {
+  name: string
+  price: string
+  planId: string
+  skuId: string
+  mostPopular: boolean
+}
 
 export default function GetStart() {
   const t = useTranslations('GetStart')
 
-  const plans = [
+  const plans: Plan[] = [
     // {
     //   name: 'Mirror酱日卡',
     //   price: '￥3.9',
-    //   itemId: '83f9d3b8cac611ef8fc352540025c377',
+    //   planId: '83f9d3b8cac611ef8fc352540025c377',
     //   mostPopular: false,
     // },
     {
       name: 'Mirror酱月卡',
       price: '￥6.9',
-      itemId: '3134f94ac9aa11ef9d725254001e7c00',
+      planId: '3134f94ac9aa11ef9d725254001e7c00',
+      skuId: '08116372d33811efb26052540025c377',
       mostPopular: false,
     },
     {
       name: 'Mirror酱季卡',
       price: '￥12.9',
-      itemId: '9e6c7b28c9aa11efb47452540025c377',
+      planId: '9e6c7b28c9aa11efb47452540025c377',
+      skuId: '9e76e3f6c9aa11efa91452540025c377',
       mostPopular: false,
     },
     {
       name: 'Mirror酱年卡',
       price: '￥29.9',
-      itemId: '69c45576c9aa11ef9ace52540025c377',
+      planId: '69c45576c9aa11ef9ace52540025c377',
+      skuId: '603d0bfad33811efb36452540025c377',
       mostPopular: true,
     },
   ]
+
+  const customOrderId = Date.now() + Math.random().toString(36).slice(2)
 
   return (
     <BackgroundBeamsWithCollision className="min-h-screen">
@@ -52,49 +65,7 @@ export default function GetStart() {
         </div>
         <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-3 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:max-w-6xl self-center">
           {plans.map((plan) => (
-            <div
-              key={plan.itemId}
-              className={cn(
-                plan.mostPopular ? 'ring-2 ring-indigo-600' : 'ring-1 ring-gray-200',
-                'rounded-3xl p-8 bg-white dark:bg-white/5 shadow-sm',
-              )}
-            >
-              <h3
-                id={plan.itemId}
-                className={cn(
-                  plan.mostPopular ? 'text-indigo-600' : 'text-gray-900 dark:text-white',
-                  'text-lg/8 font-semibold',
-                )}
-              >
-                {plan.name}
-              </h3>
-              <p className="mt-6 flex items-baseline gap-x-1">
-                <span className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                  {plan.price}
-                </span>
-              </p>
-              <a
-                href={`https://afdian.com/item/${plan.itemId}`}
-                target="_blank"
-                aria-describedby={plan.itemId}
-                className={cn(
-                  plan.mostPopular
-                    ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500'
-                    : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 dark:text-white',
-                  'mt-6 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-                )}
-              >
-                {t('buyAtAfdian')}
-              </a>
-              {/* <ul role="list" className="mt-8 space-y-3 text-sm/6 text-gray-600">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex gap-x-3">
-                      <CheckIcon aria-hidden="true" className="h-6 w-5 flex-none text-indigo-600" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul> */}
-            </div>
+            <PlanCard key={plan.planId} plan={plan} customOrderId={customOrderId} />
           ))}
         </div>
         <div className="mt-10 flex items-center justify-center gap-x-6">

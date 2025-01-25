@@ -1,6 +1,5 @@
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
-import daisyui from "daisyui";
-import { nextui } from "@nextui-org/react";
+import { heroui } from "@heroui/react";
 
 /** @type {import('tailwindcss').Config} */
 export const content = [
@@ -10,13 +9,13 @@ export const content = [
 
   // Or if using `src` directory:
   "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+  "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
 ];
 export const darkMode = "class";
 export const theme = {
   extend: {},
 };
-export const plugins = [addVariablesForColors, daisyui, nextui()];
+export const plugins = [addVariablesForColors, heroui()];
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
 function addVariablesForColors({ addBase, theme }) {

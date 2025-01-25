@@ -20,6 +20,10 @@
     "expireAt": "在 {time} 内可用",
     "goBack": "返回"
   },
+  "Order": {
+    "ProcessingOrder": "我们正在处理您的订单",
+    "InputOrderId": "手动输入订单号"
+  },
   "Component": {
     "CopyButton": {
       "copy": "复制",
