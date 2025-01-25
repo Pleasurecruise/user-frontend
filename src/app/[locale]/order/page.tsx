@@ -10,6 +10,9 @@ export default function App() {
   const t = useTranslations("Order");
   const router = useRouter();
   const searchParams = useSearchParams();
+  
+  const [timeout, setTimeout] = useState(false);
+  const [error, setError] = useState(false);
 
   const customId = searchParams.get('customId');
   if (!customId) {
@@ -34,9 +37,6 @@ export default function App() {
       }
     }
   }
-
-  const [timeout, setTimeout] = useState(false);
-  const [error, setError] = useState(false);
 
   const timeoutTimer = window.setTimeout(() => {
     setTimeout(true)
