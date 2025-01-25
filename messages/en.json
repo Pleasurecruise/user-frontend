@@ -2,7 +2,7 @@
   "GetStart": {
     "title": "Update your App with MirrorChyan",
     "description": "MirrorChyan is a third-party application distribution platform that makes it easier to update open source applications.<br></br>Users pay for use, and the revenue is shared with developers. In addition, MirrorChyan itself is also open source.",
-    "getKey": "Get CDKey",
+    "getKey": "Query CDKey",
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
     "buyAtAfdian": "Buy at AFDIAN"
@@ -19,6 +19,10 @@
     "orderExpired": "CDKey has expired",
     "expireAt": "Valid for {time}",
     "goBack": "Go Back"
+  },
+  "Order": {
+    "ProcessingOrder": "We are getting your order",
+    "InputOrderId": "Manual order query"
   },
   "Component": {
     "CopyButton": {

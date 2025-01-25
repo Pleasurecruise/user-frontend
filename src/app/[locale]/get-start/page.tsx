@@ -79,7 +79,7 @@ export default function GetStart() {
             {t('apiDoc')}<span aria-hidden="true">&nbsp;→</span>
           </a>
           <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold">
-            {t('openSource')}<span aria-hidden="true">&nbsp;→</span>
+            {t('openSource')}<span aria-hidden="true">&nbsp;</span>
           </a>
         </div>
       </div>

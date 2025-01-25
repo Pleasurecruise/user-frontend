@@ -2,7 +2,7 @@
   "GetStart": {
     "title": "使用Mirror酱更新你的App",
     "description": "Mirror酱是一个第三方应用分发平台，让开源应用的更新更简单。<br></br>用户付费使用，收益与开发者共享。此外，Mirror酱本身也是开源的。",
-    "getKey": "获取CDK",
+    "getKey": "查询CDK",
     "apiDoc": "集成文档",
     "openSource": "Mirror酱源码",
     "buyAtAfdian": "到爱发电赞助"
@@ -21,8 +21,8 @@
     "goBack": "返回"
   },
   "Order": {
-    "ProcessingOrder": "我们正在处理您的订单",
-    "InputOrderId": "手动输入订单号"
+    "ProcessingOrder": "我们正在获取您的订单",
+    "InputOrderId": "手动查询订单"
   },
   "Component": {
     "CopyButton": {
