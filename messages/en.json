@@ -5,7 +5,8 @@
     "getKey": "Query CDKey",
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
-    "buyAtAfdian": "Buy at AFDIAN"
+    "buyAtAfdian": "Buy at AFDIAN",
+    "transfer": "Time Transfer"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
