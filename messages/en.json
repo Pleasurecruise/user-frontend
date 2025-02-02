@@ -18,7 +18,10 @@
     "invalidOrderId": "Order does not exist",
     "orderExpired": "CDKey has expired",
     "expireAt": "Valid for {time}",
-    "goBack": "Go Back"
+    "goBack": "Go Back",
+    "msg": {
+      "Order not found": "Order does not exist"
+    }
   },
   "Order": {
     "ProcessingOrder": "We are getting your order",
@@ -26,7 +29,7 @@
   },
   "Component": {
     "CopyButton": {
-      "copy": "Copy",
+      "copy": "Click to copy",
       "copied": "Copied"
     }
   }

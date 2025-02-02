@@ -18,15 +18,21 @@
     "invalidOrderId": "订单不存在哦",
     "orderExpired": "CDKey已过期",
     "expireAt": "在 {time} 内可用",
-    "goBack": "返回"
+    "goBack": "返回",
+    "msg": {
+      "Order not found": "订单不存在哦"
+    }
   },
   "Order": {
     "ProcessingOrder": "我们正在获取您的订单",
     "InputOrderId": "手动查询订单"
   },
+  "Renew": {
+    "Renew CDK": "续期CDK"
+  },
   "Component": {
     "CopyButton": {
-      "copy": "复制",
+      "copy": "点击复制",
       "copied": "已复制"
     }
   }
