@@ -91,8 +91,8 @@ export default function Transmission() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center">
-      <div className="text-center text-xl">
+    <div className="min-h-screen flex flex-col justify-center items-center">
+      <div className="text-center min-w-[40rem]">
         <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">{t('title')}</h2>
         <div className="mt-6 text-pretty text-lg/8 text-gray-600">{t('description')}</div>
         <div className="flex md:flex-row flex-col justify-center items-center mt-6 px-4">
@@ -126,6 +126,6 @@ export default function Transmission() {
           {t('transfer')}
         </Button>
       </div>
-    </div>
+    </div >
   )
 }
