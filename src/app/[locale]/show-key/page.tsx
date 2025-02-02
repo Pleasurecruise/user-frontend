@@ -1,5 +1,6 @@
 import { BackgroundLines } from "@/components/BackgroundLines"
 import { getTranslations, getFormatter } from "next-intl/server"
+import moment from "moment"
 
 import CopyButton from "@/components/CopyButton"
 import { Link } from "@/i18n/routing"
@@ -16,9 +17,9 @@ export default async function ShowKey({ searchParams }: Props) {
 
   const { ec, msg, data } = await response.json()
   const isSuccessful = ec === 200
-  const isExpired = isSuccessful && new Date(data.expired_at) < new Date()
+  const isExpired = isSuccessful && moment(data.expired_at).isBefore(moment())
 
-  const time = isSuccessful ? format.dateTime(new Date(data.expired_at), {
+  const time = isSuccessful ? format.dateTime(moment(data.expired_at).toDate(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

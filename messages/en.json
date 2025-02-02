@@ -27,10 +27,26 @@
     "ProcessingOrder": "We are getting your order",
     "InputOrderId": "Manual order query"
   },
+  "Transmission": {
+    "title": "Time Transfer",
+    "description": "Supports transferring the validity period of a CDKey to another CDKey",
+    "fromOrderId": "Order ID",
+    "transferTo": "Transfer to",
+    "toOrderId": "Order ID",
+    "transfer": "Transfer",
+    "timeRemain": "Remaining time: {duration}",
+    "expireAt": "Valid within {time}, total {duration}",
+    "orderExpired": "CDKey has expired",
+    "orderTooOld": "Order creation date is more than 3 days ago"
+  },
   "Component": {
     "CopyButton": {
       "copy": "Click to copy",
       "copied": "Copied"
     }
+  },
+  "Common": {
+    "ok": "OK",
+    "cancel": "Cancel"
   }
 }
