@@ -6,12 +6,12 @@
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
     "buyAtAfdian": "Buy at AFDIAN",
-    "transfer": "Time Transfer"
+    "transfer": "Order Transfer"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
     "orderId": "Order ID",
-    "getKey": "Get CDKey"
+    "getKey": "Query CDKey"
   },
   "ShowKey": {
     "thanksForBuying": "Thanks for buying",
@@ -30,7 +30,7 @@
   },
   "Transmission": {
     "title": "Time Transfer",
-    "description": "Supports transferring the validity period of a CDKey to another CDKey",
+    "description": "Transfer the validity period of an order to another order",
     "fromOrderId": "Order ID",
     "transferTo": "Transfer to",
     "toOrderId": "Order ID",
