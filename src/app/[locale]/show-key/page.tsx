@@ -46,7 +46,7 @@ export default async function ShowKey({ searchParams }: Props) {
               </p>
               <p>
                 <span>{t('expireAt', { time })}</span>
-                <span>({t('timeLeft', { relativeTime })})</span>
+                <span>{t('timeLeft', { relativeTime })}</span>
               </p>
             </div>
           </div>
