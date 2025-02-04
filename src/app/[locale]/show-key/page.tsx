@@ -1,5 +1,5 @@
 import { BackgroundLines } from "@/components/BackgroundLines"
-import { getTranslations, getFormatter } from "next-intl/server"
+import { getTranslations, getFormatter, getLocale } from "next-intl/server"
 import moment from "moment"
 
 import CopyButton from "@/components/CopyButton"
@@ -11,6 +11,7 @@ type Props = {
 
 export default async function ShowKey({ searchParams }: Props) {
   const t = await getTranslations('ShowKey')
+  const locale = await getLocale()
   const format = await getFormatter()
   const { order_id } = await searchParams
   const response = await fetch(`https://mirrorc.top/api/billing/order/afdian?order_id=${order_id}`)
@@ -27,6 +28,10 @@ export default async function ShowKey({ searchParams }: Props) {
     minute: 'numeric',
   }) : null
 
+  moment.locale(locale)
+
+  const relativeTime = isSuccessful ? moment.duration(moment(data.expired_at).diff(moment())).humanize() : null
+
   return isSuccessful && !isExpired ? (
     <BackgroundLines className="select-none">
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -39,7 +44,10 @@ export default async function ShowKey({ searchParams }: Props) {
               <p>{t('yourKey')}:&nbsp;
                 <CopyButton text={data.cdk} />
               </p>
-              <p><span>{t('expireAt', { time })}</span></p>
+              <p>
+                <span>{t('expireAt', { time })}</span>
+                <span>({t('timeLeft', { relativeTime })})</span>
+              </p>
             </div>
           </div>
         </div>

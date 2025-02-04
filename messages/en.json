@@ -18,7 +18,8 @@
     "yourKey": "Your CDKey",
     "invalidOrderId": "Order does not exist",
     "orderExpired": "CDKey has expired",
-    "expireAt": "Valid for {time}",
+    "expireAt": "Valid until {time}",
+    "timeLeft": "{relativeTime} remain",
     "goBack": "Go Back",
     "msg": {
       "Order not found": "Order does not exist"

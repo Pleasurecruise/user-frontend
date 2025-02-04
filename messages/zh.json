@@ -19,6 +19,7 @@
     "invalidOrderId": "订单不存在哦",
     "orderExpired": "CDKey已过期",
     "expireAt": "在 {time} 内可用",
+    "timeLeft": "剩余 {relativeTime}",
     "goBack": "返回",
     "msg": {
       "Order not found": "订单不存在哦"
