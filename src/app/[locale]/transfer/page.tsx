@@ -3,6 +3,7 @@
 import { useFormatter, useTranslations } from "next-intl"
 import { ChangeEvent, useState } from "react"
 import { Button, Input } from "@heroui/react"
+import _ from "lodash"
 import moment from "moment"
 
 import { useRouter } from "@/i18n/routing"
@@ -100,7 +101,7 @@ export default function Transmission() {
             className="px-2 py-1 md:py-0"
             label={t('fromOrderId')}
             value={fromOrderId}
-            onChange={handleFromOrderIdChange}
+            onChange={_.throttle(handleFromOrderIdChange, 2000)}
             description={fromOrderDescription}
           />
           <div className="px-2 py-1 md:py-0 flex-1 text-nowrap">{t('transferTo')}</div>
@@ -109,7 +110,7 @@ export default function Transmission() {
             className="px-2 py-1 md:py-0"
             label={t('toOrderId')}
             value={toOrderId}
-            onChange={handleToOrderIdChange}
+            onChange={_.throttle(handleToOrderIdChange, 2000)}
             description={toOrderDescription}
           />
         </div>
