@@ -41,6 +41,7 @@ export default function Transmission() {
     }
     else {
       setFromOrderDescription(msg)
+      setFromOrderIdValid(false)
     }
   }
 
@@ -59,6 +60,7 @@ export default function Transmission() {
     }
     else {
       setToOrderDescription(msg)
+      setToOrderIdValid(false)
     }
   }
 
