@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl"
 import { ChangeEvent, useState } from "react"
 import { Button, Input } from "@heroui/react"
 import { debounce } from "lodash"
-import moment from "moment-timezone"
+import moment from "moment"
 
 import { useRouter } from "@/i18n/routing"
 
@@ -25,8 +25,8 @@ export default function Transmission() {
     const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`)
     const { ec, msg, data } = await response.json()
     if (ec === 200) {
-      const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
-      const createdAt = moment.tz(data.created_at, 'Asia/Shanghai')
+      const expiredAt = moment(data.expired_at)
+      const createdAt = moment(data.created_at)
       if (expiredAt.isBefore(moment())) {
         setFromOrderDescription(t('orderExpired'))
         return
@@ -39,13 +39,16 @@ export default function Transmission() {
       setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
       setFromOrderIdValid(true)
     }
+    else {
+      setFromOrderDescription(msg)
+    }
   }
 
   async function requestToOrderId(orderId: string) {
     const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`)
     const { ec, msg, data } = await response.json()
     if (ec === 200) {
-      const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
+      const expiredAt = moment(data.expired_at)
       if (expiredAt.isBefore(moment())) {
         setToOrderDescription(t('orderExpired'))
       } else {
@@ -53,6 +56,9 @@ export default function Transmission() {
         setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
       }
       setToOrderIdValid(true)
+    }
+    else {
+      setToOrderDescription(msg)
     }
   }
 
