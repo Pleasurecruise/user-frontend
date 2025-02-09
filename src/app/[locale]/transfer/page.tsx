@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl"
 import { ChangeEvent, useState } from "react"
 import { Button, Input } from "@heroui/react"
 import _ from "lodash"
-import moment from "moment"
+import moment from "moment-timezone"
 
 import { useRouter } from "@/i18n/routing"
 
@@ -30,8 +30,8 @@ export default function Transmission() {
       const response = await fetch(`/api/billing/order/afdian?order_id=${value}`)
       const { ec, msg, data } = await response.json()
       if (ec === 200) {
-        const expiredAt = moment(data.expired_at)
-        const createdAt = moment(data.created_at)
+        const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
+        const createdAt = moment.tz(data.created_at, 'Asia/Shanghai')
         if (expiredAt.isBefore(moment())) {
           setFromOrderDescription(t('orderExpired'))
           return
@@ -57,7 +57,7 @@ export default function Transmission() {
       const { ec, msg, data } = await response.json()
       if (ec === 200) {
         // 目的订单是否过期只会影响提示信息，不会影响转移
-        const expiredAt = moment(data.expired_at)
+        const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
         if (expiredAt.isBefore(moment())) {
           setToOrderDescription(t('orderExpired'))
         } else {

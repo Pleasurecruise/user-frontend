@@ -1,6 +1,6 @@
 import { BackgroundLines } from "@/components/BackgroundLines"
 import { getTranslations, getFormatter, getLocale } from "next-intl/server"
-import moment from "moment"
+import moment from "moment-timezone"
 
 import CopyButton from "@/components/CopyButton"
 import { Link } from "@/i18n/routing"
@@ -14,13 +14,13 @@ export default async function ShowKey({ searchParams }: Props) {
   const locale = await getLocale()
   const format = await getFormatter()
   const { order_id } = await searchParams
-  const response = await fetch(`https://mirrorc.top/api/billing/order/afdian?order_id=${order_id}`)
+  const response = await fetch(`/api/billing/order/afdian?order_id=${order_id}`)
 
   const { ec, msg, data } = await response.json()
   const isSuccessful = ec === 200
-  const isExpired = isSuccessful && moment(data.expired_at).isBefore(moment())
+  const isExpired = isSuccessful && moment.tz(data.expired_at, 'Asia/Shanghai').isBefore(moment())
 
-  const time = isSuccessful ? format.dateTime(moment(data.expired_at).toDate(), {
+  const time = isSuccessful ? format.dateTime(moment.tz(data.expired_at, 'Asia/Shanghai').toDate(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
