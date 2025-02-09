@@ -3,7 +3,7 @@
 import { useFormatter, useTranslations } from "next-intl"
 import { ChangeEvent, useState } from "react"
 import { Button, Input } from "@heroui/react"
-import _ from "lodash"
+import { debounce } from "lodash"
 import moment from "moment-timezone"
 
 import { useRouter } from "@/i18n/routing"
@@ -21,52 +21,54 @@ export default function Transmission() {
   const [toOrderIdValid, setToOrderIdValid] = useState(false)
   const [transfering, setTransfering] = useState(false)
 
+  async function requestFromOrderId(orderId: string) {
+    const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`)
+    const { ec, msg, data } = await response.json()
+    if (ec === 200) {
+      const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
+      const createdAt = moment.tz(data.created_at, 'Asia/Shanghai')
+      if (expiredAt.isBefore(moment())) {
+        setFromOrderDescription(t('orderExpired'))
+        return
+      }
+      if (createdAt.isBefore(moment().subtract(3, 'day'))) {
+        setFromOrderDescription(t('orderTooOld'))
+        return
+      }
+      const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: 'day' })
+      setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
+      setFromOrderIdValid(true)
+    }
+  }
+
+  async function requestToOrderId(orderId: string) {
+    const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`)
+    const { ec, msg, data } = await response.json()
+    if (ec === 200) {
+      const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
+      if (expiredAt.isBefore(moment())) {
+        setToOrderDescription(t('orderExpired'))
+      } else {
+        const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: 'day' })
+        setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
+      }
+      setToOrderIdValid(true)
+    }
+  }
+
+  const requestFromOrderIdDebounced = debounce(requestFromOrderId, 2000)
+  const requestToOrderIdDebounced = debounce(requestToOrderId, 2000)
+
   async function handleFromOrderIdChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value
     setFromOrderId(value)
-    setFromOrderDescription('')
-    setFromOrderIdValid(false)
-    if (value) {
-      const response = await fetch(`/api/billing/order/afdian?order_id=${value}`)
-      const { ec, msg, data } = await response.json()
-      if (ec === 200) {
-        const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
-        const createdAt = moment.tz(data.created_at, 'Asia/Shanghai')
-        if (expiredAt.isBefore(moment())) {
-          setFromOrderDescription(t('orderExpired'))
-          return
-        }
-        if (createdAt.isBefore(moment().subtract(3, 'day'))) {
-          setFromOrderDescription(t('orderTooOld'))
-          return
-        }
-        const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: 'day' })
-        setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
-        setFromOrderIdValid(true)
-      }
-    }
+    requestFromOrderIdDebounced(value)
   }
 
   async function handleToOrderIdChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value
     setToOrderId(value)
-    setToOrderDescription('')
-    setToOrderIdValid(false)
-    if (value) {
-      const response = await fetch(`/api/billing/order/afdian?order_id=${value}`)
-      const { ec, msg, data } = await response.json()
-      if (ec === 200) {
-        // 目的订单是否过期只会影响提示信息，不会影响转移
-        const expiredAt = moment.tz(data.expired_at, 'Asia/Shanghai')
-        if (expiredAt.isBefore(moment())) {
-          setToOrderDescription(t('orderExpired'))
-        } else {
-          const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: 'day' })
-          setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`)
-        }
-        setToOrderIdValid(true)
-      }
-    }
+    requestToOrderIdDebounced(value)
   }
 
   async function handleTransfer() {
@@ -101,7 +103,7 @@ export default function Transmission() {
             className="px-2 py-1 md:py-0"
             label={t('fromOrderId')}
             value={fromOrderId}
-            onChange={_.throttle(handleFromOrderIdChange, 2000)}
+            onChange={handleFromOrderIdChange}
             description={fromOrderDescription}
           />
           <div className="px-2 py-1 md:py-0 flex-1 text-nowrap">{t('transferTo')}</div>
@@ -110,7 +112,7 @@ export default function Transmission() {
             className="px-2 py-1 md:py-0"
             label={t('toOrderId')}
             value={toOrderId}
-            onChange={_.throttle(handleToOrderIdChange, 2000)}
+            onChange={handleToOrderIdChange}
             description={toOrderDescription}
           />
         </div>
