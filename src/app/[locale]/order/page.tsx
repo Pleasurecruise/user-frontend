@@ -6,11 +6,13 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { useSearchParams } from 'next/navigation'
 
+import ProcessLabel from "./progress-label";
+
 export default function App() {
   const t = useTranslations("Order");
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const [timeout, setTimeout] = useState(false);
   const [error, setError] = useState(false);
 
@@ -55,15 +57,26 @@ export default function App() {
   }, 3000);
 
   return (
-    <div className="flex h-screen justify-center items-center relative">
-      <CircularProgress isIndeterminate label={t("ProcessingOrder")} className="max-w-md" />
-      {(error || timeout) && (
-        <div className="absolute right-4 bottom-4">
-          <Button onClick={() => router.push('/get-key')}>
-            {t("InputOrderId")}
-          </Button>
+    <div className="flex h-screen justify-center items-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold m-8">{t("ThanksForSponsoring")}</h1>
+        <div className="relative">
+          <CircularProgress
+            isIndeterminate
+            size="lg"
+            label={<ProcessLabel />}
+            className="max-w-md"
+          />
+          {(error || timeout) && (
+            <div className="absolute right-4 bottom-4">
+              <Button onClick={() => router.push('/get-key')}>
+                {t("InputOrderId")}
+              </Button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
+
     </div>
   );
 }

@@ -6,7 +6,8 @@
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
     "buyAtAfdian": "Buy at AFDIAN",
-    "transfer": "Order Transfer"
+    "transfer": "Order Transfer",
+    "LimitTimeOffer": "Ends in "
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
@@ -27,7 +28,8 @@
   },
   "Order": {
     "ProcessingOrder": "We are getting your order",
-    "InputOrderId": "Manual order query"
+    "InputOrderId": "Manual order query",
+    "ThanksForSponsoring": "Thanks for sponsoring"
   },
   "Transmission": {
     "title": "Time Transfer",
@@ -49,6 +51,10 @@
   },
   "Common": {
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "durationDays": "days",
+    "durationHours": "hours",
+    "durationMinutes": "minutes",
+    "durationSeconds": "seconds"
   }
 }

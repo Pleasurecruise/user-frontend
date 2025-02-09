@@ -6,7 +6,8 @@
     "apiDoc": "集成文档",
     "openSource": "Mirror酱源码",
     "buyAtAfdian": "到爱发电赞助",
-    "transfer": "订单转换"
+    "transfer": "订单转换",
+    "LimitTimeOffer": "剩余："
   },
   "GetKey": {
     "title": "欢迎使用Mirror酱",
@@ -27,7 +28,8 @@
   },
   "Order": {
     "ProcessingOrder": "我们正在获取您的订单",
-    "InputOrderId": "手动查询订单"
+    "InputOrderId": "手动查询订单",
+    "ThanksForSponsoring": "感谢赞助"
   },
   "Renew": {
     "Renew CDK": "续期CDK"
@@ -52,6 +54,10 @@
   },
   "Common": {
     "ok": "确定",
-    "cancel": "取消"
+    "cancel": "取消",
+    "durationDays": "天",
+    "durationHours": "小时",
+    "durationMinutes": "分钟",
+    "durationSeconds": "秒"
   }
 }

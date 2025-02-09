@@ -4,12 +4,21 @@ import { cn } from "@/lib/utils/css"
 import { useRouter } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
 
+import Countdown from "./countdown"
+
+type Discount = {
+  beginAt: number
+  endAt: number
+  discountPrice: string
+}
+
 type Plan = {
   name: string
   price: string
   planId: string
   skuId: string
   mostPopular: boolean
+  discount?: Discount
 }
 
 export default function PlanCard({ plan, customOrderId }: { plan: Plan, customOrderId: string }) {
@@ -30,7 +39,7 @@ export default function PlanCard({ plan, customOrderId }: { plan: Plan, customOr
       key={plan.planId}
       className={cn(
         plan.mostPopular ? 'ring-2 ring-indigo-600' : 'ring-1 ring-gray-200',
-        'rounded-3xl p-8 bg-white dark:bg-white/5 shadow-sm',
+        'rounded-3xl p-8 bg-white dark:bg-white/5 shadow-sm flex flex-col',
       )}
     >
       <h3
@@ -42,11 +51,28 @@ export default function PlanCard({ plan, customOrderId }: { plan: Plan, customOr
       >
         {plan.name}
       </h3>
-      <p className="mt-6 flex items-baseline gap-x-1">
-        <span className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          {plan.price}
-        </span>
-      </p>
+      {plan.discount ? (
+        <p className="mt-6 flex items-baseline gap-x-1 basis-full">
+          <span className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            ￥{plan.discount.discountPrice}
+          </span>
+          <span className="text-sm/6 line-through text-gray-500 dark:text-gray-400">
+            ￥{plan.price}
+          </span>
+        </p>
+      ) : (
+        <p className="mt-6 flex items-baseline gap-x-1 basis-full">
+          <span className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            ￥{plan.price}
+          </span>
+        </p>
+      )}
+      {/* {plan.discount && (
+        <div className="mt-1 text-sm/6 text-gray-900 dark:text-white">
+          {t('LimitTimeOffer')}
+          <Countdown toTime={plan.discount.endAt} />
+        </div>
+      )} */}
       <a
         href={generatePlanUrl(plan)}
         target="_blank"
@@ -69,6 +95,6 @@ export default function PlanCard({ plan, customOrderId }: { plan: Plan, customOr
           </li>
         ))}
       </ul> */}
-    </div>
+    </div >
   )
 }
