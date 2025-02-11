@@ -96,6 +96,11 @@ export default async function GetStart() {
               {t('openSource')}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
+          <div className="mt-10 bottom-4 w-full text-center">
+            <a href="https://beian.miit.gov.cn/" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
+              皖ICP备2025075166号
+            </a>
+          </div>
         </div>
       </BackgroundBeamsWithCollision>
     </div>
