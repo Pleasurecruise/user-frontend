@@ -43,8 +43,13 @@
     "transfer": "转移",
     "timeRemain": "剩余时长: {duration}",
     "expireAt": "在 {time} 内可用，共计{duration}",
-    "orderExpired": "CDKey已过期",
-    "orderTooOld": "订单创建日期已超过3天"
+    "orderExpired": "订单已过期",
+    "orderTooOld": "订单创建日期已超过3天",
+    "rewardNotStarted": "兑换活动尚未开始",
+    "rewardExpired": "兑换活动已过期",
+    "rewardFillInLeft": "兑换码请填写到左侧",
+    "rewardUsedUp": "兑换码已发放完",
+    "rewardValidDays": "可兑换 {valid_days} 天"
   },
   "Component": {
     "CopyButton": {

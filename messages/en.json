@@ -40,8 +40,12 @@
     "transfer": "Transfer",
     "timeRemain": "Remaining time: {duration}",
     "expireAt": "Valid within {time}, total {duration}",
-    "orderExpired": "CDKey has expired",
-    "orderTooOld": "Order creation date is more than 3 days ago"
+    "orderExpired": "Order has expired",
+    "orderTooOld": "Order creation date is more than 3 days ago",
+    "rewardNotStarted": "Redeem code has not started yet",
+    "rewardExpired": "Redeem code has expired",
+    "rewardFillInLeft": "Please fill in the redeem code on the left",
+    "rewardUsedUp": "Redeem code has been used up"
   },
   "Component": {
     "CopyButton": {
