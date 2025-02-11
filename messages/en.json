@@ -34,7 +34,7 @@
   "Transmission": {
     "title": "Time Transfer",
     "description": "Transfer the validity period of an order to another order",
-    "fromOrderId": "Order ID",
+    "fromOrderId": "Order ID or Redeem code",
     "transferTo": "Transfer to",
     "toOrderId": "Order ID",
     "transfer": "Transfer",
