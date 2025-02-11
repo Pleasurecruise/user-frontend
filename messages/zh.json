@@ -23,7 +23,8 @@
     "timeLeft": "（剩余 {relativeTime}）",
     "goBack": "返回",
     "msg": {
-      "Order not found": "订单不存在哦"
+      "Order not found": "订单不存在哦",
+      "order_id is required": "请输入订单号"
     }
   },
   "Order": {

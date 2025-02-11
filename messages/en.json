@@ -23,7 +23,8 @@
     "timeLeft": " ( {relativeTime} remain )",
     "goBack": "Go Back",
     "msg": {
-      "Order not found": "Order does not exist"
+      "Order not found": "Order does not exist",
+      "order_id is required": "Please enter the order ID"
     }
   },
   "Order": {
