@@ -36,7 +36,7 @@ export default async function GetStart() {
       const { plan, list } = data.data
       return {
         name: plan.name,
-        price: plan.price,
+        price: "" + parseFloat(plan.price),
         planId: plan.plan_id,
         skuId: list[0].sku_id,
         mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
