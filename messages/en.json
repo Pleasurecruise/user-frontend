@@ -1,13 +1,21 @@
 {
   "GetStart": {
-    "title": "Update your App with MirrorChyan",
-    "description": "MirrorChyan is a third-party application distribution platform that makes it easier to update open source applications.<br></br>Users pay for use, and the revenue will be shared with developers. In addition, MirrorChyan itself is also open source.",
+    "title": "Update Your App with MirrorChyan",
+    "description": "MirrorChyan is a third-party application distribution platform that makes updating open-source applications easier.<br></br>Users pay for access, and the revenue is shared with developers. Plus, MirrorChyan itself is open source.",
     "getKey": "Query CDKey",
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
-    "buyAtAfdian": "Buy at AFDIAN",
+    "buyAtAfdian": "Subscribe Now",
     "transfer": "Order Transfer",
-    "LimitTimeOffer": "Ends in "
+    "LimitTimeOffer": "Ends in ",
+    "planTitle": {
+        "Mirror酱月卡": "Monthly Plan",
+        "Mirror酱季卡": "Quarterly Plan",
+        "Mirror酱年卡": "Annual Plan"
+    },
+    "priceSymbol": "$",
+    "priceExchange": "7.31",
+    "priceFixed": "2"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
@@ -15,7 +23,7 @@
     "getKey": "Query CDKey"
   },
   "ShowKey": {
-    "thanksForBuying": "Thanks for buying",
+    "thanksForBuying": "Thanks for Sponsoring",
     "yourKey": "Your CDKey",
     "invalidOrderId": "Order does not exist",
     "orderExpired": "CDKey has expired",
@@ -30,7 +38,7 @@
   "Order": {
     "ProcessingOrder": "We are getting your order",
     "InputOrderId": "Manual order query",
-    "ThanksForSponsoring": "Thanks for sponsoring"
+    "ThanksForSponsoring": "Thanks for Sponsoring"
   },
   "Transmission": {
     "title": "Time Transfer",
