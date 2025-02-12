@@ -13,7 +13,7 @@
         "Mirror酱季卡": "Quarterly Plan",
         "Mirror酱年卡": "Annual Plan"
     },
-    "priceSymbol": "$",
+    "priceSymbol": "$ ",
     "priceExchange": "7.31",
     "priceFixed": "2"
   },
