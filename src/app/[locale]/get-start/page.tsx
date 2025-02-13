@@ -19,7 +19,7 @@ type Plan = {
   discount?: Discount
 }
 
-let afdianCache: any = {}
+const afdianCache: any = {}
 
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
