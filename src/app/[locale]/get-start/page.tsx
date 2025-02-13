@@ -20,7 +20,6 @@ type Plan = {
 }
 
 let afdianCache: any = {}
-let afdianCached: boolean = false
 
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
@@ -33,11 +32,12 @@ export default async function GetStart() {
   ]
 
   const getPlanInfo = async (planId: string): Promise<Plan | null> => {
-    if (!afdianCached) {
+    if (!afdianCache[planId]) {
 			const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
 			if (response.ok) {
 				const data = await response.json()
 				afdianCache[planId] = data
+				console.log("request afdian api, planId:", planId, "data:", data)
 			}
 			else {
 				return null
