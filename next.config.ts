@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       return [
         {
           source: '/api/:path*',
-          destination: 'https://mirrorc.top/api/:path*',
+          destination: 'https://mirrorchyan.com/api/:path*',
         },
       ]
     }

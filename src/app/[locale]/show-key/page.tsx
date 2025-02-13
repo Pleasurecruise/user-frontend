@@ -14,7 +14,7 @@ export default async function ShowKey({ searchParams }: Props) {
   const locale = await getLocale()
   const format = await getFormatter()
   const { order_id } = await searchParams
-  const response = await fetch(`https://mirrorc.top/api/billing/order/afdian?order_id=${order_id}`)
+  const response = await fetch(`https://mirrorchyan.com/api/billing/order/afdian?order_id=${order_id}`)
 
   const { ec, msg, data } = await response.json()
   const isSuccessful = ec === 200
