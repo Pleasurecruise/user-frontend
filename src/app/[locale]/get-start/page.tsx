@@ -19,6 +19,7 @@ type Plan = {
   discount?: Discount
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const afdianCache: any = {}
 
 export default async function GetStart() {
