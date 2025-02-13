@@ -19,6 +19,9 @@ type Plan = {
   discount?: Discount
 }
 
+let afdianCache: any = {}
+let afdianCached: boolean = false
+
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
 
@@ -30,26 +33,32 @@ export default async function GetStart() {
   ]
 
   const getPlanInfo = async (planId: string): Promise<Plan | null> => {
-    const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
-    if (response.ok) {
-      const data = await response.json()
-      const { plan, list } = data.data
-      const priceExchange: number = parseFloat(t("priceExchange"))
-      const priceFixed: number = +t("priceFixed")
-      return {
-        name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
-        price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
-        planId: plan.plan_id,
-        skuId: list[0].sku_id,
-        mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
-        discount: plan.time_limit_price && {
-          beginAt: plan.time_limit_price.begin_time,
-          endAt: plan.time_limit_price.end_time,
-          discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
-        }
-      }
+    if (!afdianCached) {
+			const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
+			if (response.ok) {
+				const data = await response.json()
+				afdianCache[planId] = data
+			}
+			else {
+				return null
+			}
+		}
+		const data = afdianCache[planId]
+		const { plan, list } = data.data
+		const priceExchange: number = parseFloat(t("priceExchange"))
+		const priceFixed: number = +t("priceFixed")
+		return {
+			name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
+			price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
+			planId: plan.plan_id,
+			skuId: list[0].sku_id,
+			mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
+			discount: plan.time_limit_price && {
+				beginAt: plan.time_limit_price.begin_time,
+				endAt: plan.time_limit_price.end_time,
+				discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
+			}
     }
-    return null
   }
 
   const plans = await Promise.all(planIds.map(getPlanInfo))
