@@ -27,7 +27,8 @@
     "goBack": "返回",
     "msg": {
       "Order not found": "订单不存在哦",
-      "order_id is required": "请输入订单号"
+      "order_id is required": "请输入订单号",
+      "CDK already exists": "出错啦，请重试！"
     }
   },
   "Order": {
