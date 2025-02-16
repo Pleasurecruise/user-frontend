@@ -4,6 +4,7 @@
     "description": "MirrorChyan is a third-party application distribution platform that makes updating open-source applications easier.<br></br>Users pay for access, and the revenue is shared with developers. Plus, MirrorChyan itself is open source.",
     "getKey": "Query CDKey",
     "discussion": "QQ Discussion",
+    "disclaimer": "User Agreement",
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
     "buyAtAfdian": "Subscribe Now",
