@@ -4,6 +4,7 @@
     "description": "Mirror酱是一个第三方应用分发平台，让开源应用的更新更简单。<br></br>用户付费使用，收益与开发者共享。此外，Mirror酱本身也是开源的。",
     "getKey": "查询CDK",
     "discussion": "交流频道",
+    "disclaimer": "用户协议",
     "apiDoc": "集成文档",
     "openSource": "Mirror酱源码",
     "buyAtAfdian": "到爱发电赞助",
