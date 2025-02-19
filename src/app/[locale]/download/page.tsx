@@ -21,7 +21,7 @@ export default function Download() {
       return
     }
 
-    const response = await fetch(`/api/resources/${rid}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdkey}`)
+    const response = await fetch(`/api/resources/${rid}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdkey}&user_agent=mirrorchyan_web`)
 
     const { code, msg, data } = await response.json()
     if (code !== 0) {
