@@ -2,11 +2,17 @@
 
 import { useState } from "react"
 import { useTranslations } from "next-intl"
-import { Link } from "@/i18n/routing"
 import { Button } from "@heroui/react"
+import { useSearchParams } from 'next/navigation'
 
 export default function Download() {
-  const t = useTranslations('Download')
+  const t = useTranslations('Download');
+  const searchParams = useSearchParams();
+  const rid = searchParams.get('rid') ?? 'MAA';
+  const os = searchParams.get('os') ?? 'windows';
+  const arch = searchParams.get('arch') ?? 'x64';
+  const channel = searchParams.get('channel') ?? 'stable';
+  
   const [CDKey, setCDKey] = useState('')
 
   async function downloadByCDK(cdkey: string) {
@@ -15,7 +21,7 @@ export default function Download() {
       return
     }
 
-    const response = await fetch(`/api/resources/MAA/latest?os=win&arch=x64&channel=stable&cdk=${cdkey}`)
+    const response = await fetch(`/api/resources/${rid}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdkey}`)
 
     const { code, msg, data } = await response.json()
     if (code !== 0) {
@@ -36,7 +42,7 @@ export default function Download() {
       <div className="px-3 flex min-h-screen flex-1 flex-col justify-center relative">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
-            {t('title')}
+            {t('title', { rid, os, arch, channel })}
           </h2>
         </div>
 

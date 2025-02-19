@@ -65,7 +65,7 @@
     }
   },
   "Download":{
-    "title": "下载 MAA Windows x64",
+    "title": "下载 {rid} {os} {arch}",
     "cdkey": "CDK",
     "download": "下载",
     "noCDKey": "请输入 CDK"
