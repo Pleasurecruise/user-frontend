@@ -68,7 +68,8 @@
     "title": "下载 {rid} {os} {arch}",
     "cdkey": "CDK",
     "download": "下载",
-    "noCDKey": "请输入 CDK"
+    "noCDKey": "请输入 CDK",
+    "buyCDKey": "没有CDK？立即订阅"
   },
   "Common": {
     "ok": "确定",

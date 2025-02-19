@@ -51,6 +51,13 @@ export default function Download() {
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium">
                 {t('cdkey')}
+                
+                              
+                <span style={{ float: 'right' }}>
+                <a href="https://mirrorchyan.com/">
+                    <u><em>{t('buyCDKey')}</em></u>
+                </a>
+                </span>
               </label>
               <div className="mt-2">
                 <input

@@ -69,7 +69,8 @@
     "title": "Download {rid} {os} {arch}",
     "cdkey": "CDKey",
     "download": "Download",
-    "noCDKey": "No CDKey"
+    "noCDKey": "No CDKey",
+    "buyCDKey": "No CDKey? Subscribe Now"
   },
   "Common": {
     "ok": "OK",
