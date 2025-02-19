@@ -22,7 +22,8 @@
   "GetKey": {
     "title": "Welcome to MirrorChyan",
     "orderId": "Order ID",
-    "getKey": "Query CDKey"
+    "getKey": "Query CDKey",
+    "queryOrderId": "Query Order ID"
   },
   "ShowKey": {
     "thanksForBuying": "Thanks for Sponsoring",

@@ -22,6 +22,13 @@ export default function GetKey() {
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium">
                 {t('orderId')}
+                <span style={{ float: 'right' }}>
+                <Link
+                    href="https://afdian.com/dashboard/order"
+                    >
+                    <u><em>{t('queryOrderId')}</em></u>
+                </Link>
+                </span>
               </label>
               <div className="mt-2">
                 <input

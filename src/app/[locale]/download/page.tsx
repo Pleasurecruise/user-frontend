@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { Button } from "@heroui/react"
+import { Link } from "@/i18n/routing"
 import { useSearchParams } from 'next/navigation'
 
 export default function Download() {
@@ -51,12 +52,12 @@ export default function Download() {
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium">
                 {t('cdkey')}
-                
-                              
                 <span style={{ float: 'right' }}>
-                <a href="https://mirrorchyan.com/">
+                <Link
+                    href="/get-start"
+                    >
                     <u><em>{t('buyCDKey')}</em></u>
-                </a>
+                </Link>
                 </span>
               </label>
               <div className="mt-2">
