@@ -55,6 +55,7 @@ export default function Download() {
                 <span style={{ float: 'right' }}>
                 <Link
                     href="/get-start"
+                    target="_blank"
                     >
                     <u><em>{t('buyCDKey')}</em></u>
                 </Link>

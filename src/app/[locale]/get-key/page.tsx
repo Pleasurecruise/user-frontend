@@ -25,6 +25,7 @@ export default function GetKey() {
                 <span style={{ float: 'right' }}>
                 <Link
                     href="https://afdian.com/dashboard/order"
+                    target="_blank"
                     >
                     <u><em>{t('queryOrderId')}</em></u>
                 </Link>
