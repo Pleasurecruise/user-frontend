@@ -65,6 +65,12 @@
       "copied": "Copied"
     }
   },
+  "Download":{
+    "title": "Download MAA Win x64",
+    "cdkey": "CDKey",
+    "download": "Download",
+    "noCDKey": "No CDKey"
+  },
   "Common": {
     "ok": "OK",
     "cancel": "Cancel",

@@ -64,6 +64,12 @@
       "copied": "已复制"
     }
   },
+  "Download":{
+    "title": "下载 MAA win x64",
+    "cdkey": "CDK",
+    "download": "下载",
+    "noCDKey": "请输入 CDK"
+  },
   "Common": {
     "ok": "确定",
     "cancel": "取消",
