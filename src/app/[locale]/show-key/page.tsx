@@ -60,12 +60,14 @@ export default async function ShowKey({ searchParams }: Props) {
           <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
             {isExpired ? t('orderExpired') : t(`msg.${msg}`)}
           </h2>
-          <button
-            type="button"
-            className="mt-6 rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-          >
-            <Link href="/get-key">{t('goBack')}</Link>
-          </button>
+            <Link href="/get-key">
+                <button
+                type="button"
+                    className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                >
+                    {t('goBack')}
+                </button>
+            </Link>
         </div>
       </div>
     </div>
