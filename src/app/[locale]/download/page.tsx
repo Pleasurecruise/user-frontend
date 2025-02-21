@@ -20,7 +20,6 @@ export default function Download() {
   const downloadByCDKeyDebounced = debounce(downloadByCDK, 2000)
 
   async function downloadByCDK() {
-    console.log("call download")
     if (!CDKey) {
       alert(t('noCDKey'))
       return
