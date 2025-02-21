@@ -7,6 +7,21 @@ import { Link } from "@/i18n/routing"
 import { useSearchParams } from 'next/navigation'
 import { debounce } from "lodash"
 
+async function downloadAndRename(url: string, filename: string) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const newFileName = filename;
+
+  const blobUrl = URL.createObjectURL(blob);
+  const downloadLink = document.createElement('a');
+  downloadLink.href = blobUrl;
+  downloadLink.download = newFileName;
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+  URL.revokeObjectURL(blobUrl);
+}
+
 export default function Download() {
   const t = useTranslations('Download');
   const searchParams = useSearchParams();
@@ -38,7 +53,8 @@ export default function Download() {
       alert(msg)
       return
     }
-    window.location.href = url
+    const filename = `${rid}-${os}-${arch}-${data.version_name}.zip`
+    await downloadAndRename(url, filename);
   }
 
   return (
