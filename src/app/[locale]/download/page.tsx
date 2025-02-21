@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { Button } from "@heroui/react"
 import { Link } from "@/i18n/routing"
 import { useSearchParams } from 'next/navigation'
+import { debounce } from "lodash"
 
 export default function Download() {
   const t = useTranslations('Download');
@@ -16,13 +17,16 @@ export default function Download() {
   
   const [CDKey, setCDKey] = useState('')
 
-  async function downloadByCDK(cdkey: string) {
-    if (!cdkey) {
+  const downloadByCDKeyDebounced = debounce(downloadByCDK, 2000)
+
+  async function downloadByCDK() {
+    console.log("call download")
+    if (!CDKey) {
       alert(t('noCDKey'))
       return
     }
 
-    const response = await fetch(`/api/resources/${rid}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdkey}&user_agent=mirrorchyan_web`)
+    const response = await fetch(`/api/resources/${rid}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${CDKey}&user_agent=mirrorchyan_web`)
 
     const { code, msg, data } = await response.json()
     if (code !== 0) {
@@ -71,7 +75,7 @@ export default function Download() {
               </div>
             </div>
             <Button
-              onPress={() => downloadByCDK(CDKey)}
+              onPress={downloadByCDKeyDebounced}
               className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
             >
               {t('download')}
