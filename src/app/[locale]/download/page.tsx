@@ -81,6 +81,15 @@ export default function Download() {
             </Button>
           </form>
         </div>
+              
+        <div className="mt-10 bottom-4 w-full text-center">
+          <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
+            {t.rich('disclaimer', {
+                  rid,
+              br: () => <br />
+            })}<span aria-hidden="true">&nbsp;</span>
+          </a>
+        </div>
       </div>
     </>
   )
