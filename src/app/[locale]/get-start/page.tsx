@@ -1,3 +1,6 @@
+import { getLocale } from 'next-intl/server';
+
+import { getAnnouncement } from '@/app/requests/announcement';
 import { BackgroundBeamsWithCollision } from "@/components/BackgroundBeamsWithCollision"
 import { Link } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
@@ -30,6 +33,7 @@ let lastCacheTime = 0;
 
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
+  const locale = await getLocale();
 
   const planIds = [
     // '83f9d3b8cac611ef8fc352540025c377',
@@ -40,31 +44,31 @@ export default async function GetStart() {
 
   const getPlanInfo = async (planId: string): Promise<Plan | null> => {
     if (!afdianCache[planId] || Date.now() - lastCacheTime > 1000 * 60 * 60) {
-			const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
-			if (response.ok) {
-				const data = await response.json()
-				afdianCache[planId] = data
+      const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
+      if (response.ok) {
+        const data = await response.json()
+        afdianCache[planId] = data
         lastCacheTime = Date.now()
-			}
-			else {
-				return null
-			}
-		}
-		const data = afdianCache[planId]
-		const { plan, list } = data.data
-		const priceExchange: number = parseFloat(t("priceExchange"))
-		const priceFixed: number = +t("priceFixed")
-		return {
-			name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
-			price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
-			planId: plan.plan_id,
-			skuId: list[0].sku_id,
-			mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
-			discount: plan.time_limit_price && {
-				beginAt: plan.time_limit_price.begin_time,
-				endAt: plan.time_limit_price.end_time,
-				discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
-			}
+      }
+      else {
+        return null
+      }
+    }
+    const data = afdianCache[planId]
+    const { plan, list } = data.data
+    const priceExchange: number = parseFloat(t("priceExchange"))
+    const priceFixed: number = +t("priceFixed")
+    return {
+      name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
+      price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
+      planId: plan.plan_id,
+      skuId: list[0].sku_id,
+      mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
+      discount: plan.time_limit_price && {
+        beginAt: plan.time_limit_price.begin_time,
+        endAt: plan.time_limit_price.end_time,
+        discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
+      }
     }
   }
 
@@ -72,9 +76,16 @@ export default async function GetStart() {
 
   const customOrderId = Date.now() + Math.random().toString(36).slice(2)
 
+  const announcement = await getAnnouncement(locale as 'zh' | 'en')
+
   return (
-    <div suppressHydrationWarning>
-      <BackgroundBeamsWithCollision className="min-h-screen">
+    <div className='relative' suppressHydrationWarning>
+      <BackgroundBeamsWithCollision className="min-h-screen max-h-screen">
+        {announcement.ec === 200 && (
+          <div className="announcement absolute top-0 w-full font-bold text-center p-2 bg-black dark:bg-neutral-800 text-white bg-opacity-80 dark:bg-opacity-80">
+            {announcement.data.summary}
+          </div>
+        )}
         <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="px-6 py-12 sm:px-6 sm:py-8 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
