@@ -26,7 +26,7 @@ const afdianCache: {
     msg: string
   }
 } = {}
-const lastCacheTime = 0;
+let lastCacheTime = 0;
 
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
@@ -44,7 +44,7 @@ export default async function GetStart() {
 			if (response.ok) {
 				const data = await response.json()
 				afdianCache[planId] = data
-				console.log("request afdian api, planId:", planId, "data:", data)
+        lastCacheTime = Date.now()
 			}
 			else {
 				return null
