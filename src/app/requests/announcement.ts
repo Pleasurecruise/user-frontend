@@ -1,23 +1,31 @@
 type Announcement = {
-  content: {
-    zh: string
-    en: string
+  ec: number
+  msg: string
+  data: {
+    summary: string
+    details: string
   }
-  startTimestamp: number
-  endTimestamp: number
 }
 
-export function getAnnouncement(): Promise<Announcement> {
-  return fetch("/api/announcement")
+export function getAnnouncement(lang: 'zh' | 'en'): Promise<Announcement> {
+  return fetch(`/api/announcement?lang=${lang}`)
     .then((res) => res.json())
     .catch(() => {
+      // return {
+      //   "ec": 400,
+      //   "msg": "No announcement",
+      //   "data": {
+      //     "summary": "",
+      //     "details": ""
+      //   }
+      // }
       return {
-        content: {
-          zh: "",
-          en: "",
-        },
-        startTimestamp: 0,
-        endTimestamp: 0,
+        "ec": 0,
+        "msg": "mollit consectetur",
+        "data": {
+          "summary": "est do qui incididunt",
+          "details": "incididunt sunt nulla reprehenderit non"
+        }
       }
     });
 }
