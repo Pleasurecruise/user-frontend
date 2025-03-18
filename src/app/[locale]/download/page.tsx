@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Button } from "@heroui/react"
 import { Link } from "@/i18n/routing"
 import { useSearchParams } from 'next/navigation'
-import { addToast, ToastProvider } from "@heroui/toast";
+import { addToast } from "@heroui/toast";
 
 export default function Download() {
   const t = useTranslations('Download');
@@ -93,7 +93,6 @@ export default function Download() {
                 />
               </div>
             </div>
-            <ToastProvider placement={'top-center'} toastOffset={60} />
             <Button
               isLoading={loading}
               onPress={downloadByCDK}
