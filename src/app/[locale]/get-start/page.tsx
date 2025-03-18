@@ -18,15 +18,9 @@ type Plan = {
   mostPopular: boolean
   discount?: Discount
 }
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const afdianCache: {
-  [K in string]: {
-    ec: number
-    data: any
-    msg: string
-  }
-} = {}
-const lastCacheTime = 0;
+const afdianCache: any = {}
 
 export default async function GetStart() {
   const t = await getTranslations('GetStart')
@@ -39,7 +33,7 @@ export default async function GetStart() {
   ]
 
   const getPlanInfo = async (planId: string): Promise<Plan | null> => {
-    if (!afdianCache[planId] || Date.now() - lastCacheTime > 1000 * 60 * 60) {
+    if (!afdianCache[planId]) {
 			const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`)
 			if (response.ok) {
 				const data = await response.json()
