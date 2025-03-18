@@ -64,6 +64,10 @@
     "CopyButton": {
       "copy": "Click to copy",
       "copied": "Copied"
+    },
+    "Announcement": {
+      "doNotShow": "Do not show",
+      "close": "Close"
     }
   },
   "Download":{

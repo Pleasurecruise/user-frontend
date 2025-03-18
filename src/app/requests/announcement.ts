@@ -7,20 +7,20 @@ type Announcement = {
   }
 }
 
-export function getAnnouncement(lang: 'zh' | 'en'): Promise<Announcement> {
+export function getAnnouncement(lang: "zh" | "en"): Promise<Announcement> {
   // Use absolute URL with origin to work properly in server components
-  const baseUrl = process.env.MIRRORC_BASE_URL || '';
+  const baseUrl = process.env.MIRRORC_BASE_URL || "";
   return fetch(`${baseUrl}/api/misc/anno?lang=${lang}`)
     .then((res) => res.json())
     .catch((error) => {
-      console.error('Get Announcement error:', error);
+      console.error("Get Announcement error:", error);
       return {
-        "ec": 200,
-        "msg": "mollit consectetur",
+        "ec": 400,
+        "msg": "",
         "data": {
-          "summary": "est do qui incididunt",
-          "details": "incididunt sunt nulla reprehenderit non"
+          "summary": "",
+          "details": ""
         }
-      }
+      };
     });
 }
