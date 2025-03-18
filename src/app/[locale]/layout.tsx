@@ -2,9 +2,7 @@ import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import _ from 'lodash';
 import { routing } from '@/i18n/routing';
-import { getAnnouncement } from '@/app/requests/announcement';
 
 import { Providers } from './provider';
 
@@ -32,17 +30,9 @@ export default async function LocaleLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
 
-  const announcement = await getAnnouncement();
-
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        {announcement.startTimestamp < Date.now() && Date.now() < announcement.endTimestamp && (
-          <div className="announcement">
-            {/* fallback to en */}
-            {_.defaultTo(_.get(announcement.content, locale), _.get(announcement.content, 'en'))}
-          </div>
-        )}
         <Providers>
           <NextIntlClientProvider messages={messages}>
             {children}
