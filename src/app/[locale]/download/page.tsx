@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Button } from "@heroui/react"
 import { Link } from "@/i18n/routing"
 import { useSearchParams } from 'next/navigation'
-import { addToast } from "@heroui/toast";
+import { addToast, ToastProps } from "@heroui/toast";
 
 export default function Download() {
   const t = useTranslations('Download');
@@ -34,10 +34,14 @@ export default function Download() {
 
       const { code, msg, data } = await response.json()
       if (code !== 0) {
-        addToast({
+        const props = {
           description: msg,
           color: 'warning'
-        });
+        }
+        if (code !== 1) {
+          props.description = t(code.toString())
+        }
+        addToast(props as ToastProps)
         return
       }
 
