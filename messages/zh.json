@@ -63,6 +63,12 @@
     "CopyButton": {
       "copy": "点击复制",
       "copied": "已复制"
+    },
+    "Announcement": {
+      "newAnnouncement": "新公告",
+      "readMore": "查看详情",
+      "doNotShow": "不再显示",
+      "close": "关闭"
     }
   },
   "Download":{

@@ -1,8 +1,8 @@
 interface RequestStat {
-  'Number of requests': number;
-  'Total traffic': number;
-  'Average response time': number;
-  'Success rate': number;
+  "Number of requests": number;
+  "Total traffic": number;
+  "Average response time": number;
+  "Success rate": number;
 }
 
 interface Props {
@@ -25,5 +25,5 @@ export default function RequestStat({ stats }: Props) {
         </div>
       </div>
     </div>
-  )
+  );
 }

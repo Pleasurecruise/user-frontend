@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useTranslations } from "next-intl";
 
@@ -7,7 +7,7 @@ export default function ProgressLabel() {
 
   return (
     <span className="text-pretty text-lg">
-      {t('ProcessingOrder')}
+      {t("ProcessingOrder")}
     </span>
-  )
+  );
 }

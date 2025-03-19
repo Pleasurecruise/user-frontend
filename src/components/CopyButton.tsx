@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import { useTranslations } from "next-intl"
-import { useState } from "react"
-import { Tooltip } from "@heroui/react"
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { Tooltip } from "@heroui/react";
 
 export default function CopyButton({ text }: { text: string }) {
-  const t = useTranslations('Component.CopyButton')
-  const [copied, setCopied] = useState(false)
-  const [tooltip, setTooltip] = useState(false)
+  const t = useTranslations("Component.CopyButton");
+  const [copied, setCopied] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text)
-      .then(() => setCopied(true))
-  }
+      .then(() => setCopied(true));
+  };
 
   return (
     <Tooltip
-      content={<span className="p-1">{t(copied ? 'copied' : 'copy')}</span>}
+      content={<span className="p-1">{t(copied ? "copied" : "copy")}</span>}
       showArrow
       isOpen={tooltip}
     >
@@ -30,5 +30,5 @@ export default function CopyButton({ text }: { text: string }) {
       </span>
     </Tooltip>
 
-  )
+  );
 }
