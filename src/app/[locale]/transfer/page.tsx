@@ -7,6 +7,7 @@ import { debounce } from "lodash";
 import moment from "moment";
 
 import { useRouter } from "@/i18n/routing";
+import { CLIENT_BACKEND } from "@/app/requests/misc";
 
 export default function Transmission() {
   const format = useFormatter();
@@ -22,7 +23,7 @@ export default function Transmission() {
   const [transfering, setTransfering] = useState(false);
 
   async function requestFromOrderId(orderId: string) {
-    const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
       if ("reward_key" in data) {
@@ -67,7 +68,7 @@ export default function Transmission() {
   }
 
   async function requestToOrderId(orderId: string) {
-    const response = await fetch(`/api/billing/order/afdian?order_id=${orderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
       if ("reward_key" in data) {
@@ -108,7 +109,7 @@ export default function Transmission() {
 
   async function handleTransfer() {
     setTransfering(true);
-    const response = await fetch(`/api/billing/order/afdian/transfer?from=${fromOrderId}&to=${toOrderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian/transfer?from=${fromOrderId}&to=${toOrderId}`);
     const { ec, msg } = await response.json();
     if (ec === 200) {
       router.replace(`/show-key?order_id=${toOrderId}`);

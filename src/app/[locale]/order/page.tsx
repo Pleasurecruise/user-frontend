@@ -7,6 +7,7 @@ import { useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 
 import ProcessLabel from "./progress-label";
+import { CLIENT_BACKEND } from "@/app/requests/misc";
 
 export default function App() {
   const t = useTranslations("Order");
@@ -28,7 +29,7 @@ export default function App() {
   }
 
   const fetcher = async () => {
-    const response = await fetch(`/api/billing/order/afdian?custom_order_id=${customId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?custom_order_id=${customId}`);
     if (response.ok) {
       const data = await response.json();
       if (data.ec === 200) {

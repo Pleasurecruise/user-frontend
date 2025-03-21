@@ -4,6 +4,7 @@ import moment from "moment";
 
 import CopyButton from "@/components/CopyButton";
 import { Link } from "@/i18n/routing";
+import { SERVER_BACKEND } from "@/app/requests/misc";
 
 type Props = {
   searchParams: Promise<{ order_id: string }>
@@ -14,7 +15,7 @@ export default async function ShowKey({ searchParams }: Props) {
   const locale = await getLocale();
   const format = await getFormatter();
   const { order_id } = await searchParams;
-  const response = await fetch(`https://mirrorchyan.com/api/billing/order/afdian?order_id=${order_id}`);
+  const response = await fetch(`${SERVER_BACKEND}/api/billing/order/afdian?order_id=${order_id}`);
 
   const { ec, msg, data } = await response.json();
   const isSuccessful = ec === 200;
@@ -60,14 +61,14 @@ export default async function ShowKey({ searchParams }: Props) {
           <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
             {isExpired ? t("orderExpired") : t(`msg.${msg}`)}
           </h2>
-            <Link href="/get-key">
-                <button
-                type="button"
-                    className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                >
-                    {t("goBack")}
-                </button>
-            </Link>
+          <Link href="/get-key">
+            <button
+              type="button"
+              className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              {t("goBack")}
+            </button>
+          </Link>
         </div>
       </div>
     </div>
