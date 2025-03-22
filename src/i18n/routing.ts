@@ -1,14 +1,14 @@
-import { defineRouting } from 'next-intl/routing';
-import { createNavigation } from 'next-intl/navigation';
+import { defineRouting } from "next-intl/routing";
+import { createNavigation } from "next-intl/navigation";
 
-import 'moment/locale/zh-cn'
+import "moment/locale/zh-cn";
 
 export const routing = defineRouting({
   // A list of all locales that are supported
-  locales: ['en', 'zh'],
+  locales: ["en", "zh"],
 
   // Used when no locale matches
-  defaultLocale: 'en'
+  defaultLocale: "en"
 });
 
 // Lightweight wrappers around Next.js' navigation APIs

@@ -1,10 +1,13 @@
-import { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import _ from "lodash";
 
-import { Providers } from './provider';
+import { routing } from "@/i18n/routing";
+import { AnimatedTooltip } from "@/components/AnimatedTooltip";
+
+import { Providers } from "./provider";
 
 import "@/app/globals.css";
 
@@ -22,7 +25,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as 'zh' | 'en')) {
+  if (!routing.locales.includes(locale as "zh" | "en")) {
     notFound();
   }
 

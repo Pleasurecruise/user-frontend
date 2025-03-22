@@ -1,36 +1,37 @@
-import { BackgroundLines } from "@/components/BackgroundLines"
-import { getTranslations, getFormatter, getLocale } from "next-intl/server"
-import moment from "moment"
+import { BackgroundLines } from "@/components/BackgroundLines";
+import { getTranslations, getFormatter, getLocale } from "next-intl/server";
+import moment from "moment";
 
-import CopyButton from "@/components/CopyButton"
-import { Link } from "@/i18n/routing"
+import CopyButton from "@/components/CopyButton";
+import { Link } from "@/i18n/routing";
+import { SERVER_BACKEND } from "@/app/requests/misc";
 
 type Props = {
   searchParams: Promise<{ order_id: string }>
 }
 
 export default async function ShowKey({ searchParams }: Props) {
-  const t = await getTranslations('ShowKey')
-  const locale = await getLocale()
-  const format = await getFormatter()
-  const { order_id } = await searchParams
-  const response = await fetch(`https://mirrorchyan.com/api/billing/order/afdian?order_id=${order_id}`)
+  const t = await getTranslations("ShowKey");
+  const locale = await getLocale();
+  const format = await getFormatter();
+  const { order_id } = await searchParams;
+  const response = await fetch(`${SERVER_BACKEND}/api/billing/order/afdian?order_id=${order_id}`);
 
-  const { ec, msg, data } = await response.json()
-  const isSuccessful = ec === 200
-  const isExpired = isSuccessful && moment(data.expired_at).isBefore(moment())
+  const { ec, msg, data } = await response.json();
+  const isSuccessful = ec === 200;
+  const isExpired = isSuccessful && moment(data.expired_at).isBefore(moment());
 
   const time = isSuccessful ? format.dateTime(moment(data.expired_at).toDate(), {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  }) : null
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  }) : null;
 
-  moment.locale(locale)
+  moment.locale(locale);
 
-  const relativeTime = isSuccessful ? moment.duration(moment(data.expired_at).diff(moment())).humanize() : null
+  const relativeTime = isSuccessful ? moment.duration(moment(data.expired_at).diff(moment())).humanize() : null;
 
   return isSuccessful && !isExpired ? (
     <BackgroundLines className="select-none">
@@ -38,15 +39,15 @@ export default async function ShowKey({ searchParams }: Props) {
         <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-              {t('thanksForBuying')}
+              {t("thanksForBuying")}
             </h2>
             <div className="mt-6 text-pretty text-lg/8 text-gray-600">
-              <p>{t('yourKey')}:&nbsp;
+              <p>{t("yourKey")}:&nbsp;
                 <CopyButton text={data.cdk} />
               </p>
               <p>
-                <span>{t('expireAt', { time })}</span>
-                <span>{t('timeLeft', { relativeTime })}</span>
+                <span>{t("expireAt", { time })}</span>
+                <span>{t("timeLeft", { relativeTime })}</span>
               </p>
             </div>
           </div>
@@ -58,18 +59,18 @@ export default async function ShowKey({ searchParams }: Props) {
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            {isExpired ? t('orderExpired') : t(`msg.${msg}`)}
+            {isExpired ? t("orderExpired") : t(`msg.${msg}`)}
           </h2>
-            <Link href="/get-key">
-                <button
-                type="button"
-                    className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                >
-                    {t('goBack')}
-                </button>
-            </Link>
+          <Link href="/get-key">
+            <button
+              type="button"
+              className="mt-6 flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              {t("goBack")}
+            </button>
+          </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
