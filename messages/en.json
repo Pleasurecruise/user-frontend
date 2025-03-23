@@ -11,9 +11,9 @@
     "transfer": "Order Transfer",
     "LimitTimeOffer": "Ends in ",
     "planTitle": {
-        "Mirror酱月卡": "Monthly Plan",
-        "Mirror酱季卡": "Quarterly Plan",
-        "Mirror酱年卡": "Annual Plan"
+      "Mirror酱月卡": "Monthly Plan",
+      "Mirror酱季卡": "Quarterly Plan",
+      "Mirror酱年卡": "Annual Plan"
     },
     "priceSymbol": "$ ",
     "priceExchange": "7.25",
@@ -25,7 +25,7 @@
     "orderId": "Order ID",
     "getKey": "Query CDKey",
     "queryOrderId": "Query Order ID",
-    "Loading": "Order is coming..."
+    "loading": "Querying please wait..."
   },
   "ShowKey": {
     "thanksForBuying": "Thanks for Sponsoring",
@@ -72,7 +72,7 @@
       "close": "Close"
     }
   },
-  "Download":{
+  "Download": {
     "title": "Download {rid} {os} {arch}",
     "cdkey": "CDKey",
     "prepare": "Prepare download",
@@ -87,7 +87,6 @@
     "7002": "Please confirm that you have entered the correct CDKey",
     "7003": "Your CDKey has reached the most downloads today",
     "7004": "Current cdk cannot download this resource, please check your cdk type"
-
   },
   "Common": {
     "ok": "OK",

@@ -34,7 +34,7 @@ export default function GetKey() {
   if (isLoading) {
     return <LoadingState
         title={t("thanksForBuying")}
-        description={t("Loading")}
+        description={t("loading")}
     />;
   }
 
