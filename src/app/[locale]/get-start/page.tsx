@@ -33,7 +33,7 @@ export default async function GetStart() {
 
   return (
     <div className='relative' suppressHydrationWarning>
-      <BackgroundBeamsWithCollision className="min-h-screen max-h-screen">
+      <BackgroundBeamsWithCollision className="min-h-screen">
         <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="px-6 py-12 sm:px-6 sm:py-8 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
