@@ -68,6 +68,7 @@
       "copied": "Copied"
     },
     "Announcement": {
+      "newAnnouncement": "Announcement",
       "doNotShow": "Do not show",
       "close": "Close"
     }
