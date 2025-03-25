@@ -76,10 +76,10 @@ export default async function GetStart() {
             >
               {t("discussion")}
             </Link>
-            <a href="https://github.com/MirrorChyan/docs" target="_blank" className="text-sm/6 font-semibold">
+            <a href="https://github.com/MirrorChyan/docs" target="_blank" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("apiDoc")}<span aria-hidden="true">&nbsp;→</span>
             </a>
-            <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold">
+            <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("openSource")}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
