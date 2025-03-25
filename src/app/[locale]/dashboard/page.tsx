@@ -5,10 +5,10 @@ import { useTranslations } from "next-intl";
 import YearMonthPicker from "@/components/YearMonthPicker";
 import { useState } from "react";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
-import { useRouter } from "@/i18n/routing";
 import { closeAll, addToast } from "@heroui/toast";
+import Revenue from "@/app/[locale]/dashboard/revenue";
 
-export type Revenue = {
+export type RevenueType = {
   activated_at: Date
   amount: string
   application: string
@@ -18,7 +18,7 @@ export type Revenue = {
 }
 
 export type RevenueResponse = {
-  data: Revenue[]
+  data: RevenueType[]
   ec: number
 }
 
@@ -29,8 +29,10 @@ export default function Dashboard() {
   const [rid, setRid] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
-  const router = useRouter();
+  const [revenueData, setRevenueData] = useState<RevenueType[]>([]);
+
 
   const handleMonthChange = (value: string) => setMonth(value);
 
@@ -58,10 +60,8 @@ export default function Dashboard() {
         return;
       }
 
-      sessionStorage.setItem("rid", String(rid));
-      sessionStorage.setItem("REVENUE_DATA", JSON.stringify(response.data));
-
-      router.push(`/dashboard/${rid}?date=${month}`);
+      setRevenueData(response.data);
+      setIsLogin(true);
     } catch (error) {
       console.error("Error:", error);
       closeAll();
@@ -73,6 +73,15 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
+
+  const handleLogOut = () => {
+    setIsLogin(false);
+    setRevenueData([]);
+  }
+
+  if( isLogin ) {
+    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month}/>
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">

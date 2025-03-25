@@ -1,49 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Button, Skeleton } from "@heroui/react";
-import { useParams, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/routing";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
-import { Revenue } from "@/app/[locale]/dashboard/page";
+import { RevenueType } from "@/app/[locale]/dashboard/page";
 
+type PropsType = {
+  revenueData: RevenueType[]
+  onLogOut: () => void
+  date: string
+  rid: string
+}
 
-export default function Dashboard() {
+export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" }: PropsType) {
   const t = useTranslations("Dashboard");
-  const router = useRouter();
-  const accessRef = useRef<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [revenueData, setRevenueData] = useState<Revenue[]>([]);
-
-  const searchParams = useSearchParams();
-  const date = searchParams.get("date");
-  const params = useParams();
-  const rid: string = params.rid as string ?? "MAA";
 
   useEffect(() => {
-    // 只在客户端执行 直接打开了 /zh/dashboard/{rid} 页面，或者刷新了页面，跳转回 /zh/dashboard
-    if (typeof window !== "undefined") {
-      const localRid = sessionStorage.getItem("rid");
-
-      if (!localRid || !rid || !date) {
-        return router.replace("/dashboard");
-      }
-
-      const data = sessionStorage.getItem("REVENUE_DATA");
-
-      if (data) {
-        setRevenueData(JSON.parse(data));
-        if (!accessRef.current) {
-          accessRef.current = true;
-          return;
-        }
-        sessionStorage.removeItem("REVENUE_DATA"); // 使用后清理
-      } else {
-        router.replace("/dashboard"); // 无数据时重定向
-      }
+    if( !revenueData ){
+      return onLogOut();
     }
     setTimeout(() => {
       setIsLoading(false);
