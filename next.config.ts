@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       return [
         {
           source: '/api/:path*',
-          destination: 'https://mirrorchyan.com/api/:path*',
+          destination: `${process.env.CLIENT_BACKEND}/api/:path*`,
         },
       ]
     }

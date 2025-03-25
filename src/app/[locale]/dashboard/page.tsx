@@ -79,8 +79,8 @@ export default function Dashboard() {
     setRevenueData([]);
   }
 
-  if( isLogin ) {
-    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month}/>
+  if (isLogin) {
+    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />
   }
 
   return (
@@ -94,7 +94,7 @@ export default function Dashboard() {
             className="flex gap-5 flex-col mt-12 text-balance text-lg leading-8 text-gray-600 dark:text-gray-400"
             onSubmit={onSubmit}
           >
-            <YearMonthPicker onChange={handleMonthChange}/>
+            <YearMonthPicker onChange={handleMonthChange} />
 
             <Input
               label={t("rid")} name="rid"

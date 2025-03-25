@@ -20,7 +20,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if( !revenueData ){
+    if (!revenueData) {
       return onLogOut();
     }
     setTimeout(() => {
@@ -36,7 +36,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
         `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
         .join("\n");
 
-    const blob = new Blob([csvContent], {type: "text/csv"});
+    const blob = new Blob([csvContent], { type: "text/csv" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = filename;
@@ -47,21 +47,21 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     return (
       <div className="p-6 space-y-8 max-w-7xl mx-auto">
         {/* 标题骨架 */}
-        <Skeleton className="w-1/2 h-20 rounded-lg"/>
+        <Skeleton className="w-1/2 h-20 rounded-lg" />
 
         {/* 统计卡片骨架 */}
         <div className="grid grid-cols-3 gap-4">
           {[1, 2, 3].map((_, i) => (
             <Skeleton key={i} className={clsx(
               "rounded-xl", i === 2 ? "h-20" : "h-52"
-            )}/>
+            )} />
           ))}
         </div>
 
         {/* 图表区骨架 */}
         <div className="grid grid-cols-3 gap-6">
           {[1, 2, 3].map((_, i) => (
-            <Skeleton key={i} className="h-52 rounded-xl"/>
+            <Skeleton key={i} className="h-52 rounded-xl" />
           ))}
         </div>
 
@@ -71,7 +71,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
             <Skeleton key={i} className={clsx(
               "h-52 rounded-xl",
               i === 0 ? "lg:col-span-1" : "lg:col-span-2"
-            )}/>
+            )} />
           ))}
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     <div className="p-6 max-w-7xl mx-auto">
       {/* 标题区 */}
       <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
-        {t("dashboardTitle", {rid})}
+        {t("dashboardTitle", { rid })}
       </h1>
 
       <div className="max-w-7xl mx-auto">
@@ -92,7 +92,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
             <div className="p-4 sm:p-8">
               <h3 className="text-gray-500">{t("totalAmount")}</h3>
               <p className="text-2xl sm:text-3xl font-bold">
-                {revenueData.reduce((acc, cur)=> acc + Number(cur.buy_count), 0)}份
+                {revenueData.reduce((acc, cur) => acc + Number(cur.buy_count), 0)}份
               </p>
             </div>
           </Card>
