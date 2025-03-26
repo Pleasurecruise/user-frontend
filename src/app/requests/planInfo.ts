@@ -36,7 +36,7 @@ export type AfdianResponse = {
 // 缓存的信息
 const cachedPlanInfo: Record<string, Plan | undefined> = {};
 // 缓存的更新时间
-let lastFetchTime: Record<string, number> = {};
+const lastFetchTime: Record<string, number> = {};
 // 缓存的持续时间
 const CACHE_DURATION = 10 * 60 * 1000; // 10分钟（毫秒）
 

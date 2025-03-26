@@ -13,7 +13,7 @@ type Announcement = {
 const announcementCache: Record<string, Announcement> = {};
 
 // 缓存的公告更新时间
-let lastFetchTime: Record<string, number> = {};
+const lastFetchTime: Record<string, number> = {};
 // 缓存的持续时间
 const CACHE_DURATION = 60 * 1000; // 1分钟（毫秒）
 
