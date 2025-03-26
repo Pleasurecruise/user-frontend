@@ -15,9 +15,10 @@ export default function YearMonthPicker({ onChange }: PropsType) {
 
   function formatMonth(month: number) {
     return month.toString().padStart(2, "0");
-  }
-
-  const years = Array.from({ length: 15 }, (_, i) => currentYear - i).reverse();
+    }
+    
+  const startYear = 2025;
+  const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
   const months = Array.from({ length: 12 }, (_, i) => formatMonth(i + 1));
 
   // 设置初始值为当前年月
