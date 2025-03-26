@@ -1,5 +1,3 @@
-import { getTranslations } from "next-intl/server";
-
 export type Discount = {
   beginAt: number // timestamp
   endAt: number   // timestamp
@@ -40,15 +38,14 @@ const cachedPlanInfo: Record<string, Plan | undefined> = {};
 // 缓存的更新时间
 let lastFetchTime = 0;
 // 缓存的持续时间
-const CACHE_DURATION = 10 * 60 * 1000; // 24小时（毫秒）
+const CACHE_DURATION = 10 * 60 * 1000; // 10分钟（毫秒）
 
 export const getPlanInfo = async (planId: string, mostPopularId: string): Promise<Plan | null> => {
-  const t = await getTranslations("GetStart");
   const now = Date.now();
-
   if(now - lastFetchTime < CACHE_DURATION && cachedPlanInfo[planId]){
     return cachedPlanInfo[planId] || null;
   }
+
   try {
     const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`);
 
@@ -76,10 +73,11 @@ export const getPlanInfo = async (planId: string, mostPopularId: string): Promis
       return responsePlan;
     }
     else {
-      return null;
+      console.error("Get Plan Info resp error:", response);
+      return cachedPlanInfo[planId] || null;
     }
   } catch (error) {
     console.error("Get Plan Info error:", error);
-    return null;
+    return cachedPlanInfo[planId] || null;
   }
 };
