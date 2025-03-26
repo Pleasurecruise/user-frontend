@@ -4,7 +4,9 @@ import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector } from "recharts";
+import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector} from "recharts";
+import {ActiveShape} from "recharts/types/util/types";
+import {PieSectorDataItem} from "recharts/types/polar/Pie";
 
 type PropsType = {
   revenueData: RevenueType[]
@@ -12,6 +14,16 @@ type PropsType = {
   date: string
   rid: string
 }
+
+type CustomSectorProps = {
+  cx: number;
+  cy: number;
+  innerRadius: number;
+  outerRadius: number;
+  startAngle: number;
+  endAngle: number;
+  fill: string;
+};
 
 type ChartDataItem = {
   name: string;
@@ -54,9 +66,16 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     }));
   }
 
-  // Custom active shape for pie chart
-  const renderActiveShape = (props: any) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+  const renderActiveShape: ActiveShape<PieSectorDataItem> = (props: unknown) => {
+    const {
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle,
+      endAngle,
+      fill,
+    } = props as CustomSectorProps;
 
     return (
         <g>
