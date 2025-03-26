@@ -3,12 +3,12 @@ import { getTranslations } from "next-intl/server";
 export type Discount = {
   beginAt: number // timestamp
   endAt: number   // timestamp
-  discountPrice: string
+  discountPrice: number
 }
 
 export type Plan = {
   name: string
-  price: string
+  price: number
   planId: string
   skuId: string
   mostPopular: boolean
@@ -57,18 +57,16 @@ export const getPlanInfo = async (planId: string, mostPopularId: string): Promis
 
       const { plan, list } = data.data;
 
-      const priceExchange: number = parseFloat(t("priceExchange"));
-      const priceFixed: number = +t("priceFixed");
       const responsePlan = {
-        name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
-        price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
+        name: plan.name,
+        price: parseFloat(plan.price),
         planId: plan.plan_id,
         skuId: list[0].sku_id,
         mostPopular: mostPopularId === plan.plan_id,
         discount: plan.time_limit_price && {
           beginAt: plan.time_limit_price.begin_time,
           endAt: plan.time_limit_price.end_time,
-          discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
+          discountPrice: parseFloat(plan.time_limit_price.price)
         }
       };
 

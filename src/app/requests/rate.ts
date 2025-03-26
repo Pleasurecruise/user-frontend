@@ -28,7 +28,7 @@ export async function getUSDRate(): Promise<number> {
     lastFetchTime = now;
     return response.rates.USD;
   } catch (error) {
-    console.error("Get Announcement error:", error);
+    console.error("Get USD Rate error:", error);
     return NaN;
   }
 }
