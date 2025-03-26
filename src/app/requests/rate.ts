@@ -17,7 +17,7 @@ export async function getUSDRate(): Promise<number> {
   // Use absolute URL with origin to work properly in server components
   const now = Date.now();
 
-  if (now - lastFetchTime < CACHE_DURATION && cachedRate) {
+  if (now - lastFetchTime < CACHE_DURATION && cachedRate !== null) {
     return cachedRate;
   }
   try {
