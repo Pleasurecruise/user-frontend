@@ -29,6 +29,6 @@ export async function getUSDRate(): Promise<number> {
     return response.rates.USD;
   } catch (error) {
     console.error("Get USD Rate error:", error);
-    return NaN;
+    return cachedRate || NaN;
   }
 }
