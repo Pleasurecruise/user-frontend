@@ -13,14 +13,14 @@ type Announcement = {
 const announcementCache: Record<string, Announcement> = {};
 
 // 缓存的公告更新时间
-let lastFetchTime = 0;
+let lastFetchTime: Record<string, number> = {};
 // 缓存的持续时间
 const CACHE_DURATION = 60 * 1000; // 1分钟（毫秒）
 
 export async function getAnnouncement(lang: "zh" | "en"): Promise<Announcement> {
   // Use absolute URL with origin to work properly in server components
   const now = Date.now();
-  if(now - lastFetchTime < CACHE_DURATION && announcementCache[lang]){
+  if(lastFetchTime[lang] && now - lastFetchTime[lang] < CACHE_DURATION && announcementCache[lang]){
     return announcementCache[lang];
   }
 
@@ -29,7 +29,7 @@ export async function getAnnouncement(lang: "zh" | "en"): Promise<Announcement> 
     const response = await res.json();
 
     announcementCache[lang] = response;
-    lastFetchTime = now;
+    lastFetchTime[lang] = now;
 
     return response;
   } catch (error) {
