@@ -141,8 +141,8 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                 const data = payload[0].payload;
                 return (
                     <div className="bg-white dark:bg-gray-800 p-2 shadow rounded border dark:border-gray-700">
-                        <p className="font-medium text-gray-900 dark:text-white">{data.name}</p>
-                        <p className="text-gray-700 dark:text-gray-300">{data.percentage}% {data.count}份 {data.value}元</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{data.name} {data.percentage}%</p>
+                        <p className="text-gray-700 dark:text-gray-300">{data.count}份 {data.value}元</p>
                     </div>
                 );
             }
@@ -179,7 +179,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                             verticalAlign="top"
                             content={renderLegend}
                             wrapperStyle={{
-                                maxHeight: '140px',
+                                maxHeight: '240px',
                                 overflowY: 'auto',
                                 direction: 'ltr',
                                 paddingRight: '10px',
