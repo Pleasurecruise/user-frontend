@@ -30,7 +30,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
 
   // CSV导出处理
   const handleExport = debounce(async () => {
-    const filename = `Mirror酱 ${rid} ${date} 销售数据.csv`;
+    const filename = `MirrorChyan Sales ${rid} ${date}.csv`;
     const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,buy_count,amount\n" +
       revenueData.map(d =>
         `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
