@@ -14,7 +14,7 @@ type PropsType = {
   rid: string
 }
 
-export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" }: PropsType) {
+export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType) {
   const t = useTranslations("Dashboard");
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -30,7 +30,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
 
   // CSV导出处理
   const handleExport = debounce(async () => {
-    const filename = `Mirror酱 ${rid} ${date?.slice(0, 4)}-${date?.slice(5)} 销售数据.csv`;
+    const filename = `Mirror酱 ${rid} ${date} 销售数据.csv`;
     const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,buy_count,amount\n" +
       revenueData.map(d =>
         `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
@@ -82,7 +82,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     <div className="p-6 max-w-7xl mx-auto">
       {/* 标题区 */}
       <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
-        {t("dashboardTitle", { rid })}
+        {t("dashboardTitle", { rid, date })}
       </h1>
 
       <div className="max-w-7xl mx-auto">
