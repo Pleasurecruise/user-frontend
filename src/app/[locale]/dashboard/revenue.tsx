@@ -4,8 +4,7 @@ import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector, Legend} from "recharts";
-import {ActiveShape} from "recharts/types/util/types";
+import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend} from "recharts";
 
 type PropsType = {
   revenueData: RevenueType[]
@@ -81,58 +80,6 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     }));
   }
 
-  // Custom active shape for Pie Chart
-  // @ts-ignore
-  const renderActiveShape= (props: any) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
-
-    return (
-        <g>
-          <Sector
-              cx={cx}
-              cy={cy}
-              innerRadius={innerRadius}
-              outerRadius={outerRadius + 10}
-              startAngle={startAngle}
-              endAngle={endAngle}
-              fill={fill}
-          />
-          <Sector
-              cx={cx}
-              cy={cy}
-              startAngle={startAngle}
-              endAngle={endAngle}
-              innerRadius={outerRadius + 6}
-              outerRadius={outerRadius + 12}
-              fill={fill}
-          />
-        </g>
-    );
-  };
-
-  // Custom legend component
-  // @ts-ignore
-  const renderLegend = (props: any) => {
-    const { payload } = props;
-
-    return (
-        <ul className="text-xs">
-          {payload.map((entry: any, index: number) => (
-              <li key={`item-${index}`} className="flex items-center mb-1">
-            <span
-                className="inline-block w-3 h-3 mr-1"
-                style={{ backgroundColor: entry.color }}
-            />
-                <div className="flex flex-col">
-                  <span>{entry.value} {entry.payload.percentage}% </span>
-                  <span className="text-gray-500">({entry.payload.count || 0}份 {entry.payload.value}元)</span>
-                </div>
-              </li>
-          ))}
-        </ul>
-    );
-  };
-
   // CSV export handler
   const handleExport = debounce(async () => {
     const filename = `Mirror酱 ${rid} ${date?.slice(0, 4)}-${date?.slice(5)} 销售数据.csv`;
@@ -152,6 +99,10 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
   const SalesPieChart = ({ data, title }: { data: ChartDataItem[], title: string }) => {
     const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
+
+    const renderLabel = ({ name, percentage }: ChartDataItem) => {
+      return percentage && percentage > 10 ? `${name} ${percentage}%` : null;
+    };
 
     const customTooltip = ({ active, payload }: any) => {
       if (active && payload && payload.length) {
@@ -181,9 +132,9 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
                   fill="#8884d8"
                   dataKey="value"
                   activeIndex={activeSliceIndex}
-                  activeShape={renderActiveShape}
                   onMouseEnter={(_, index) => setActiveSliceIndex(index)}
                   onMouseLeave={() => setActiveSliceIndex(undefined)}
+                  label={renderLabel}
               >
                 {data.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -194,7 +145,13 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
                   layout="vertical"
                   align="left"
                   verticalAlign="top"
-                  content={renderLegend}
+                  wrapperStyle={{
+                    maxHeight: '140px',
+                    overflowY: 'auto',
+                    direction: 'rtl',
+                    paddingRight: '10px',
+                    textAlign: 'left'
+                  }}
               />
             </PieChart>
           </ResponsiveContainer>
