@@ -276,24 +276,25 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                     </Card>
                 </div>
 
-        {/* 数据表格区 - 桌面1+2列/手机单列 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          {/* 日销售记录 (桌面1列) */}
-          <Card className="lg:col-span-1">
-            <div className="p-4">
-              <h3>{t("dailyRecord.title")}</h3>
-              <div className="w-full h-64">
-                <SalesList listData={revenueData}/>
+          {/* 数据表格区 - 桌面1+2列/手机单列 */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            {/* 日销售记录 (桌面1列) */}
+            <Card className="lg:col-span-1">
+              <div className="p-4">
+                <h3>{t("dailyRecord.title")}</h3>
+                <div className="w-full h-64">
+                  <SalesList listData={revenueData} date={date} />
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
 
-          {/* 折线图 (桌面2列) */}
-          <Card className="lg:col-span-2">
-            <div className="w-full h-96 p-4 sm:h-64">
-              <SalesLineChart revenueData={revenueData}/>
-            </div>
-          </Card>
+            {/* 折线图 (桌面2列) */}
+            <Card className="lg:col-span-2">
+              <div className="w-full h-96 p-4 sm:h-64">
+                <SalesLineChart revenueData={revenueData} />
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
