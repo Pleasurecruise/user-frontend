@@ -7,7 +7,6 @@ import {clsx} from "clsx";
 import {debounce} from "lodash";
 import {RevenueType} from "@/app/[locale]/dashboard/page";
 import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps} from "recharts";
-import {Payload} from "recharts/types/component/DefaultLegendContent";
 
 type PropsType = {
     revenueData: RevenueType[]
@@ -91,7 +90,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     }
 
     // Function to render legend for pie chart
-    const renderLegend = ({payload}: { payload?: Array<Payload> }) => {
+    const renderLegend = ({payload}: any) => {
         if (!payload) return null;
         return (
             <ul className="text-xs">
