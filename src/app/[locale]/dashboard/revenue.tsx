@@ -6,6 +6,9 @@ import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
+import SalesList from "@/app/[locale]/dashboard/SalesList";
+import SalesLineChart from "@/app/[locale]/dashboard/SalesLineChart";
+
 
 type PropsType = {
   revenueData: RevenueType[]
@@ -141,16 +144,17 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
           {/* 日销售记录 (桌面1列) */}
           <Card className="lg:col-span-1">
             <div className="p-4">
-              <h3 className="mb-4">{t("dailyRecord")}</h3>
-              <div className="w-full h-64 bg-amber-400"></div>
+              <h3>{t("dailyRecord.title")}</h3>
+              <div className="w-full h-64">
+                <SalesList listData={revenueData}/>
+              </div>
             </div>
           </Card>
 
           {/* 折线图 (桌面2列) */}
           <Card className="lg:col-span-2">
-            <div className="p-4">
-              <h3 className="mb-4">{t("totalAmountChart")}</h3>
-              <div className="w-full h-64 bg-indigo-300"></div>
+            <div className="w-full h-96 p-4 sm:h-64">
+              <SalesLineChart revenueData={revenueData}/>
             </div>
           </Card>
         </div>
