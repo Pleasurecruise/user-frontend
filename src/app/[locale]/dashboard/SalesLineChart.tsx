@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useRef, useEffect, useCallback} from "react";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import {
   LineChart,
   Line,
@@ -11,14 +11,14 @@ import {
 } from "recharts";
 import { format, parseISO, startOfMinute, startOfHour, startOfDay } from "date-fns";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import { Radio, RadioGroup, cn, Tooltip as Tippy, Button } from "@heroui/react";
+import { Radio, RadioGroup, cn, Tooltip as Tippy, Switch } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 type PropsType = {
   revenueData: RevenueType[];
 }
 
-export default function SalesLineChart ({revenueData}: PropsType) {
+export default function SalesLineChart({ revenueData }: PropsType) {
   const t = useTranslations("Dashboard");
   // 状态管理
   const [showSales, setShowSales] = useState(true);
@@ -89,7 +89,7 @@ export default function SalesLineChart ({revenueData}: PropsType) {
   // 自定义 Tooltip
   const CustomTooltip = (
     { active, payload }: TooltipProps<number, string> & {
-      payload?:{
+      payload?: {
         payload: {
           time: Date;
           amount: number;
@@ -100,13 +100,13 @@ export default function SalesLineChart ({revenueData}: PropsType) {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-3 shadow-lg rounded">
-          <p className="font-medium">
+        <div className="bg-white dark:bg-gray-800 p-3 shadow-lg rounded dark:border-gray-700">
+          <p className="font-medium dark:border-gray-70">
             {timeRange === "day"
               ? format(data.time, "yyyy-MM-dd")
               : format(data.time, "yyyy-MM-dd HH:mm")}
           </p>
-          <p className="text-blue-600">
+          <p className="text-blue-600 dark:text-blue-400">
             {showSales ?
               `${t("dailyRecord.amount")}: ${data.amount.toFixed(2)}元` :
               `${t("dailyRecord.revenue")}: ${data.count}件`}
@@ -119,7 +119,7 @@ export default function SalesLineChart ({revenueData}: PropsType) {
 
   const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
     const delta = e.deltaY * 0.0005;
-    const newRange = Math.min(Math.max( timeRange === "day" ? 0.5 : 0.1, brushRange.end - brushRange.start + delta), 1);
+    const newRange = Math.min(Math.max(timeRange === "day" ? 0.5 : 0.1, brushRange.end - brushRange.start + delta), 1);
 
     const center = (brushRange.start + brushRange.end) / 2;
     const newStart = Math.max(0, center - newRange / 2);
@@ -147,11 +147,9 @@ export default function SalesLineChart ({revenueData}: PropsType) {
   return (
     <div className="relative h-full">
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-2">
-        <Tippy content={showSales ? t("dailyRecord.toggleAmount") : t("dailyRecord.toggleRevenue")} showArrow>
-          <Button variant="light" className="w-full sm:flex-1 text-base sm:text-lg" onPress={() => setShowSales(!showSales)}>
-            {t("totalAmountChart")}
-          </Button>
-        </Tippy>
+        <h3 className="w-full sm:flex-1 text-base sm:text-lg text-center">
+          {t("totalAmountChart")}
+        </h3>
 
         <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <RadioGroup
@@ -160,17 +158,17 @@ export default function SalesLineChart ({revenueData}: PropsType) {
             size="sm"
             onValueChange={(value: string) => {
               setTimeRange(value);
-              if ( value === "day" ) {
+              if (value === "day") {
                 setBrushRange({ start: 0, end: 0.99 });
               }
             }}
             className="flex-1 sm:flex-none"
           >
             {[
-              {label: t("dailyRecord.minute"), value: "minute"},
-              {label: t("dailyRecord.hour"), value: "hour"},
-              {label: t("dailyRecord.day"), value: "day"},
-            ].map(({label, value}) => (
+              { label: t("dailyRecord.minute"), value: "minute" },
+              { label: t("dailyRecord.hour"), value: "hour" },
+              { label: t("dailyRecord.day"), value: "day" },
+            ].map(({ label, value }) => (
               <Radio
                 key={value}
                 value={value}
@@ -188,6 +186,16 @@ export default function SalesLineChart ({revenueData}: PropsType) {
               </Radio>
             ))}
           </RadioGroup>
+          <Tippy
+            content={showSales ? t("dailyRecord.toggleAmount") : t("dailyRecord.toggleRevenue")}
+            showArrow className="text-gray-500 dark:text-gray-200 "
+          >
+            <Switch
+              isSelected={showSales}
+              size="sm"
+              onValueChange={(value) => setShowSales(value)}
+            />
+          </Tippy>
         </div>
       </div>
 
@@ -251,6 +259,7 @@ export default function SalesLineChart ({revenueData}: PropsType) {
               endIndex={Math.floor(processedData.length * brushRange.end)}
               tickFormatter={timeFormatter}
               gap={5}
+              className="dark:[&_rect:first-child]:fill-gray-800"
               onChange={({ startIndex, endIndex }) => {
                 const newStart = Number(startIndex) / processedData.length;
                 const newEnd = Number(endIndex) / processedData.length;
