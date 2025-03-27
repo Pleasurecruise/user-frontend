@@ -36,13 +36,13 @@ export type AfdianResponse = {
 // 缓存的信息
 const cachedPlanInfo: Record<string, Plan | undefined> = {};
 // 缓存的更新时间
-let lastFetchTime = 0;
+const lastFetchTime: Record<string, number> = {};
 // 缓存的持续时间
 const CACHE_DURATION = 10 * 60 * 1000; // 10分钟（毫秒）
 
 export const getPlanInfo = async (planId: string, mostPopularId: string): Promise<Plan | null> => {
   const now = Date.now();
-  if(now - lastFetchTime < CACHE_DURATION && cachedPlanInfo[planId]){
+  if(lastFetchTime[planId] && now - lastFetchTime[planId] < CACHE_DURATION && cachedPlanInfo[planId]){
     return cachedPlanInfo[planId] || null;
   }
 
@@ -68,7 +68,7 @@ export const getPlanInfo = async (planId: string, mostPopularId: string): Promis
       };
 
       cachedPlanInfo[planId] = responsePlan;
-      lastFetchTime = now;
+      lastFetchTime[planId] = now;
 
       return responsePlan;
     }

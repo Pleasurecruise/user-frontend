@@ -10,32 +10,26 @@ type Announcement = {
 }
 
 // 缓存的公告
-let cachedAnnouncement: Announcement = {
-  "ec": 400,
-  "msg": "",
-  "data": {
-    "summary": "",
-    "details": ""
-  }
-};
+const announcementCache: Record<string, Announcement> = {};
+
 // 缓存的公告更新时间
-let lastFetchTime = 0;
+const lastFetchTime: Record<string, number> = {};
 // 缓存的持续时间
 const CACHE_DURATION = 60 * 1000; // 1分钟（毫秒）
 
 export async function getAnnouncement(lang: "zh" | "en"): Promise<Announcement> {
   // Use absolute URL with origin to work properly in server components
   const now = Date.now();
-
-  if (now - lastFetchTime < CACHE_DURATION && cachedAnnouncement) {
-    return cachedAnnouncement;
+  if(lastFetchTime[lang] && now - lastFetchTime[lang] < CACHE_DURATION && announcementCache[lang]){
+    return announcementCache[lang];
   }
+
   try {
     const res = await fetch(`${SERVER_BACKEND}/api/misc/anno?lang=${lang}`);
     const response = await res.json();
 
-    cachedAnnouncement = response;
-    lastFetchTime = now;
+    announcementCache[lang] = response;
+    lastFetchTime[lang] = now;
 
     return response;
   } catch (error) {

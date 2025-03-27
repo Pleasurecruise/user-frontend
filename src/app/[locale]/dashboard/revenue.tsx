@@ -22,7 +22,7 @@ type ChartDataItem = {
   percentage?: number;
 }
 
-export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" }: PropsType) {
+export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType) {
   const t = useTranslations("Dashboard");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
 
   // CSV export handler
   const handleExport = debounce(async () => {
-    const filename = `Mirror酱 ${rid} ${date?.slice(0, 4)}-${date?.slice(5)} 销售数据.csv`;
+    const filename = `MirrorChyan Sales ${rid} ${date}.csv`;
     const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,buy_count,amount\n" +
         revenueData.map(d =>
             `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
@@ -191,12 +191,39 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
   }
 
   return (
-      <div className="p-6 max-w-7xl mx-auto">
-        {/* Title section */}
-        <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
-          {t("dashboardTitle", { rid })}
-        </h1>
+    <div className="p-6 max-w-7xl mx-auto">
+      {/* 标题区 */}
+      <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
+        {t("dashboardTitle", { rid, date })}
+      </h1>
 
+      <div className="max-w-7xl mx-auto">
+        {/* 统计卡片区 - 桌面3列/手机1列布局 */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <Card>
+            <div className="p-4 sm:p-8">
+              <h3 className="text-gray-500">{t("totalAmount")}</h3>
+              <p className="text-2xl sm:text-3xl font-bold">
+                {revenueData.reduce((acc, cur) => acc + Number(cur.buy_count), 0)}份
+              </p>
+            </div>
+          </Card>
+          <Card>
+            <div className="p-4 sm:p-8">
+              <h3 className="text-gray-500">{t("totalRevenue")}</h3>
+              <p className="text-2xl sm:text-3xl font-bold">
+                {revenueData.reduce(
+                  (acc, cur) => acc + Number(cur.amount) * Number(cur.buy_count), 0
+                ).toFixed(2)}元
+              </p>
+            </div>
+          </Card>
+          <div className="flex items-center justify-center p-4">
+            <Button className="w-full sm:w-auto" color="secondary" variant="ghost" onClick={handleExport}>
+              {t("export")}
+            </Button>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto">
           {/* Stats cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">

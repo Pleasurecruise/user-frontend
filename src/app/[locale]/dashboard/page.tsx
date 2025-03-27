@@ -47,7 +47,7 @@ export default function Dashboard() {
 
     try {
       setIsLoading(true);
-      const response: RevenueResponse = await fetch(`${CLIENT_BACKEND}/api/billing/revenue?rid=${rid}`, {
+      const response: RevenueResponse = await fetch(`${CLIENT_BACKEND}/api/billing/revenue?rid=${rid}&date=${month}`, {
         headers: { Authorization: token },
       }).then(res => res.json());
 
