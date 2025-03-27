@@ -110,7 +110,19 @@
     "application": "Application",
     "userAgent": "UserAgent",
     "plan": "Plan",
-    "dailyRecord": "日销售记录",
+    "dailyRecord": {
+      "title": "日销售记录",
+      "date": "日期",
+      "amount": "销量",
+      "revenue": "销售额",
+      "labelAmount": "销售额 (元)",
+      "labelRevenue": "销量 (份)",
+      "day": "日",
+      "hour": "小时",
+      "minute": "分钟",
+      "toggleAmount": "点击切换为销量",
+      "toggleRevenue": "点击切换为销售额"
+    },
     "totalAmountChart": "销售总额折线图"
   }
 }

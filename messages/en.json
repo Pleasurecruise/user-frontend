@@ -110,7 +110,19 @@
     "application": "Application",
     "userAgent": "User Agent",
     "plan": "Plan",
-    "dailyRecord": "Daily sales record",
+    "dailyRecord": {
+      "title": "Daily sales record",
+      "date": "Date",
+      "amount": "Amount",
+      "revenue": "Sales Volume",
+      "labelAmount": "Amount (元)",
+      "labelRevenue": "Revenue (份)",
+      "day": "Day",
+      "hour": "Hour",
+      "minute": "Minute",
+      "toggleAmount": "Click to switch to sales volume",
+      "toggleRevenue": "Click to switch to sales revenue"
+    },
     "totalAmountChart": "Line chart of total sales"
   }
 }
