@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState, useMemo } from "react";
 import { Card, Button, Skeleton } from "@heroui/react";
 import { useTranslations } from "next-intl";
