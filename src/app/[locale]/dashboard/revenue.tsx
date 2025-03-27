@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend} from "recharts";
+import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps} from "recharts";
 
 type PropsType = {
   revenueData: RevenueType[]
@@ -104,7 +104,8 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
       return percentage && percentage > 10 ? `${name} ${percentage}%` : null;
     };
 
-    const customTooltip = ({ active, payload }: any) => {
+    const customTooltip = (props: TooltipProps<number, string>) => {
+      const { active, payload } = props;
       if (active && payload && payload.length) {
         const data = payload[0].payload;
         return (
