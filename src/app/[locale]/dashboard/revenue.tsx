@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { Card, Button, Skeleton } from "@heroui/react";
-import { useTranslations } from "next-intl";
-import { clsx } from "clsx";
-import { debounce } from "lodash";
-import { RevenueType } from "@/app/[locale]/dashboard/page";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps } from "recharts";
+import {useEffect, useState, useMemo} from "react";
+import {Card, Button, Skeleton} from "@heroui/react";
+import {useTranslations} from "next-intl";
+import {clsx} from "clsx";
+import {debounce} from "lodash";
+import {RevenueType} from "@/app/[locale]/dashboard/page";
+import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps} from "recharts";
+import {Payload} from "recharts/types/component/DefaultLegendContent";
 
 type PropsType = {
     revenueData: RevenueType[]
@@ -22,7 +23,7 @@ type ChartDataItem = {
     percentage?: number;
 }
 
-export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType) {
+export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     const t = useTranslations("Dashboard");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
@@ -75,19 +76,41 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
             const count = Number(item.buy_count);
 
             if (!acc[keyValue]) {
-                acc[keyValue] = { value: 0, count: 0 };
+                acc[keyValue] = {value: 0, count: 0};
             }
             acc[keyValue].value += amount;
             acc[keyValue].count += count;
             return acc;
         }, {} as Record<string, { value: number, count: number }>);
 
-        return Object.entries(grouped).map(([name, { value, count }]) => ({
+        return Object.entries(grouped).map(([name, {value, count}]) => ({
             name,
             value: parseFloat(value.toFixed(2)),
             count
         }));
     }
+
+    // Function to render legend for pie chart
+    const renderLegend = ({payload}: { payload?: Array<Payload> }) => {
+        if (!payload) return null;
+        return (
+            <ul className="text-xs">
+                {payload.map((entry: any, index: number) => (
+                    <li key={`item-${index}`} className="flex items-center mb-1">
+            <span
+                className="inline-block w-3 h-3 mr-1"
+                style={{backgroundColor: entry.color}}
+            />
+                        <div className="flex flex-col">
+                            <span>{entry.value} {entry.payload.percentage}% </span>
+                            <span
+                                className="text-gray-500">({entry.payload.count || 0}份 {entry.payload.value}元)</span>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        );
+    };
 
     // CSV export handler
     const handleExport = debounce(async () => {
@@ -97,7 +120,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
                 .join("\n");
 
-        const blob = new Blob([csvContent], { type: "text/csv" });
+        const blob = new Blob([csvContent], {type: "text/csv"});
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = filename;
@@ -105,22 +128,22 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     }, 500);
 
     // Reusable Pie Chart component
-    const SalesPieChart = ({ data, title }: { data: ChartDataItem[], title: string }) => {
+    const SalesPieChart = ({data, title}: { data: ChartDataItem[], title: string }) => {
         const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
         const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
 
-        const renderLabel = ({ name, percentage }: ChartDataItem) => {
+        const renderLabel = ({name, percentage}: ChartDataItem) => {
             return percentage && percentage > 10 ? `${name} ${percentage}%` : null;
         };
 
         const customTooltip = (props: TooltipProps<number, string>) => {
-            const { active, payload } = props;
+            const {active, payload} = props;
             if (active && payload && payload.length) {
                 const data = payload[0].payload;
                 return (
-                    <div className="bg-white p-2 shadow rounded border">
-                        <p className="font-medium">{data.name}</p>
-                        <p>{data.percentage}% {data.count}份 {data.value}元</p>
+                    <div className="bg-white dark:bg-gray-800 p-2 shadow rounded border dark:border-gray-700">
+                        <p className="font-medium text-gray-900 dark:text-white">{data.name}</p>
+                        <p className="text-gray-700 dark:text-gray-300">{data.percentage}% {data.count}份 {data.value}元</p>
                     </div>
                 );
             }
@@ -147,21 +170,25 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                             label={renderLabel}
                         >
                             {data.map((_entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                             ))}
                         </Pie>
-                        <Tooltip content={customTooltip} />
+                        <Tooltip content={customTooltip}/>
                         <Legend
                             layout="vertical"
                             align="left"
                             verticalAlign="top"
+                            content={renderLegend}
                             wrapperStyle={{
                                 maxHeight: '140px',
                                 overflowY: 'auto',
-                                direction: 'rtl',
+                                direction: 'ltr',
                                 paddingRight: '10px',
-                                textAlign: 'left'
+                                textAlign: 'left',
+                                scrollbarWidth: 'none', /* Firefox */
+                                msOverflowStyle: 'none', /* Internet Explorer 10+ */
                             }}
+                            className="no-scrollbar"
                         />
                     </PieChart>
                 </ResponsiveContainer>
@@ -172,17 +199,17 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     if (isLoading) {
         return (
             <div className="p-6 space-y-8 max-w-7xl mx-auto">
-                <Skeleton className="w-1/2 h-20 rounded-lg" />
+                <Skeleton className="w-1/2 h-20 rounded-lg"/>
                 <div className="grid grid-cols-3 gap-4">
                     {[1, 2, 3].map((_, i) => (
                         <Skeleton key={i} className={clsx(
                             "rounded-xl", i === 2 ? "h-20" : "h-52"
-                        )} />
+                        )}/>
                     ))}
                 </div>
                 <div className="grid grid-cols-3 gap-6">
                     {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className="h-52 rounded-xl" />
+                        <Skeleton key={i} className="h-52 rounded-xl"/>
                     ))}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
@@ -190,7 +217,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                         <Skeleton key={i} className={clsx(
                             "h-52 rounded-xl",
                             i === 0 ? "lg:col-span-1" : "lg:col-span-2"
-                        )} />
+                        )}/>
                     ))}
                 </div>
             </div>
@@ -201,7 +228,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
         <div className="p-6 max-w-7xl mx-auto">
             {/* 标题区 */}
             <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
-                {t("dashboardTitle", { rid, date })}
+                {t("dashboardTitle", {rid, date})}
             </h1>
 
             <div className="max-w-7xl mx-auto">
@@ -236,17 +263,17 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={applicationData} title={t("application")} />
+                            <SalesPieChart data={applicationData} title={t("application")}/>
                         </div>
                     </Card>
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={userAgentData} title={t("userAgent")} />
+                            <SalesPieChart data={userAgentData} title={t("userAgent")}/>
                         </div>
                     </Card>
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={planData} title={t("plan")} />
+                            <SalesPieChart data={planData} title={t("plan")}/>
                         </div>
                     </Card>
                 </div>
