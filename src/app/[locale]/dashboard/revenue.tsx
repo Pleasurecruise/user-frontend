@@ -4,9 +4,8 @@ import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector} from "recharts";
+import {PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector, Legend} from "recharts";
 import {ActiveShape} from "recharts/types/util/types";
-import {PieSectorDataItem} from "recharts/types/polar/Pie";
 
 type PropsType = {
   revenueData: RevenueType[]
@@ -15,19 +14,11 @@ type PropsType = {
   rid: string
 }
 
-type CustomSectorProps = {
-  cx: number;
-  cy: number;
-  innerRadius: number;
-  outerRadius: number;
-  startAngle: number;
-  endAngle: number;
-  fill: string;
-};
-
 type ChartDataItem = {
   name: string;
   value: number;
+  count?: number;
+  percentage?: number;
 }
 
 export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" }: PropsType) {
@@ -42,40 +33,58 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     }, 1000);
   }, []);
 
-  // Prepare data for pie charts
-  const applicationData = useMemo(() => prepareChartData(revenueData, 'application'), [revenueData]);
-  const userAgentData = useMemo(() => prepareChartData(revenueData, 'user_agent'), [revenueData]);
-  const planData = useMemo(() => prepareChartData(revenueData, 'plan'), [revenueData]);
+  // Prepare chart data
+  const applicationData = useMemo(() => {
+    const data = prepareChartData(revenueData, 'application');
+    return calculatePercentages(data);
+  }, [revenueData]);
+
+  const userAgentData = useMemo(() => {
+    const data = prepareChartData(revenueData, 'user_agent');
+    return calculatePercentages(data);
+  }, [revenueData]);
+
+  const planData = useMemo(() => {
+    const data = prepareChartData(revenueData, 'plan');
+    return calculatePercentages(data);
+  }, [revenueData]);
+
+  function calculatePercentages(data: ChartDataItem[]): ChartDataItem[] {
+    const total = data.reduce((sum, item) => sum + item.value, 0);
+
+    return data.map(item => ({
+      ...item,
+      percentage: parseFloat(((item.value / total) * 100).toFixed(1))
+    }))
+        .sort((a, b) => b.value - a.value); // 按值从大到小排序
+  }
 
   // Function to prepare chart data by grouping
   function prepareChartData(data: RevenueType[], key: keyof RevenueType): ChartDataItem[] {
-    const grouped = data.reduce((acc, item) => {
+    const grouped: Record<string, {value: number, count: number}> = data.reduce((acc, item) => {
       const keyValue = String(item[key]);
       const amount = parseFloat(item.amount) * item.buy_count;
+      const count = Number(item.buy_count);
 
       if (!acc[keyValue]) {
-        acc[keyValue] = 0;
+        acc[keyValue] = { value: 0, count: 0 };
       }
-      acc[keyValue] += amount;
+      acc[keyValue].value += amount;
+      acc[keyValue].count += count;
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, {value: number, count: number}>);
 
-    return Object.entries(grouped).map(([name, value]) => ({
+    return Object.entries(grouped).map(([name, { value, count }]) => ({
       name,
-      value: parseFloat(value.toFixed(2))
+      value: parseFloat(value.toFixed(2)),
+      count
     }));
   }
 
-  const renderActiveShape: ActiveShape<PieSectorDataItem> = (props: unknown) => {
-    const {
-      cx,
-      cy,
-      innerRadius,
-      outerRadius,
-      startAngle,
-      endAngle,
-      fill,
-    } = props as CustomSectorProps;
+  // Custom active shape for Pie Chart
+  // @ts-ignore
+  const renderActiveShape= (props: any) => {
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
 
     return (
         <g>
@@ -101,6 +110,29 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
     );
   };
 
+  // Custom legend component
+  // @ts-ignore
+  const renderLegend = (props: any) => {
+    const { payload } = props;
+
+    return (
+        <ul className="text-xs">
+          {payload.map((entry: any, index: number) => (
+              <li key={`item-${index}`} className="flex items-center mb-1">
+            <span
+                className="inline-block w-3 h-3 mr-1"
+                style={{ backgroundColor: entry.color }}
+            />
+                <div className="flex flex-col">
+                  <span>{entry.value} {entry.payload.percentage}% </span>
+                  <span className="text-gray-500">({entry.payload.count || 0}份 {entry.payload.value}元)</span>
+                </div>
+              </li>
+          ))}
+        </ul>
+    );
+  };
+
   // CSV export handler
   const handleExport = debounce(async () => {
     const filename = `Mirror酱 ${rid} ${date?.slice(0, 4)}-${date?.slice(5)} 销售数据.csv`;
@@ -119,7 +151,20 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
   // Reusable Pie Chart component
   const SalesPieChart = ({ data, title }: { data: ChartDataItem[], title: string }) => {
     const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
+
+    const customTooltip = ({ active, payload }: any) => {
+      if (active && payload && payload.length) {
+        const data = payload[0].payload;
+        return (
+            <div className="bg-white p-2 shadow rounded border">
+              <p className="font-medium">{data.name}</p>
+              <p>{data.percentage}% {data.count}份 {data.value}元</p>
+            </div>
+        );
+      }
+      return null;
+    };
 
     return (
         <div className="h-full">
@@ -144,9 +189,12 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip
-                  formatter={(value, _name, entry) => [`${value}元`, entry.payload.name]}
-                  contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '4px', padding: '8px' }}
+              <Tooltip content={customTooltip} />
+              <Legend
+                  layout="vertical"
+                  align="left"
+                  verticalAlign="top"
+                  content={renderLegend}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -155,7 +203,6 @@ export default function Revenue({ revenueData, onLogOut, rid = "MAA", date = "" 
   };
 
   if (isLoading) {
-    // Skeleton loading state (unchanged)
     return (
         <div className="p-6 space-y-8 max-w-7xl mx-auto">
           <Skeleton className="w-1/2 h-20 rounded-lg" />
