@@ -13,7 +13,6 @@ import {
 import {
   eachDayOfInterval,
   eachHourOfInterval,
-  eachMinuteOfInterval,
   endOfMonth,
   format,
   parseISO,
@@ -60,7 +59,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
   function timeFormatter(date: Date) {
     switch (timeRange) {
       case "minute":
-        return format(date, "MM-dd HH:mm");
+        return format(date, "MM-dd HH:00");
       case "hour":
         return format(date, "MM-dd HH:00");
       case "day":
@@ -102,7 +101,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
         case 'hour':
           return eachHourOfInterval(interval);
         case 'minute':
-          return eachMinuteOfInterval(interval);
+          return eachHourOfInterval(interval);
         default:
           throw new Error('不支持的时间粒度');
       }
@@ -121,7 +120,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
       const end = endOfMonth(`${currentYear}-${currentMonth}-${month[currentMonth - 1]} 23:59:59`);
 
       const completeTimes = generateTimeSeries(start, end);
-
       const dataMap = createDataMap(originalData);
 
       return completeTimes.map(time => {
@@ -129,7 +127,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
         return dataMap.get(key) || {
           amount: 0,
           count: 0,
-          time: new Date(key),
+          time: time,
         };
       })
     }
@@ -172,7 +170,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
         amount: item.sumAmount,
         count: item.sumCount
       }));
-
     return fillTimeSeries(result);
   }, [revenueData, timeRange]);
 
