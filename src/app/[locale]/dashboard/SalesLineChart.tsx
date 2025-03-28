@@ -1,24 +1,53 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
+  Brush,
   CartesianGrid,
-  Tooltip,
+  Line,
+  LineChart,
   ResponsiveContainer,
-  Brush, TooltipProps
+  Tooltip,
+  TooltipProps,
+  XAxis,
+  YAxis
 } from "recharts";
-import { format, parseISO, startOfMinute, startOfHour, startOfDay } from "date-fns";
+import {
+  eachDayOfInterval,
+  eachHourOfInterval,
+  eachMinuteOfInterval,
+  endOfMonth,
+  format,
+  parseISO,
+  startOfDay,
+  startOfHour,
+  startOfMinute,
+  startOfMonth
+} from "date-fns";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
-import { Radio, RadioGroup, cn, Tooltip as Tippy, Switch } from "@heroui/react";
+import { cn, Radio, RadioGroup, Switch, Tooltip as Tippy } from "@heroui/react";
 import { useTranslations } from "next-intl";
 
 type PropsType = {
   revenueData: RevenueType[];
+  date: string;
 }
 
-export default function SalesLineChart({ revenueData }: PropsType) {
+type DataType = {
+  amount: number;
+  count: number;
+  time: Date;
+}
+
+type TooltipType = TooltipProps<number, string> & {
+  payload?: {
+    payload: {
+      time: Date;
+      amount: number;
+      count: number
+    }
+  }[]
+}
+
+export default function SalesLineChart({ revenueData, date }: PropsType) {
   const t = useTranslations("Dashboard");
   // 状态管理
   const [showSales, setShowSales] = useState(true);
@@ -27,9 +56,83 @@ export default function SalesLineChart({ revenueData }: PropsType) {
   const [brushRange, setBrushRange] = useState({ start: 0, end: 0.5 });
   const brushRef = useRef<HTMLDivElement>(null);
 
+  // 时间格式化
+  function timeFormatter(date: Date) {
+    switch (timeRange) {
+      case "minute":
+        return format(date, "MM-dd HH:mm");
+      case "hour":
+        return format(date, "MM-dd HH:00");
+      case "day":
+        return format(date, "yyyy-MM-dd");
+      default:
+        return format(date, "MM-dd HH:mm");
+    }
+  };
+
   // 处理原始数据
   const processedData = useMemo(() => {
     const groupedData: Record<string, { sumAmount: number; sumCount: number; time: Date }> = {};
+
+    function createDataMap(
+      data: DataType[],
+    ): Map<string, DataType> {
+      const map = new Map<string, DataType>();
+      data.forEach((item) => {
+        map.set(
+          timeFormatter(item.time),
+          {
+            amount: item.amount,
+            count: item.count,
+            time: item.time
+          });
+      })
+      return map;
+    }
+
+    function generateTimeSeries(
+      start: Date,
+      end: Date,
+    ): Date[] {
+      const interval = { start, end };
+
+      switch (timeRange) {
+        case 'day':
+          return eachDayOfInterval(interval);
+        case 'hour':
+          return eachHourOfInterval(interval);
+        case 'minute':
+          return eachMinuteOfInterval(interval);
+        default:
+          throw new Error('不支持的时间粒度');
+      }
+    }
+
+    function fillTimeSeries(
+      originalData: DataType[],
+    ): DataType[] {
+      const currentYear = Number(date.slice(0, 4));
+      const currentMonth = Number(date.slice(5));
+      const month = [31,
+        currentYear % 4 === 0 && currentYear % 100 !== 0 || currentYear % 400 === 0 ? 29 : 28,
+        31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+      const start = startOfMonth(`${currentYear}-${currentMonth}-${1} 00:00:00`);
+      const end = endOfMonth(`${currentYear}-${currentMonth}-${month[currentMonth - 1]} 23:59:59`);
+
+      const completeTimes = generateTimeSeries(start, end);
+
+      const dataMap = createDataMap(originalData);
+
+      return completeTimes.map(time => {
+        const key = timeFormatter(time);
+        return dataMap.get(key) || {
+          amount: 0,
+          count: 0,
+          time: new Date(key),
+        };
+      })
+    }
 
     revenueData.forEach(item => {
       const date = parseISO(String(item.activated_at));
@@ -62,41 +165,20 @@ export default function SalesLineChart({ revenueData }: PropsType) {
       groupedData[isoKey].sumAmount += parseFloat(item.amount);
       groupedData[isoKey].sumCount += item.buy_count;
     });
-
-    return Object.values(groupedData)
+    const result = Object.values(groupedData)
       .sort((a, b) => a.time.getTime() - b.time.getTime())
       .map(item => ({
         time: item.time,
         amount: item.sumAmount,
         count: item.sumCount
       }));
-  }, [revenueData, timeRange]);
 
-  // 时间格式化
-  const timeFormatter = (date: Date) => {
-    switch (timeRange) {
-      case "minute":
-        return format(date, "MM-dd HH:mm");
-      case "hour":
-        return format(date, "MM-dd HH:00");
-      case "day":
-        return format(date, "yyyy-MM-dd");
-      default:
-        return format(date, "MM-dd HH:mm");
-    }
-  };
+    return fillTimeSeries(result);
+  }, [revenueData, timeRange]);
 
   // 自定义 Tooltip
   const CustomTooltip = (
-    { active, payload }: TooltipProps<number, string> & {
-      payload?: {
-        payload: {
-          time: Date;
-          amount: number;
-          count: number
-        }
-      }[]
-    }) => {
+    { active, payload }: TooltipType) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (

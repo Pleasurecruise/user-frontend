@@ -291,7 +291,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
             {/* 折线图 (桌面2列) */}
             <Card className="lg:col-span-2">
               <div className="w-full h-96 p-4 sm:h-64">
-                <SalesLineChart revenueData={revenueData} />
+                <SalesLineChart revenueData={revenueData} date={date}/>
               </div>
             </Card>
           </div>
