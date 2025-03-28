@@ -71,7 +71,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     function prepareChartData(data: RevenueType[], key: keyof RevenueType): ChartDataItem[] {
         const grouped: Record<string, { value: number, count: number }> = data.reduce((acc, item) => {
             const keyValue = String(item[key]);
-            const amount = parseFloat(item.amount) * item.buy_count;
+            const amount = parseFloat(item.amount);
             const count = Number(item.buy_count);
 
             if (!acc[keyValue]) {
@@ -246,7 +246,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                             <h3 className="text-gray-500">{t("totalRevenue")}</h3>
                             <p className="text-2xl sm:text-3xl font-bold">
                                 {revenueData.reduce(
-                                    (acc, cur) => acc + Number(cur.amount) * Number(cur.buy_count), 0
+                                    (acc, cur) => acc + Number(cur.amount), 0
                                 ).toFixed(2)}元
                             </p>
                         </div>
