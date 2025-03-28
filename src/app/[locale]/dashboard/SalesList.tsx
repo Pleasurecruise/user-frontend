@@ -97,7 +97,7 @@ export default function SalesList({ listData, date }: PropsType) {
         </TableHeader>
         <TableBody items={processedData}>
           {(item) => (
-            <TableRow key={String(item.date)} className="hover:bg-gray-100">
+            <TableRow key={String(item.date)} className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white">
               {(columnKey) => <TableCell>{item[columnKey as keyof DataType]}</TableCell>}
             </TableRow>
           )}
