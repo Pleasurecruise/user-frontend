@@ -59,7 +59,7 @@ export default function SalesLineChart({ revenueData }: PropsType) {
         };
       }
 
-      groupedData[isoKey].sumAmount += parseFloat(item.amount) * Number(item.buy_count);
+      groupedData[isoKey].sumAmount += parseFloat(item.amount);
       groupedData[isoKey].sumCount += item.buy_count;
     });
 

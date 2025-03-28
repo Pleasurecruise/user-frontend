@@ -19,10 +19,10 @@ export default function SalesList({ listData, date }: PropsType) {
   const t = useTranslations("Dashboard.dailyRecord");
 
   const generateDateRange = () => {
+    const currentYear = Number(date.slice(0, 4));
     const currentMonth = Number(date.slice(5));
-    const year = new Date().getFullYear();
     const month = [31,
-      year % 4 === 0 && year % 100 !== 0 || year % 400 === 0 ? 29 : 28,
+      currentYear % 4 === 0 && currentYear % 100 !== 0 || currentYear % 400 === 0 ? 29 : 28,
       31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     const dates: number[] = [];
@@ -53,7 +53,7 @@ export default function SalesList({ listData, date }: PropsType) {
           date: key,
         });
       } else {
-        const revenue = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.amount) * Number(cur.buy_count), 0).toFixed(2));
+        const revenue = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.amount), 0).toFixed(2));
         const amount = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.buy_count), 0));
         dateMap.set(key, {
           amount,
