@@ -19,14 +19,15 @@ export default function SalesList({ listData, date }: PropsType) {
   const t = useTranslations("Dashboard.dailyRecord");
 
   const generateDateRange = () => {
-    const currentYear = Number(date.slice(0, 4));
-    const currentMonth = Number(date.slice(5));
+    const tarngetYear = Number(date.slice(0, 4));
+    const tarngetMonth = Number(date.slice(5));
     const month = [31,
-      currentYear % 4 === 0 && currentYear % 100 !== 0 || currentYear % 400 === 0 ? 29 : 28,
+      tarngetYear % 4 === 0 && tarngetYear % 100 !== 0 || tarngetYear % 400 === 0 ? 29 : 28,
       31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const currentMonth = new Date().getMonth() + 1;
 
     const dates: number[] = [];
-    const lastDay = month[currentMonth - 1];
+    const lastDay = currentMonth === tarngetMonth ? new Date().getDate() : month[tarngetMonth - 1];
 
     for (let i = 1; i <= lastDay; i++) {
       dates.push(i);
@@ -62,7 +63,7 @@ export default function SalesList({ listData, date }: PropsType) {
         });
       }
     });
-    return Array.from(dateMap.values());
+    return Array.from(dateMap.values()).reverse();
   }, [listData]);
 
 
