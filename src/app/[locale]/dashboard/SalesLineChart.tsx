@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import {
   eachDayOfInterval,
-  eachHourOfInterval,
+  eachHourOfInterval, eachMinuteOfInterval,
   endOfMonth,
   format,
   parseISO,
@@ -97,8 +97,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
           return eachDayOfInterval(interval);
         case "hour":
           return eachHourOfInterval(interval);
-        case "minute":
-          return eachHourOfInterval(interval);
         default:
           throw new Error("不支持的时间粒度");
       }
@@ -134,9 +132,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
       let key: Date;
 
       switch (timeRange) {
-        case "minute":
-          key = startOfMinute(date);
-          break;
         case "hour":
           key = startOfHour(date);
           break;
@@ -214,7 +209,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             className="flex-1 sm:flex-none"
           >
             {[
-              { label: t("dailyRecord.minute"), value: "minute" },
               { label: t("dailyRecord.hour"), value: "hour" },
               { label: t("dailyRecord.day"), value: "day" },
             ].map(({ label, value }) => (
