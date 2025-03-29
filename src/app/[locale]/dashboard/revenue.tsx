@@ -152,7 +152,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
 
         return (
             <div className="h-full">
-                <h3 className="mb-4">{title}</h3>
+                <h3 className="mb-2">{title}</h3>
                 <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
                         <Pie
@@ -224,9 +224,10 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     }
 
     return (
+      <div className="dark:bg-gray-900">
         <div className="p-6 max-w-7xl mx-auto">
             {/* 标题区 */}
-            <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
+            <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6 dark:text-white">
                 {t("dashboardTitle", { rid, date })}
             </h1>
 
@@ -261,17 +262,17 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 {/* Chart section */}
                 <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
                     <Card>
-                        <div className="p-4">
+                        <div className="p-2">
                             <SalesPieChart data={applicationData} title={t("application")} />
                         </div>
                     </Card>
                     <Card>
-                        <div className="p-4">
+                        <div className="p-2">
                             <SalesPieChart data={userAgentData} title={t("userAgent")} />
                         </div>
                     </Card>
                     <Card>
-                        <div className="p-4">
+                        <div className="p-2">
                             <SalesPieChart data={planData} title={t("plan")} />
                         </div>
                     </Card>
@@ -298,5 +299,6 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 </div>
             </div>
         </div>
+      </div>
     );
 }
