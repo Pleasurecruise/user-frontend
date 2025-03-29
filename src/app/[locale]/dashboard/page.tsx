@@ -3,7 +3,7 @@
 import { Button, Input } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import YearMonthPicker from "@/components/YearMonthPicker";
-import { useState } from "react";
+import React, { useState } from "react";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { closeAll, addToast } from "@heroui/toast";
 import Revenue from "@/app/[locale]/dashboard/revenue";
@@ -77,10 +77,10 @@ export default function Dashboard() {
   const handleLogOut = () => {
     setIsLogin(false);
     setRevenueData([]);
-  }
+  };
 
   if (isLogin) {
-    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />
+    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />;
   }
 
   return (

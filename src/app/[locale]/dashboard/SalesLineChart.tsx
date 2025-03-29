@@ -67,7 +67,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
       default:
         return format(date, "MM-dd HH:mm");
     }
-  };
+  }
 
   // 处理原始数据
   const processedData = useMemo(() => {
@@ -85,7 +85,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             count: item.count,
             time: item.time
           });
-      })
+      });
       return map;
     }
 
@@ -96,14 +96,14 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
       const interval = { start, end };
 
       switch (timeRange) {
-        case 'day':
+        case "day":
           return eachDayOfInterval(interval);
-        case 'hour':
+        case "hour":
           return eachHourOfInterval(interval);
-        case 'minute':
+        case "minute":
           return eachHourOfInterval(interval);
         default:
-          throw new Error('不支持的时间粒度');
+          throw new Error("不支持的时间粒度");
       }
     }
 
@@ -129,7 +129,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
           count: 0,
           time: time,
         };
-      })
+      });
     }
 
     revenueData.forEach(item => {
