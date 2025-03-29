@@ -131,9 +131,6 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
         const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
         const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
 
-        const renderLabel = ({name, percentage}: ChartDataItem) => {
-            return percentage && percentage > 10 ? `${name} ${percentage}%` : null;
-        };
 
         const customTooltip = (props: TooltipProps<number, string>) => {
             const {active, payload} = props;
@@ -166,7 +163,6 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                             activeIndex={activeSliceIndex}
                             onMouseEnter={(_, index) => setActiveSliceIndex(index)}
                             onMouseLeave={() => setActiveSliceIndex(undefined)}
-                            label={renderLabel}
                         >
                             {data.map((_entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
