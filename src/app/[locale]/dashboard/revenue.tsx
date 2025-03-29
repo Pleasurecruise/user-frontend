@@ -107,7 +107,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                         <div className="flex flex-col">
                             <span>{entry.value} {entry.payload.percentage}% </span>
                             <span
-                                className="text-gray-500">({entry.payload.count || 0}份 {entry.payload.value}元)</span>
+                                className="text-gray-500">({entry.payload.count || 0}份 {entry.payload.value.toFixed(2)}元)</span>
                         </div>
                     </li>
                 ))}
@@ -143,7 +143,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 return (
                     <div className="bg-white dark:bg-gray-800 p-2 shadow rounded border dark:border-gray-700">
                         <p className="font-medium text-gray-900 dark:text-white">{data.name} {data.percentage}%</p>
-                        <p className="text-gray-700 dark:text-gray-300">{data.count}份 {data.value}元</p>
+                        <p className="text-gray-700 dark:text-gray-300">{data.count}份 {data.value.toFixed(2)}元</p>
                     </div>
                 );
             }
@@ -236,7 +236,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                     <Card>
                         <div className="p-4 sm:p-8">
-                            <h3 className="text-gray-500">{t("totalAmount")}</h3>
+                            <h3 className="text-gray-500">{t("totalCount")}</h3>
                             <p className="text-2xl sm:text-3xl font-bold">
                                 {revenueData.reduce((acc, cur) => acc + Number(cur.buy_count), 0)}份
                             </p>
@@ -244,7 +244,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                     </Card>
                     <Card>
                         <div className="p-4 sm:p-8">
-                            <h3 className="text-gray-500">{t("totalRevenue")}</h3>
+                            <h3 className="text-gray-500">{t("totalAmount")}</h3>
                             <p className="text-2xl sm:text-3xl font-bold">
                                 {revenueData.reduce(
                                     (acc, cur) => acc + Number(cur.amount), 0

@@ -179,8 +179,8 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
           </p>
           <p className="text-blue-600 dark:text-blue-400">
             {showSales ?
-              `${t("dailyRecord.revenue")}: ${data.amount.toFixed(2)}元` :
-              `${t("dailyRecord.amount")}: ${data.count}件`}
+              `${t("dailyRecord.amount")}: ${data.amount.toFixed(2)}元` :
+              `${t("dailyRecord.count")}: ${data.count}件`}
           </p>
         </div>
       );
@@ -195,7 +195,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
     <div className="relative h-full">
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-2">
         <h3 className="w-full sm:flex-1 text-base sm:text-lg text-center">
-          {t("totalAmountChart")}
+          {t("totalCountChart")}
         </h3>
 
         <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
@@ -230,7 +230,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             ))}
           </RadioGroup>
           <Tippy
-            content={showSales ? t("dailyRecord.toggleAmount") : t("dailyRecord.toggleRevenue")}
+            content={showSales ? t("dailyRecord.toggleCount") : t("dailyRecord.toggleAmount")}
             showArrow className="text-gray-500 dark:text-gray-200 "
           >
             <Switch
@@ -280,7 +280,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
 
             <YAxis
               label={{
-                value: showSales ? t("dailyRecord.labelAmount") : t("dailyRecord.labelRevenue"),
+                value: showSales ? t("dailyRecord.labelAmount") : t("dailyRecord.labelCount"),
                 angle: -90,
                 position: "insideLeft",
                 fontSize: 14,
@@ -308,7 +308,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             <Line
               className="dark:text-gray-200"
               type="monotone"
-              dataKey={showSales ? "amount" : "count"}
+              dataKey={showSales ? "count" : "count"}
               stroke="#8884d8"
               strokeWidth={2}
               dot={{

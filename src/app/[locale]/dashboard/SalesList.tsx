@@ -10,8 +10,8 @@ type PropsType = {
 }
 
 type DataType = {
-  amount: number
-  revenue: number
+  amount: string
+  count: number
   date: string
 }
 
@@ -65,16 +65,16 @@ export default function SalesList({ listData, date }: PropsType) {
 
       if (groupedData[key] === undefined) {
         dateMap.set(key, {
-          amount: 0,
-          revenue: 0,
+          count: 0,
+          amount: "0.00",
           date: key,
         });
       } else {
-        const revenue = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.amount), 0).toFixed(10));
-        const amount = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.buy_count), 0));
+        const count = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.buy_count), 0));
+        const amount = groupedData[key].reduce((acc, cur) => acc + Number(cur.amount), 0).toFixed(2);
         dateMap.set(key, {
+          count,
           amount,
-          revenue,
           date: key,
         });
       }
@@ -102,12 +102,12 @@ export default function SalesList({ listData, date }: PropsType) {
       label: t("date"),
     },
     {
-      key: "amount",
-      label: t("amount")
+      key: "count",
+      label: t("count")
     },
     {
-      key: "revenue",
-      label: t("revenue")
+      key: "amount",
+      label: t("amount")
     }
   ];
 
@@ -132,7 +132,9 @@ export default function SalesList({ listData, date }: PropsType) {
         <TableBody items={processedData}>
           {(item) => (
             <TableRow key={String(item.date)} className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white">
-              {(columnKey) => <TableCell className="text-center">{item[columnKey as keyof DataType]}</TableCell>}
+              <TableCell className="text-center">{item.date}</TableCell>
+              <TableCell className="text-center">{item.count}</TableCell>
+              <TableCell className="text-right">{item.amount}</TableCell>
             </TableRow>
           )}
         </TableBody>

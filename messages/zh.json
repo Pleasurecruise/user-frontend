@@ -106,8 +106,8 @@
     "confirm": "确认",
     "error": "～(>_<) 怎么不对呢！是不是手指抖了一下呀？",
     "dashboardTitle": "Mirror酱 x {rid} {date} 销售看板",
-    "totalAmount": "月销售总量",
-    "totalRevenue": "月销售总额",
+    "totalCount": "月销售总量",
+    "totalAmount": "月销售总额",
     "export": "导出csv文件",
     "application": "Application",
     "userAgent": "UserAgent",
@@ -115,16 +115,16 @@
     "dailyRecord": {
       "title": "日销售记录",
       "date": "日期",
-      "amount": "销量",
-      "revenue": "销售额",
+      "count": "销量",
+      "amount": "销售额",
       "labelAmount": "销售额 (元)",
-      "labelRevenue": "销量 (份)",
+      "labelCount": "销量 (份)",
       "day": "日",
       "hour": "小时",
       "minute": "分钟",
-      "toggleAmount": "点击切换为销量",
-      "toggleRevenue": "点击切换为销售额"
+      "toggleCount": "点击切换为销量",
+      "toggleAmount": "点击切换为销售额"
     },
-    "totalAmountChart": "销售总额折线图"
+    "totalCountChart": "销售额/销量折线图"
   }
 }

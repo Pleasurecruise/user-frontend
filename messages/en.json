@@ -106,8 +106,8 @@
     "confirm": "Confirm",
     "error": "Please confirm that you have entered the correct content",
     "dashboardTitle": "MirrorChyan {rid} {date} Sales Bulletin Board",
-    "totalAmount": "Total Monthly Amount",
-    "totalRevenue": "Total Monthly Revenue",
+    "totalCount": "Total Monthly Amount",
+    "totalAmount": "Total Monthly Revenue",
     "export": "Export CSV file",
     "application": "Application",
     "userAgent": "User Agent",
@@ -115,16 +115,16 @@
     "dailyRecord": {
       "title": "Daily sales record",
       "date": "Date",
-      "amount": "Amount",
-      "revenue": "Sales Volume",
+      "count": "count",
+      "amount": "Sales Volume",
       "labelAmount": "Amount (元)",
-      "labelRevenue": "Revenue (份)",
+      "labelCount": "Revenue (份)",
       "day": "Day",
       "hour": "Hour",
       "minute": "Minute",
-      "toggleAmount": "Click to switch to sales volume",
-      "toggleRevenue": "Click to switch to sales revenue"
+      "toggleCount": "Click to switch to sales volume",
+      "toggleAmount": "Click to switch to sales revenue"
     },
-    "totalAmountChart": "Line chart of total sales"
+    "totalCountChart": "Line chart of total sales"
   }
 }
