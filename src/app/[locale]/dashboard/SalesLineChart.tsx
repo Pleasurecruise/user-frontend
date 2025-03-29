@@ -180,7 +180,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
           <p className="text-blue-600 dark:text-blue-400">
             {showSales ?
               `${t("dailyRecord.amount")}: ${data.amount.toFixed(2)}元` :
-              `${t("dailyRecord.count")}: ${data.count}件`}
+              `${t("dailyRecord.count")}: ${data.count}份`}
           </p>
         </div>
       );

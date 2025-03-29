@@ -101,7 +101,7 @@ export default function Dashboard() {
               type="text" onChange={handleRidChange}
             />
             <Input
-              label={t("token")} name="rid"
+              label={t("token")} name="token"
               type="password"
               onChange={handleTokenChange}
             />
