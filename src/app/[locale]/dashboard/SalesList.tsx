@@ -31,7 +31,8 @@ const UpDownIcon = () => {
 
 export default function SalesList({ listData, date }: PropsType) {
   const t = useTranslations("Dashboard.dailyRecord");
-  const [flashback, setFlashback] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const generateDateRange = () => {
     const tarngetYear = Number(date.slice(0, 4));
@@ -69,7 +70,7 @@ export default function SalesList({ listData, date }: PropsType) {
           date: key,
         });
       } else {
-        const revenue = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.amount), 0).toFixed(2));
+        const revenue = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.amount), 0).toFixed(10));
         const amount = Number(groupedData[key].reduce((acc, cur) => acc + Number(cur.buy_count), 0));
         dateMap.set(key, {
           amount,
@@ -82,8 +83,16 @@ export default function SalesList({ listData, date }: PropsType) {
   }, [listData]);
 
   const processedData = useMemo(() => {
-    return flashback ? [...resolveData] : [...resolveData].reverse();
-  }, [resolveData, flashback])
+    return [...resolveData].sort((a, b) => {
+      if(sortBy === "date"){
+        return sortOrder === "asc" ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+      } else if(sortBy === "amount"){
+        return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+      } else {
+        return sortOrder === "asc" ? a.revenue - b.revenue : b.revenue - a.revenue;
+      }
+    });
+  }, [resolveData, sortBy, sortOrder])
 
 
   const columns = [
@@ -109,18 +118,15 @@ export default function SalesList({ listData, date }: PropsType) {
         className="h-full p-0 overflow-y-scroll scrollbar-hide"
       >
         <TableHeader columns={columns} className="relative">
-          {(column) => column.key !== "date" ? (
-            <TableColumn key={column.key} className="text-center">
-              {column.label}
-            </TableColumn>
-          ) : (
-            <TableColumn key={column.key} className="group text-center relative">
-              {column.label}
-              <div onClick={() => setFlashback(!flashback)}
-                className="opacity-0 group-hover:opacity-100 absolute right-0 top-1 mr-2 mt-2 cursor-pointer hover:text-gray-400 hover:shadow-sm hover:rotate-180 transition"
-              ><UpDownIcon /></div>
-            </TableColumn>
-          )}
+          {(column) => <TableColumn key={column.key} className="text-center relative">
+            {column.label}
+            <div onClick={() => {
+              setSortBy(column.key);
+              setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+            }}
+                 className="absolute right-0 top-1 mr-2 mt-2 cursor-pointer hover:text-gray-400 hover:shadow-sm hover:rotate-180 transition"
+            ><UpDownIcon /></div>
+          </TableColumn>}
         </TableHeader>
         <TableBody items={processedData}>
           {(item) => (
