@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, Button, Skeleton } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
@@ -25,7 +25,7 @@ type ChartDataItem = {
     percentage?: number;
 }
 
-export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
+export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType) {
     const t = useTranslations("Dashboard");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
@@ -78,14 +78,14 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
             const count = Number(item.buy_count);
 
             if (!acc[keyValue]) {
-                acc[keyValue] = {value: 0, count: 0};
+                acc[keyValue] = { value: 0, count: 0 };
             }
             acc[keyValue].value += amount;
             acc[keyValue].count += count;
             return acc;
         }, {} as Record<string, { value: number, count: number }>);
 
-        return Object.entries(grouped).map(([name, {value, count}]) => ({
+        return Object.entries(grouped).map(([name, { value, count }]) => ({
             name,
             value: parseFloat(value.toFixed(2)),
             count
@@ -93,16 +93,16 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     }
 
     // Function to render legend for pie chart
-    const renderLegend = ({payload}: any) => {
+    const renderLegend = ({ payload }: any) => {
         if (!payload) return null;
         return (
             <ul className="text-xs">
                 {payload.map((entry: any, index: number) => (
                     <li key={`item-${index}`} className="flex items-center mb-1">
-            <span
-                className="inline-block w-3 h-3 mr-1"
-                style={{backgroundColor: entry.color}}
-            />
+                        <span
+                            className="inline-block w-3 h-3 mr-1"
+                            style={{ backgroundColor: entry.color }}
+                        />
                         <div className="flex flex-col">
                             <span>{entry.value} {entry.payload.percentage}% </span>
                             <span
@@ -122,7 +122,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                 `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
                 .join("\n");
 
-        const blob = new Blob([csvContent], {type: "text/csv"});
+        const blob = new Blob([csvContent], { type: "text/csv" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = filename;
@@ -130,13 +130,13 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     }, 500);
 
     // Reusable Pie Chart component
-    const SalesPieChart = ({data, title}: { data: ChartDataItem[], title: string }) => {
+    const SalesPieChart = ({ data, title }: { data: ChartDataItem[], title: string }) => {
         const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
         const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
 
 
         const customTooltip = (props: TooltipProps<number, string>) => {
-            const {active, payload} = props;
+            const { active, payload } = props;
             if (active && payload && payload.length) {
                 const data = payload[0].payload;
                 return (
@@ -168,10 +168,10 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                             onMouseLeave={() => setActiveSliceIndex(undefined)}
                         >
                             {data.map((_entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
-                        <Tooltip content={customTooltip}/>
+                        <Tooltip content={customTooltip} />
                         <Legend
                             layout="vertical"
                             align="left"
@@ -197,17 +197,17 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
     if (isLoading) {
         return (
             <div className="p-6 space-y-8 max-w-7xl mx-auto">
-                <Skeleton className="w-1/2 h-20 rounded-lg"/>
+                <Skeleton className="w-1/2 h-20 rounded-lg" />
                 <div className="grid grid-cols-3 gap-4">
                     {[1, 2, 3].map((_, i) => (
                         <Skeleton key={i} className={clsx(
                             "rounded-xl", i === 2 ? "h-20" : "h-52"
-                        )}/>
+                        )} />
                     ))}
                 </div>
                 <div className="grid grid-cols-3 gap-6">
                     {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className="h-52 rounded-xl"/>
+                        <Skeleton key={i} className="h-52 rounded-xl" />
                     ))}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
@@ -215,7 +215,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                         <Skeleton key={i} className={clsx(
                             "h-52 rounded-xl",
                             i === 0 ? "lg:col-span-1" : "lg:col-span-2"
-                        )}/>
+                        )} />
                     ))}
                 </div>
             </div>
@@ -226,7 +226,7 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
         <div className="p-6 max-w-7xl mx-auto">
             {/* 标题区 */}
             <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6">
-                {t("dashboardTitle", {rid, date})}
+                {t("dashboardTitle", { rid, date })}
             </h1>
 
             <div className="max-w-7xl mx-auto">
@@ -261,42 +261,41 @@ export default function Revenue({revenueData, onLogOut, rid, date}: PropsType) {
                 <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={applicationData} title={t("application")}/>
+                            <SalesPieChart data={applicationData} title={t("application")} />
                         </div>
                     </Card>
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={userAgentData} title={t("userAgent")}/>
+                            <SalesPieChart data={userAgentData} title={t("userAgent")} />
                         </div>
                     </Card>
                     <Card>
                         <div className="p-4">
-                            <SalesPieChart data={planData} title={t("plan")}/>
+                            <SalesPieChart data={planData} title={t("plan")} />
                         </div>
                     </Card>
                 </div>
 
-          {/* 数据表格区 - 桌面1+2列/手机单列 */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            {/* 日销售记录 (桌面1列) */}
-            <Card className="lg:col-span-1">
-              <div className="p-4">
-                <h3>{t("dailyRecord.title")}</h3>
-                <div className="w-full h-64">
-                  <SalesList listData={revenueData} date={date} />
-                </div>
-              </div>
-            </Card>
+                {/* 数据表格区 - 桌面1+2列/手机单列 */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    {/* 日销售记录 (桌面1列) */}
+                    <Card className="lg:col-span-1">
+                        <div className="p-4">
+                            <h3>{t("dailyRecord.title")}</h3>
+                            <div className="w-full h-64">
+                                <SalesList listData={revenueData} date={date} />
+                            </div>
+                        </div>
+                    </Card>
 
-            {/* 折线图 (桌面2列) */}
-            <Card className="lg:col-span-2">
-              <div className="w-full h-96 p-4 sm:h-64">
-                <SalesLineChart revenueData={revenueData} date={date}/>
-              </div>
-            </Card>
-          </div>
+                    {/* 折线图 (桌面2列) */}
+                    <Card className="lg:col-span-2">
+                        <div className="w-full h-96 p-4 sm:h-64">
+                            <SalesLineChart revenueData={revenueData} date={date} />
+                        </div>
+                    </Card>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

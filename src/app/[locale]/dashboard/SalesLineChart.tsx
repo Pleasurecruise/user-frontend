@@ -67,7 +67,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
       default:
         return format(date, "MM-dd HH:mm");
     }
-  };
+  }
 
   // 处理原始数据
   const processedData = useMemo(() => {
