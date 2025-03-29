@@ -1,25 +1,25 @@
-import type { NextConfig } from "next"
-import createNextIntlPlugin from 'next-intl/plugin'
+import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  output: "standalone",
   async rewrites() {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       return [
         {
-          source: '/api/:path*',
+          source: "/api/:path*",
           destination: `${process.env.CLIENT_BACKEND}/api/:path*`,
         },
-      ]
+      ];
     }
 
-    return []
+    return [];
   },
   experimental: {
     reactCompiler: true,
   }
-}
+};
 
-export default withNextIntl(nextConfig)
+export default withNextIntl(nextConfig);

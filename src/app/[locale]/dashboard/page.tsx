@@ -77,10 +77,10 @@ export default function Dashboard() {
   const handleLogOut = () => {
     setIsLogin(false);
     setRevenueData([]);
-  }
+  };
 
   if (isLogin) {
-    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />
+    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />;
   }
 
   return (

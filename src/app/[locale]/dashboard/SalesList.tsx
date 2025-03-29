@@ -61,7 +61,7 @@ export default function SalesList({ listData, date }: PropsType) {
           date: key,
         });
       }
-    })
+    });
     return Array.from(dateMap.values());
   }, [listData]);
 
@@ -79,7 +79,7 @@ export default function SalesList({ listData, date }: PropsType) {
       key: "revenue",
       label: t("revenue")
     }
-  ]
+  ];
 
   return (
     <>

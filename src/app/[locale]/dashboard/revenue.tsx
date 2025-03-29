@@ -9,6 +9,7 @@ import { RevenueType } from "@/app/[locale]/dashboard/page";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps } from "recharts";
 import SalesList from "@/app/[locale]/dashboard/SalesList";
 import SalesLineChart from "@/app/[locale]/dashboard/SalesLineChart";
+import { Props } from "recharts/types/component/DefaultLegendContent";
 
 
 type PropsType = {
@@ -39,17 +40,17 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
 
     // Prepare chart data
     const applicationData = useMemo(() => {
-        const data = prepareChartData(revenueData, 'application');
+        const data = prepareChartData(revenueData, "application");
         return calculatePercentages(data);
     }, [revenueData]);
 
     const userAgentData = useMemo(() => {
-        const data = prepareChartData(revenueData, 'user_agent');
+        const data = prepareChartData(revenueData, "user_agent");
         return calculatePercentages(data);
     }, [revenueData]);
 
     const planData = useMemo(() => {
-        const data = prepareChartData(revenueData, 'plan');
+        const data = prepareChartData(revenueData, "plan");
         return calculatePercentages(data);
     }, [revenueData]);
 
@@ -93,7 +94,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     }
 
     // Function to render legend for pie chart
-    const renderLegend = ({ payload }: any) => {
+    const renderLegend = ({ payload }: Props) => {
         if (!payload) return null;
         return (
             <ul className="text-xs">
@@ -132,7 +133,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     // Reusable Pie Chart component
     const SalesPieChart = ({ data, title }: { data: ChartDataItem[], title: string }) => {
         const [activeSliceIndex, setActiveSliceIndex] = useState<number | undefined>(undefined);
-        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D', '#DC143C', '#9370DB', '#20B2AA'];
+        const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D", "#DC143C", "#9370DB", "#20B2AA"];
 
 
         const customTooltip = (props: TooltipProps<number, string>) => {
@@ -178,13 +179,13 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                             verticalAlign="top"
                             content={renderLegend}
                             wrapperStyle={{
-                                maxHeight: '240px',
-                                overflowY: 'auto',
-                                direction: 'ltr',
-                                paddingRight: '10px',
-                                textAlign: 'left',
-                                scrollbarWidth: 'none', /* Firefox */
-                                msOverflowStyle: 'none', /* Internet Explorer 10+ */
+                                maxHeight: "240px",
+                                overflowY: "auto",
+                                direction: "ltr",
+                                paddingRight: "10px",
+                                textAlign: "left",
+                                scrollbarWidth: "none", /* Firefox */
+                                msOverflowStyle: "none", /* Internet Explorer 10+ */
                             }}
                             className="no-scrollbar"
                         />
