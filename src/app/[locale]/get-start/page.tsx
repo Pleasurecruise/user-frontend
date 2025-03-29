@@ -13,7 +13,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
   const t = await getTranslations("GetStart");
   const locale = await getLocale();
 
-  const { type_id } = await searchParams
+  const { type_id } = await searchParams;
 
   const { homePlans, morePlans } = await getPlans(type_id);
 
