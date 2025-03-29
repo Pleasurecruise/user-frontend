@@ -184,8 +184,8 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
           </p>
           <p className="text-blue-600 dark:text-blue-400">
             {showSales ?
-              `${t("dailyRecord.amount")}: ${data.amount.toFixed(2)}元` :
-              `${t("dailyRecord.revenue")}: ${data.count}件`}
+              `${t("dailyRecord.revenue")}: ${data.amount.toFixed(2)}元` :
+              `${t("dailyRecord.amount")}: ${data.count}件`}
           </p>
         </div>
       );
