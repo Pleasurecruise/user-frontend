@@ -308,7 +308,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             <Line
               className="dark:text-gray-200"
               type="monotone"
-              dataKey={showSales ? "count" : "count"}
+              dataKey={showSales ? "amount" : "count"}
               stroke="#8884d8"
               strokeWidth={2}
               dot={{
