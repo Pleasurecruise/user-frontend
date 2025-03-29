@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Brush,
   CartesianGrid,
@@ -51,9 +51,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
   // 状态管理
   const [showSales, setShowSales] = useState(true);
   const [timeRange, setTimeRange] = useState<string>("day");
-  // 新增缩放状态
-  const [brushRange, setBrushRange] = useState({ start: 0, end: 0.5 });
-  const brushRef = useRef<HTMLDivElement>(null);
 
   // 时间格式化
   function timeFormatter(date: Date) {
@@ -196,32 +193,8 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
     return null;
   };
 
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    const delta = e.deltaY * 0.0005;
-    const newRange = Math.min(Math.max(timeRange === "day" ? 0.5 : 0.1, brushRange.end - brushRange.start + delta), 1);
-
-    const center = (brushRange.start + brushRange.end) / 2;
-    const newStart = Math.max(0, center - newRange / 2);
-    const newEnd = Math.min(0.99, center + newRange / 2);
-
-    setBrushRange({
-      start: Number(newStart.toFixed(2)),
-      end: Number(newEnd.toFixed(2))
-    });
-  }, [timeRange, brushRange]);
-
-  useEffect(() => {
-    const container = brushRef.current;
-    if (container) {
-      const nativeHandleWheel = (e: WheelEvent) => {
-        handleWheel(e as unknown as React.WheelEvent<HTMLDivElement>);
-      };
-      container.addEventListener("wheel", nativeHandleWheel, { passive: false });
-      return () => container.removeEventListener("wheel", nativeHandleWheel);
-    }
-  }, [brushRange, handleWheel]);
-
-  const transform = 15 * (2 - brushRange.end + brushRange.start);
+  const startIndex = 0;
+  const endIndex = timeRange === "day" ? Math.floor(processedData.length * 0.5) : Math.floor(processedData.length * 0.1);
 
   return (
     <div className="relative h-full">
@@ -237,9 +210,6 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
             size="sm"
             onValueChange={(value: string) => {
               setTimeRange(value);
-              if (value === "day") {
-                setBrushRange({ start: 0, end: 0.99 });
-              }
             }}
             className="flex-1 sm:flex-none"
           >
@@ -280,13 +250,11 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
 
       <div
         className="mt-4 overflow-x-auto"
-        onWheel={handleWheel}
         style={{
           cursor: "grab",
           scrollbarWidth: "thin",
           scrollbarColor: "#888 transparent"
         }}
-        ref={brushRef}
       >
         <ResponsiveContainer
           width={"100%"}
@@ -331,47 +299,36 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
 
             <Brush
               dataKey="time"
-              height={30}
+              startIndex={startIndex}
+              endIndex={endIndex}
               stroke="#8884d8"
-              travellerWidth={10}
-              startIndex={Math.floor(processedData.length * brushRange.start)}
-              endIndex={Math.floor(processedData.length * brushRange.end)}
               tickFormatter={timeFormatter}
-              gap={5}
               className="dark:[&_rect:first-child]:fill-gray-800"
-              onChange={({ startIndex, endIndex }) => {
-                const newStart = Number(startIndex) / processedData.length;
-                const newEnd = Number(endIndex) / processedData.length;
-                setBrushRange({ start: newStart, end: newEnd });
-              }}
             />
 
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ strokeWidth: 0 }}
+              cursor={{ strokeWidth: 0, className: "dark:text-gray-200" }}
             />
 
             <Line
+              className="dark:text-gray-200"
               type="monotone"
               dataKey={showSales ? "amount" : "count"}
               stroke="#8884d8"
               strokeWidth={2}
-              style={timeRange === "day" ? { transform: `translateX(-${transform}px)` } : {}}
               dot={{
+                /* 此处有魔法，不能配置dot={null}，因为rechart库的问题 */
                 fill: "#8884d8",
-                strokeWidth: 2,
-                r: 3,
-                stroke: "#fff",
-                style: timeRange === "day" ? { transform: `translateX(-${transform}px)` } : {}
+                strokeWidth: 0,
+                r: 0,
               }}
               activeDot={{
                 r: 6,
                 fill: "#fff",
                 stroke: "#8884d8",
                 strokeWidth: 2,
-                style: timeRange === "day" ? { transform: `translateX(-${transform}px)` } : {}
               }}
-              isAnimationActive
             />
           </LineChart>
         </ResponsiveContainer>
