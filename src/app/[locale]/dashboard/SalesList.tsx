@@ -88,9 +88,9 @@ export default function SalesList({ listData, date }: PropsType) {
         return Number(sortOrder === "asc" ? Number(new Date(a.date)) - Number(new Date(b.date)) :
           Number(new Date(b.date)) - Number(new Date(a.date)));
       } else if (sortBy === "amount") {
-        return (sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount);
+        return (sortOrder === "asc" ? Number(a.amount) - Number(b.amount) : Number(b.amount) - Number(a.amount));
       } else {
-        return (sortOrder === "asc" ? a.revenue - b.revenue : b.revenue - a.revenue);
+        return (sortOrder === "asc" ? a.count - b.count : b.count - a.count);
       }
     });
   }, [resolveData, sortBy, sortOrder])
