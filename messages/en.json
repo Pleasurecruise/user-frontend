@@ -11,19 +11,22 @@
     "transfer": "Order Transfer",
     "LimitTimeOffer": "Ends in ",
     "planTitle": {
-        "Mirror酱月卡": "Monthly Plan",
-        "Mirror酱季卡": "Quarterly Plan",
-        "Mirror酱年卡": "Annual Plan"
+      "Mirror酱月卡": "Monthly Plan",
+      "Mirror酱季卡": "Quarterly Plan",
+      "Mirror酱年卡": "Annual Plan"
     },
     "priceSymbol": "$ ",
-    "priceExchange": "7.25",
-    "priceFixed": "2"
+    "priceFixed": "2",
+    "more": "More",
+    "hide": "Hide"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
+    "thanksForBuying": "Thanks for Sponsoring",
     "orderId": "Order ID",
     "getKey": "Query CDKey",
-    "queryOrderId": "Query Order ID"
+    "queryOrderId": "Query Order ID",
+    "loading": "Querying please wait..."
   },
   "ShowKey": {
     "thanksForBuying": "Thanks for Sponsoring",
@@ -66,15 +69,18 @@
       "copied": "Copied"
     },
     "Announcement": {
+      "newAnnouncement": "Announcement",
       "doNotShow": "Do not show",
       "close": "Close"
     }
   },
-  "Download":{
+  "Download": {
     "title": "Download {rid} {os} {arch}",
     "cdkey": "CDKey",
+    "prepare": "Prepare download",
     "download": "Download",
     "downloading": "downloading",
+    "pleaseWait": "Please wait ...",
     "noCDKey": "No CDKey",
     "buyCDKey": "No CDKey? Subscribe Now",
     "disclaimer": "As a third-party distribution platform, MirrorChyan only charges for download acceleration services, which does not mean that {rid} requires a paid subscription.<br></br>You can still download and use it for free through {rid}'s official channels. Please refer to the User Agreement for complete instructions.",
@@ -83,7 +89,6 @@
     "7002": "Please confirm that you have entered the correct CDKey",
     "7003": "Your CDKey has reached the most downloads today",
     "7004": "Current cdk cannot download this resource, please check your cdk type"
-
   },
   "Common": {
     "ok": "OK",
@@ -92,5 +97,34 @@
     "durationHours": "hours",
     "durationMinutes": "minutes",
     "durationSeconds": "seconds"
+  },
+  "Dashboard": {
+    "title": "MirrorChyan Revenue",
+    "monthInput": "Month",
+    "rid": "RID",
+    "token": "Token",
+    "confirm": "Confirm",
+    "error": "Please confirm that you have entered the correct content",
+    "dashboardTitle": "MirrorChyan {rid} {date} Sales Bulletin Board",
+    "totalCount": "Total Monthly Amount",
+    "totalAmount": "Total Monthly Revenue",
+    "export": "Export CSV file",
+    "application": "Application",
+    "userAgent": "User Agent",
+    "plan": "Plan",
+    "dailyRecord": {
+      "title": "Daily sales record",
+      "date": "Date",
+      "count": "count",
+      "amount": "Sales Volume",
+      "labelAmount": "Amount (元)",
+      "labelCount": "Revenue (份)",
+      "day": "Day",
+      "hour": "Hour",
+      "minute": "Minute",
+      "toggleCount": "Click to switch to sales volume",
+      "toggleAmount": "Click to switch to sales revenue"
+    },
+    "totalCountChart": "Line chart of total sales"
   }
 }

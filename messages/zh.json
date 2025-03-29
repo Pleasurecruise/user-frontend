@@ -11,14 +11,17 @@
     "transfer": "订单转换",
     "LimitTimeOffer": "剩余：",
     "priceSymbol": "¥ ",
-    "priceExchange": "1.0",
-    "priceFixed": "1"
+    "priceFixed": "1",
+    "more": "更多",
+    "hide": "收起"
   },
   "GetKey": {
     "title": "欢迎使用Mirror酱",
+    "thanksForBuying": "感谢赞助",
     "orderId": "订单号",
     "getKey": "查询CDK",
-    "queryOrderId": "查询订单号"
+    "queryOrderId": "查询订单号",
+    "loading": "正在查询……"
   },
   "ShowKey": {
     "thanksForBuying": "感谢赞助",
@@ -71,11 +74,13 @@
       "close": "关闭"
     }
   },
-  "Download":{
+  "Download": {
     "title": "下载 {rid} {os} {arch}",
     "cdkey": "CDK",
+    "prepare": "准备下载",
     "download": "下载",
     "downloading": "下载中",
+    "pleaseWait": "请稍等...",
     "noCDKey": "请输入 CDK",
     "buyCDKey": "没有CDK？立即订阅",
     "disclaimer": "Mirror酱作为第三方分发平台，仅对下载加速服务收取费用，不代表 {rid} 需付费订阅。<br></br>您仍可通过 {rid} 的官方渠道进行免费下载和使用。完整说明请查阅用户协议。",
@@ -92,5 +97,34 @@
     "durationHours": "小时",
     "durationMinutes": "分钟",
     "durationSeconds": "秒"
+  },
+  "Dashboard": {
+    "title": "Mirror酱の营收",
+    "monthInput": "月份",
+    "rid": "RID",
+    "token": "Token",
+    "confirm": "确认",
+    "error": "～(>_<) 怎么不对呢！是不是手指抖了一下呀？",
+    "dashboardTitle": "Mirror酱 x {rid} {date} 销售看板",
+    "totalCount": "月销售总量",
+    "totalAmount": "月销售总额",
+    "export": "导出csv文件",
+    "application": "Application",
+    "userAgent": "UserAgent",
+    "plan": "Plan",
+    "dailyRecord": {
+      "title": "日销售记录",
+      "date": "日期",
+      "count": "销量",
+      "amount": "销售额",
+      "labelAmount": "销售额 (元)",
+      "labelCount": "销量 (份)",
+      "day": "日",
+      "hour": "小时",
+      "minute": "分钟",
+      "toggleCount": "点击切换为销量",
+      "toggleAmount": "点击切换为销售额"
+    },
+    "totalCountChart": "销售额/销量折线图"
   }
 }

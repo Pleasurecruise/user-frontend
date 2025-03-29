@@ -1,83 +1,28 @@
 import { getLocale } from "next-intl/server";
 
-import { getAnnouncement } from "@/app/requests/announcement";
 import { BackgroundBeamsWithCollision } from "@/components/BackgroundBeamsWithCollision";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
-import PlanCard from "./plan-card";
 import Announcement from "./announcement";
-// import { CheckIcon } from '@heroicons/react/20/solid'
+import { getUSDRate } from "@/app/requests/rate";
+import { getAnnouncement } from "@/app/requests/announcement";
+import { getPlans } from "@/app/requests/plan";
+import Plans from "./plans";
 
-type Discount = {
-  beginAt: number // timestamp
-  endAt: number   // timestamp
-  discountPrice: string
-}
-
-type Plan = {
-  name: string
-  price: string
-  planId: string
-  skuId: string
-  mostPopular: boolean
-  discount?: Discount
-}
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const afdianCache: {
-  [K in string]: {
-    ec: number
-    data: any
-    msg: string
-  }
-} = {};
-let lastCacheTime = 0;
-
-export default async function GetStart() {
+export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string }> }) {
   const t = await getTranslations("GetStart");
   const locale = await getLocale();
 
-  const planIds = [
-    // '83f9d3b8cac611ef8fc352540025c377',
-    "3134f94ac9aa11ef9d725254001e7c00",
-    "9e6c7b28c9aa11efb47452540025c377",
-    "69c45576c9aa11ef9ace52540025c377",
-  ];
+  const { type_id } = await searchParams;
 
-  const getPlanInfo = async (planId: string): Promise<Plan | null> => {
-    if (!afdianCache[planId] || Date.now() - lastCacheTime > 1000 * 60 * 60) {
-      const response = await fetch(`https://afdian.com/api/creator/get-plan-skus?plan_id=${planId}&is_ext=`);
-      if (response.ok) {
-        const data = await response.json();
-        afdianCache[planId] = data;
-        lastCacheTime = Date.now();
-      }
-      else {
-        return null;
-      }
-    }
-    const data = afdianCache[planId];
-    const { plan, list } = data.data;
-    const priceExchange: number = parseFloat(t("priceExchange"));
-    const priceFixed: number = +t("priceFixed");
-    return {
-      name: t.has("planTitle") ? t(`planTitle.${plan.name}`) : plan.name,
-      price: t("priceSymbol") + (parseFloat(plan.price) / priceExchange).toFixed(priceFixed),
-      planId: plan.plan_id,
-      skuId: list[0].sku_id,
-      mostPopular: planIds.indexOf(plan.plan_id) === planIds.length - 1,
-      discount: plan.time_limit_price && {
-        beginAt: plan.time_limit_price.begin_time,
-        endAt: plan.time_limit_price.end_time,
-        discountPrice: t("priceSymbol") + (parseFloat(plan.time_limit_price.price) / priceExchange).toFixed(priceFixed)
-      }
-    };
-  };
-
-  const plans = await Promise.all(planIds.map(getPlanInfo));
-
-  const customOrderId = Date.now() + Math.random().toString(36).slice(2);
+  const { homePlans, morePlans } = await getPlans(type_id);
 
   const announcement = await getAnnouncement(locale as "zh" | "en");
+
+  // 人民币->美元汇率
+  const C2URate = locale === "zh" ? 1 : await getUSDRate();
+
+  const customOrderId = Date.now() + Math.random().toString(36).slice(2);
 
   return (
     <div className='relative' suppressHydrationWarning>
@@ -98,13 +43,8 @@ export default async function GetStart() {
           {announcement.ec === 200 && (
             <Announcement summary={announcement.data.summary} details={announcement.data.details} />
           )}
-          <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-3 lg:max-w-4xl xl:mx-0 xl:max-w-6xl self-center">
-            {plans.map((plan) => {
-              if (!plan) return null;
-              return <PlanCard key={plan.planId} plan={plan} customOrderId={customOrderId} />;
-            })}
-          </div>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
+          <Plans morePlans={morePlans} homePlans={homePlans} customOrderId={customOrderId} C2URate={C2URate} />
+          <div className="mt-12 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <Link
               href="/get-key"
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -124,10 +64,10 @@ export default async function GetStart() {
             >
               {t("discussion")}
             </Link>
-            <a href="https://github.com/MirrorChyan/docs" target="_blank" className="text-sm/6 font-semibold">
+            <a href="https://github.com/MirrorChyan/docs" target="_blank" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("apiDoc")}<span aria-hidden="true">&nbsp;→</span>
             </a>
-            <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold">
+            <a href="https://github.com/MirrorChyan/user-frontend" target="_blank" className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("openSource")}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
