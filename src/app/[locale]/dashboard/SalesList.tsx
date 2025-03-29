@@ -85,11 +85,12 @@ export default function SalesList({ listData, date }: PropsType) {
   const processedData = useMemo(() => {
     return [...resolveData].sort((a, b) => {
       if (sortBy === "date") {
-        return sortOrder === "asc" ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+        return Number(sortOrder === "asc" ? Number(new Date(a.date)) - Number(new Date(b.date)) :
+          Number(new Date(b.date)) - Number(new Date(a.date)));
       } else if (sortBy === "amount") {
-        return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+        return (sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount);
       } else {
-        return sortOrder === "asc" ? a.revenue - b.revenue : b.revenue - a.revenue;
+        return (sortOrder === "asc" ? a.revenue - b.revenue : b.revenue - a.revenue);
       }
     });
   }, [resolveData, sortBy, sortOrder])
