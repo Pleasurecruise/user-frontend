@@ -77,10 +77,10 @@ export default function Dashboard() {
   const handleLogOut = () => {
     setIsLogin(false);
     setRevenueData([]);
-  }
+  };
 
   if (isLogin) {
-    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />
+    return <Revenue revenueData={revenueData} onLogOut={handleLogOut} rid={rid} date={month} />;
   }
 
   return (
@@ -101,7 +101,7 @@ export default function Dashboard() {
               type="text" onChange={handleRidChange}
             />
             <Input
-              label={t("token")} name="rid"
+              label={t("token")} name="token"
               type="password"
               onChange={handleTokenChange}
             />
