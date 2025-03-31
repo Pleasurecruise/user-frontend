@@ -47,7 +47,7 @@ export default function PlanCard({ plan, customOrderId, C2URate }: PropsType) {
     : plan.name;
 
   const priceFixed: number = Number(t("priceFixed"));
-  const price: string = (plan.price * C2URate).toFixed(priceFixed);
+  const price: number = parseFloat((plan.price * C2URate).toFixed(priceFixed));
   const discountPrice: string | null = plan.discount
     ? (plan.discount.discountPrice * C2URate).toFixed(priceFixed)
     : null;

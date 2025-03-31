@@ -134,7 +134,7 @@ export default function SalesList({ listData, date }: PropsType) {
             <TableRow key={String(item.date)} className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white">
               <TableCell className="text-center">{item.date}</TableCell>
               <TableCell className="text-center">{item.count}</TableCell>
-              <TableCell className="text-right">{item.amount}</TableCell>
+              <TableCell className="text-right pr-6">{item.amount}</TableCell>
             </TableRow>
           )}
         </TableBody>
