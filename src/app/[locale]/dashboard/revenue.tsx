@@ -21,7 +21,7 @@ type PropsType = {
 
 type ChartDataItem = {
     name: string;
-    value: number;
+    amount: number;
     count: number;
     percentage?: number;
 }
@@ -73,22 +73,22 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
 
     // Function to prepare chart data by grouping
     function prepareChartData(data: RevenueType[], key: keyof RevenueType): ChartDataItem[] {
-        const grouped: Record<string, { value: number, count: number }> = data.reduce((acc, item) => {
+        const grouped: Record<string, { amount: number, count: number }> = data.reduce((acc, item) => {
             const keyValue = String(item[key]);
             const amount = parseFloat(item.amount);
             const count = Number(item.buy_count);
 
             if (!acc[keyValue]) {
-                acc[keyValue] = { value: 0, count: 0 };
+                acc[keyValue] = { amount: 0, count: 0 };
             }
-            acc[keyValue].value += amount;
+            acc[keyValue].amount += amount;
             acc[keyValue].count += count;
             return acc;
-        }, {} as Record<string, { value: number, count: number }>);
+        }, {} as Record<string, { amount: number, count: number }>);
 
-        return Object.entries(grouped).map(([name, { value, count }]) => ({
+        return Object.entries(grouped).map(([name, { amount, count }]) => ({
             name,
-            value: parseFloat(value.toFixed(2)),
+            amount: parseFloat(amount.toFixed(2)),
             count
         }));
     }
@@ -107,7 +107,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                         <div className="flex flex-col">
                             <span>{entry.value} {entry.payload.percentage}% </span>
                             <span
-                                className="text-gray-500">({entry.payload.count}份 {entry.payload.value.toFixed(2)}元)</span>
+                                className="text-gray-500">({entry.payload.count}份 {entry.payload.amount.toFixed(2)}元)</span>
                         </div>
                     </li>
                 ))}
@@ -143,7 +143,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                 return (
                     <div className="bg-white dark:bg-gray-800 p-2 shadow rounded border dark:border-gray-700">
                         <p className="font-medium text-gray-900 dark:text-white">{data.name} {data.percentage}%</p>
-                        <p className="text-gray-700 dark:text-gray-300">{data.count}份 {data.value.toFixed(2)}元</p>
+                        <p className="text-gray-700 dark:text-gray-300">{data.count}份 {data.amount.toFixed(2)}元</p>
                     </div>
                 );
             }
