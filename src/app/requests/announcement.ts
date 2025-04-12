@@ -20,7 +20,7 @@ const CACHE_DURATION = 60 * 1000; // 1分钟（毫秒）
 export async function getAnnouncement(lang: "zh" | "en"): Promise<Announcement> {
   // Use absolute URL with origin to work properly in server components
   const now = Date.now();
-  if(lastFetchTime[lang] && now - lastFetchTime[lang] < CACHE_DURATION && announcementCache[lang]){
+  if (lastFetchTime[lang] && now - lastFetchTime[lang] < CACHE_DURATION && announcementCache[lang]) {
     return announcementCache[lang];
   }
 

@@ -51,7 +51,7 @@ export default function Plans({
         )}>
           {renderPlans(homePlans)}
         </div>
-        { morePlans.length ? (
+        {morePlans.length ? (
           <button
             className={cn(
               "absolute -bottom-9 left-1/2 -translate-x-1/2 z-10",
@@ -60,11 +60,11 @@ export default function Plans({
             )}
             style={offset ? { left: offset } : {}}
             onClick={() => setIsOpenMore(val => !val)}>
-            { isOpenMore ? t("hide") : t("more") }
+            {isOpenMore ? t("hide") : t("more")}
           </button>
-        ) : null }
+        ) : null}
       </div>
-      { morePlans.length ? (
+      {morePlans.length ? (
         <div className={cn(
           "transition-all duration-400 overflow-hidden grid",
           isOpenMore ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
@@ -78,7 +78,7 @@ export default function Plans({
             </div>
           </div>
         </div>
-      ) : null }
+      ) : null}
     </div>
   );
 }
