@@ -103,7 +103,9 @@
   "Projects": {
     "title": "已支持的项目",
     "joinUs": "加入我们",
-    "contactUs": "集成Mirror酱到您的项目"
+    "contactUs": "集成Mirror酱到您的项目",
+    "openProjectHomepage": "查看项目主页",
+    "onlyInternalUpdate": "{name} 目前只支持通过应用本身更新"
   },
   "Common": {
     "ok": "确定",
@@ -111,7 +113,8 @@
     "durationDays": "天",
     "durationHours": "小时",
     "durationMinutes": "分钟",
-    "durationSeconds": "秒"
+    "durationSeconds": "秒",
+    "networkError": "网络错误，请稍后重试"
   },
   "Dashboard": {
     "title": "Mirror酱の营收",

@@ -21,17 +21,19 @@ import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 
 export interface ProjectCardProps {
+  type_id: string;
   resource: string;
   name: string;
   desc: string;
   url?: string;
   image?: string;
   support: string[];
+  download: boolean;
 }
 
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { name, desc, image, url, support, resource } = props;
+  const { name, desc, image, url, support, resource, download } = props;
 
   const avatarBgColor = useMemo(() => stringToColor(name), [name]);
   const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
@@ -45,6 +47,7 @@ export default function ProjectCard(props: ProjectCardProps) {
 
 
   const t = useTranslations("Download");
+  const p = useTranslations("Projects");
   const common = useTranslations("Common");
 
   const supportOptions = useMemo(() => {
@@ -184,12 +187,25 @@ export default function ProjectCard(props: ProjectCardProps) {
   }) => {
     return condition() ? children : <></>;
   };
+  const openModal = () => {
+    if (download) {
+      addToast({
+        variant: "solid",
+        description: p.rich('onlyInternalUpdate', {
+          name
+        })?.toString(),
+        color: "secondary"
+      });
+      return;
+    }
+    onOpen()
+  }
 
 
   return (
     <div
       className={"rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary-500/30 transform hover:-translate-y-1 group cursor-pointer bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-600"}
-      onClick={onOpen}
+      onClick={openModal}
     >
       <div className="flex p-4">
         {
@@ -221,7 +237,7 @@ export default function ProjectCard(props: ProjectCardProps) {
               <Tooltip content={
                 <div className="px-1 py-2">
                   <Link href={url} underline="hover" color="primary" target="_blank"
-                    showAnchorIcon={true}> 查看项目地址 </Link>
+                    showAnchorIcon={true}> {p('openProjectHomepage')} </Link>
                 </div>
               } showArrow={true} placement="top-start">
                 {name}

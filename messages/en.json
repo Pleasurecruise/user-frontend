@@ -103,7 +103,9 @@
   "Projects": {
     "title": "Supported Projects",
     "joinUs": "Join us",
-    "contactUs": "Integrate Mirrorchyan into your project"
+    "contactUs": "Integrate Mirrorchyan into your project",
+    "openProjectHomepage": "open project repo",
+    "onlyInternalUpdate": "{name} currently only be updated through the application itself"
   },
   "Common": {
     "ok": "OK",
@@ -111,7 +113,8 @@
     "durationDays": "days",
     "durationHours": "hours",
     "durationMinutes": "minutes",
-    "durationSeconds": "seconds"
+    "durationSeconds": "seconds",
+    "networkError": "Network error, please try again later"
   },
   "Dashboard": {
     "title": "MirrorChyan Revenue",
