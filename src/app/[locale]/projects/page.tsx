@@ -3,7 +3,6 @@ import ProjectCard, { ProjectCardProps } from "@/components/ProjectCard";
 import ProjectIntegratedCard from "@/components/ProjectIntegratedCard";
 import { getTranslations } from "next-intl/server";
 import { SERVER_BACKEND } from "@/app/requests/misc";
-import { addToast } from "@heroui/toast";
 
 export default async function ProjectsPage() {
   const t = await getTranslations("Projects");
@@ -16,10 +15,7 @@ export default async function ProjectsPage() {
       Array.prototype.push.apply(projects, data);
     }
   } catch (e) {
-    addToast({
-      description: c('networkError'),
-      color: "danger",
-    })
+    console.log(e)
   }
 
   return (
