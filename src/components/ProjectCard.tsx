@@ -15,6 +15,7 @@ import {
   Select,
   SelectItem
 } from "@heroui/react";
+import { stringToColor } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
@@ -31,6 +32,9 @@ export interface ProjectCardProps {
 
 export default function ProjectCard(props: ProjectCardProps) {
   const { name, desc, image, url, support, resource } = props;
+  
+  const avatarBgColor = useMemo(() => stringToColor(name), [name]);
+  const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
@@ -188,21 +192,36 @@ export default function ProjectCard(props: ProjectCardProps) {
       onClick={onOpen}
     >
       <div className="flex p-4">
-        <div className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
-          style={{ width: "80px", height: "80px" }}>
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
-          />
-        </div>
+        {
+          image ? (
+            <div className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
+               style={{width: "80px", height: "80px"}}>
+              <img
+                src={image}
+                alt={name}
+                className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
+              />
+            </div>
+          ) : (
+            <div 
+              className="relative overflow-hidden flex-shrink-0 mr-4 rounded-md shadow-sm flex items-center justify-center text-white font-bold text-2xl"
+              style={{
+                width: "80px", 
+                height: "80px",
+                backgroundColor: avatarBgColor
+              }}
+            >
+              {avatarText}
+            </div>
+          )
+        }
         <div className="flex flex-col justify-center">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
             {url ?
-              <Tooltip content={
-                <div className="px-1 py-2">
-                  <Link href={url} underline="hover" color="primary"
-                    showAnchorIcon={true}> 查看项目地址 </Link>
+                <Tooltip content={
+                  <div className="px-1 py-2">
+                    <Link href={url} underline="hover" color="primary" target="_blank"
+                          showAnchorIcon={true}> 查看项目地址 </Link>
                 </div>
               } showArrow={true} placement="top-start">
                 {name}
