@@ -43,8 +43,8 @@ export default function ProjectCard(props: ProjectCardProps) {
   const first = (support?.[0]?.split('-')) || [];
 
   const [channel, setChannel] = useState(first[0] ?? "");
-  const [os, setOs] = useState(first[1] ?? "");
-  const [arch, setArch] = useState(first[2] ?? "");
+  const [os, setOs] = useState(first[1] === "any" ? "" : (first[1] ?? ""));
+  const [arch, setArch] = useState(first[2] === "any" ? "" : (first[2] ?? ""));
 
   const [cdk, setCdk] = useState("");
 
