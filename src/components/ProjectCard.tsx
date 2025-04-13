@@ -188,7 +188,7 @@ export default function ProjectCard(props: ProjectCardProps) {
     return condition() ? children : <></>;
   };
   const openModal = () => {
-    if (download) {
+    if (!download) {
       addToast({
         variant: "solid",
         description: p.rich('onlyInternalUpdate', {
