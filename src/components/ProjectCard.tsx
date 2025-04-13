@@ -40,15 +40,19 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const [os, setOs] = useState("");
-  const [arch, setArch] = useState("");
-  const [channel, setChannel] = useState("");
+  const first = (support?.[0]?.split('-')) || [];
+
+  const [channel, setChannel] = useState(first[0] ?? "");
+  const [os, setOs] = useState(first[1] ?? "");
+  const [arch, setArch] = useState(first[2] ?? "");
+
   const [cdk, setCdk] = useState("");
 
 
   const t = useTranslations("Download");
   const p = useTranslations("Projects");
   const common = useTranslations("Common");
+
 
   const supportOptions = useMemo(() => {
     return support.map(item => {
