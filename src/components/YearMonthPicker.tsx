@@ -15,8 +15,8 @@ export default function YearMonthPicker({ onChange }: PropsType) {
 
   function formatMonth(month: number) {
     return month.toString().padStart(2, "0");
-    }
-    
+  }
+
   const startYear = 2025;
   const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
   const months = Array.from({ length: 12 }, (_, i) => formatMonth(i + 1));
@@ -28,13 +28,13 @@ export default function YearMonthPicker({ onChange }: PropsType) {
   const handleYearChange = (set: SharedSelection) => {
     const year = String([...set][0]);
     setSelectedYear(year);
-    if(selectedMonth) onChange?.(year + selectedMonth);
+    if (selectedMonth) onChange?.(year + selectedMonth);
   };
 
   const handleMonthChange = (set: SharedSelection) => {
     const month = String([...set][0]);
     setSelectedMonth(month);
-    if(selectedYear) onChange?.(selectedYear + month);
+    if (selectedYear) onChange?.(selectedYear + month);
   };
 
   // 初始化时触发一次回调

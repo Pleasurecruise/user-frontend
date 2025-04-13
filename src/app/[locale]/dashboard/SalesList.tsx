@@ -26,8 +26,8 @@ const UpDownIcon = () => {
         d="M768 213.333333a42.666667 42.666667 0 1 0-85.333333 0v515.669334l-97.834667-97.834667a42.666667 42.666667 0 0 0-60.330667 60.330667l140.501334 140.501333a85.333333 85.333333 0 0 0 120.661333 0l140.501333-140.501333a42.666667 42.666667 0 0 0-60.330666-60.330667L768 729.002667V213.333333z"
         fill="#9F9F9F"></path>
     </svg>
-  )
-}
+  );
+};
 
 export default function SalesList({ listData, date }: PropsType) {
   const t = useTranslations("Dashboard.dailyRecord");
@@ -93,7 +93,7 @@ export default function SalesList({ listData, date }: PropsType) {
         return (sortOrder === "asc" ? a.count - b.count : b.count - a.count);
       }
     });
-  }, [resolveData, sortBy, sortOrder])
+  }, [resolveData, sortBy, sortOrder]);
 
 
   const columns = [

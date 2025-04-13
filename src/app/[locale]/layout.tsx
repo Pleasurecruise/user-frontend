@@ -2,10 +2,9 @@ import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import _ from "lodash";
+import React from "react";
 
 import { routing } from "@/i18n/routing";
-import { AnimatedTooltip } from "@/components/AnimatedTooltip";
 
 import { Providers } from "./provider";
 

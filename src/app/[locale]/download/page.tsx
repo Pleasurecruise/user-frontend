@@ -1,12 +1,12 @@
 "use client";
 
-import {useState} from "react";
-import {useTranslations} from "next-intl";
-import {Button} from "@heroui/react";
-import {Link} from "@/i18n/routing";
-import {useSearchParams} from "next/navigation";
-import {addToast, ToastProps} from "@heroui/toast";
-import {CLIENT_BACKEND} from "@/app/requests/misc";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Button } from "@heroui/react";
+import { Link } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
+import { addToast, ToastProps } from "@heroui/toast";
+import { CLIENT_BACKEND } from "@/app/requests/misc";
 import LoadingState from "@/components/LoadingState";
 
 export default function Download() {
@@ -69,8 +69,8 @@ export default function Download() {
 
   if (loading) {
     return <LoadingState
-        title={t("downloading")}
-        description={t("pleaseWait")}
+      title={t("downloading")}
+      description={t("pleaseWait")}
     />;
   }
 
