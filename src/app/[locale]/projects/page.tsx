@@ -1,11 +1,11 @@
-import { useTranslations } from "next-intl";
 import { BackgroundLines } from "@/components/BackgroundLines";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectIntegratedCard from "@/components/ProjectIntegratedCard";
 import { PROJECTS } from "@/data/projects";
+import { getTranslations } from "next-intl/server";
 
-export default function ProjectsPage() {
-  const t = useTranslations("Projects");
+export default async function ProjectsPage() {
+  const t = await getTranslations("Projects");
 
   return (
     <BackgroundLines className="min-h-screen">

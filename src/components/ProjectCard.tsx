@@ -32,7 +32,7 @@ export interface ProjectCardProps {
 
 export default function ProjectCard(props: ProjectCardProps) {
   const { name, desc, image, url, support, resource } = props;
-  
+
   const avatarBgColor = useMemo(() => stringToColor(name), [name]);
   const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
 
@@ -195,7 +195,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         {
           image ? (
             <div className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
-               style={{width: "80px", height: "80px"}}>
+              style={{ width: "80px", height: "80px" }}>
               <img
                 src={image}
                 alt={name}
@@ -203,10 +203,10 @@ export default function ProjectCard(props: ProjectCardProps) {
               />
             </div>
           ) : (
-            <div 
+            <div
               className="relative overflow-hidden flex-shrink-0 mr-4 rounded-md shadow-sm flex items-center justify-center text-white font-bold text-2xl"
               style={{
-                width: "80px", 
+                width: "80px",
                 height: "80px",
                 backgroundColor: avatarBgColor
               }}
@@ -218,10 +218,10 @@ export default function ProjectCard(props: ProjectCardProps) {
         <div className="flex flex-col justify-center">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
             {url ?
-                <Tooltip content={
-                  <div className="px-1 py-2">
-                    <Link href={url} underline="hover" color="primary" target="_blank"
-                          showAnchorIcon={true}> 查看项目地址 </Link>
+              <Tooltip content={
+                <div className="px-1 py-2">
+                  <Link href={url} underline="hover" color="primary" target="_blank"
+                    showAnchorIcon={true}> 查看项目地址 </Link>
                 </div>
               } showArrow={true} placement="top-start">
                 {name}
@@ -239,13 +239,14 @@ export default function ProjectCard(props: ProjectCardProps) {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         backdrop="blur"
+        size="2xl"
         placement="center"
         scrollBehavior="inside"
       >
         <ModalContent>
           <>
             <ModalHeader className="flex flex-col gap-1">
-              下载 {name}
+              {`${t('download')} ${name}`}
             </ModalHeader>
             <ModalBody>
               <div className="space-y-4">
@@ -312,11 +313,21 @@ export default function ProjectCard(props: ProjectCardProps) {
                     onChange={e => setCdk(e.target.value)}
                     className="w-full"
                   />
-                  <div className="mt-1 text-right">
+                  <div className="mt-10 text-right">
                     <Link href="/" target="_blank" size="sm" color="primary" underline="hover">
                       {t("buyCDKey")}
                     </Link>
                   </div>
+                </div>
+              </div>
+              <div>
+                <div className="mt-10 bottom-4 w-full text-center">
+                  <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
+                    {t.rich("disclaimer", {
+                      rid: name,
+                      br: () => <br />
+                    })}<span aria-hidden="true">&nbsp;</span>
+                  </a>
                 </div>
               </div>
             </ModalBody>
