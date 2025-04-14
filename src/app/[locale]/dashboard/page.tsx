@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { closeAll, addToast } from "@heroui/toast";
 import Revenue from "@/app/[locale]/dashboard/revenue";
+import { ComputerDesktopIcon } from "@heroicons/react/16/solid";
 
 export type RevenueType = {
   activated_at: Date
@@ -30,6 +31,7 @@ export default function Dashboard() {
   const [token, setToken] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isUa, setIsUa] = useState<boolean>(false);
 
   const [revenueData, setRevenueData] = useState<RevenueType[]>([]);
 
@@ -47,7 +49,7 @@ export default function Dashboard() {
 
     try {
       setIsLoading(true);
-      const response: RevenueResponse = await fetch(`${CLIENT_BACKEND}/api/billing/revenue?rid=${rid}&date=${month}`, {
+      const response: RevenueResponse = await fetch(`${CLIENT_BACKEND}/api/billing/revenue?rid=${rid}&date=${month}&is_ua=${+isUa}`, {
         headers: { Authorization: token },
       }).then(res => res.json());
 
@@ -96,10 +98,26 @@ export default function Dashboard() {
           >
             <YearMonthPicker onChange={handleMonthChange} />
 
-            <Input
-              label={t("rid")} name="rid"
-              type="text" onChange={handleRidChange}
-            />
+            <div className="flex items-center gap-2 h-14">
+              <div className="flex-grow">
+                <Input
+                  label={t("rid")} name="rid"
+                  type="text" onChange={handleRidChange}
+                />
+              </div>
+              <div className="flex items-center h-full justify-center">
+                <button
+                  onClick={() => setIsUa(!isUa)}
+                  className={`flex items-center justify-center h-full w-14 rounded-md mr-1 transition-colors ${isUa ? 'bg-indigo-100 dark:bg-indigo-900' : 'bg-gray-100 dark:bg-gray-800'}`}
+                  type="button"
+                >
+                  <ComputerDesktopIcon className={`h-1/2 w-1/2 ${isUa ? "text-indigo-600 dark:text-indigo-400"
+                      : "text-gray-500 dark:text-gray-400"
+                    }`} />
+
+                </button>
+              </div>
+            </div>
             <Input
               label={t("token")} name="token"
               type="password"
