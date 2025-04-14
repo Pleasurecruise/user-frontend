@@ -19,6 +19,7 @@ import { stringToColor } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
 export interface ProjectCardProps {
   type_id: string;
@@ -47,6 +48,7 @@ export default function ProjectCard(props: ProjectCardProps) {
   const [arch, setArch] = useState(first[2] === "any" ? "" : (first[2] ?? ""));
 
   const [cdk, setCdk] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
 
   const t = useTranslations("Download");
@@ -330,8 +332,26 @@ export default function ProjectCard(props: ProjectCardProps) {
                     label="CDK"
                     placeholder={t("noCDKey")}
                     value={cdk}
+                    type={isPasswordVisible ? "text" : "password"}
                     onChange={e => setCdk(e.target.value)}
                     className="w-full"
+                    endContent={
+                      <div className="h-5/6 flex ">
+                        <button
+                          type="button"
+                          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                          className="focus:outline-none dark:text-gray-300"
+                        >
+                          {isPasswordVisible ?
+                            <EyeSlashIcon
+                              className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
+                            :
+                            <EyeIcon
+                              className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
+                          }
+                        </button>
+                      </div>
+                    }
                   />
                   <div className="mt-10 text-right">
                     <Link href="/" target="_blank" size="sm" color="primary" underline="hover">

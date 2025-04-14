@@ -6,7 +6,6 @@ import { SERVER_BACKEND } from "@/app/requests/misc";
 
 export default async function ProjectsPage() {
   const t = await getTranslations("Projects");
-  const c = await getTranslations("Common");
   const resp = await fetch(`${SERVER_BACKEND}/api/misc/project`)
   const projects: Array<ProjectCardProps> = []
   try {
