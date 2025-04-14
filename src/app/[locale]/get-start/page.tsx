@@ -12,7 +12,7 @@ import Plans from "./plans";
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string }> }) {
   const t = await getTranslations("GetStart");
 
-  const p = await getTranslations('Projects')
+  const p = await getTranslations("Projects");
 
   const locale = await getLocale();
 
@@ -71,7 +71,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
                 href="/projects"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {p('title')}
+              {p("title")}
             </Link>
 
           </div>

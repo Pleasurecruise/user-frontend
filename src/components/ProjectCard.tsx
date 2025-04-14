@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import {
   Link,
   Tooltip,
@@ -45,7 +45,7 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const first = (support?.[0]?.split('-')) || [];
+  const first = (support?.[0]?.split("-")) || [];
 
   const [channel, setChannel] = useState(first[0] ?? "");
   const [os, setOs] = useState(first[1] === "any" ? "" : (first[1] ?? ""));
@@ -59,8 +59,8 @@ export default function ProjectCard(props: ProjectCardProps) {
   const p = useTranslations("Projects");
   const common = useTranslations("Common");
 
-  if (showModal) {
-    useLayoutEffect(() => {
+  useLayoutEffect(() => {
+    if (showModal) {
       if (osParam) {
         setOs(osParam);
       }
@@ -70,9 +70,9 @@ export default function ProjectCard(props: ProjectCardProps) {
       if (channelParam) {
         setChannel(channelParam);
       }
-      onOpen()
-    }, [])
-  }
+      onOpen();
+    }
+  }, []);
 
 
   const supportOptions = useMemo(() => {
@@ -216,15 +216,15 @@ export default function ProjectCard(props: ProjectCardProps) {
     if (!download) {
       addToast({
         variant: "solid",
-        description: p.rich('onlyInternalUpdate', {
+        description: p.rich("onlyInternalUpdate", {
           name
         })?.toString(),
         color: "secondary"
       });
       return;
     }
-    onOpen()
-  }
+    onOpen();
+  };
 
 
   return (
@@ -234,7 +234,7 @@ export default function ProjectCard(props: ProjectCardProps) {
     >
       {url && (
         <div className="absolute top-2 right-2 z-10">
-          <Tooltip content={<span className="px-1 py-2">{p('openProjectHomepage')}</span>} showArrow={true} placement="top">
+          <Tooltip content={<span className="px-1 py-2">{p("openProjectHomepage")}</span>} showArrow={true} placement="top">
             <a
               href={url}
               target="_blank"
@@ -292,7 +292,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         <ModalContent>
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {`${t('download')} ${name}`}
+              {`${t("download")} ${name}`}
             </ModalHeader>
             <ModalBody>
               <div className="space-y-4">

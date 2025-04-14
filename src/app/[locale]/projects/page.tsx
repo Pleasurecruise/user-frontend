@@ -7,15 +7,15 @@ import ProjectCardView from "@/components/ProjectCardView";
 
 export default async function ProjectsPage() {
   const t = await getTranslations("Projects");
-  const resp = await fetch(`${SERVER_BACKEND}/api/misc/project`)
-  const projects: Array<ProjectCardProps> = []
+  const resp = await fetch(`${SERVER_BACKEND}/api/misc/project`);
+  const projects: Array<ProjectCardProps> = [];
   try {
     const { ec, data } = await resp.json();
     if (ec === 200) {
       Array.prototype.push.apply(projects, data);
     }
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 
   return (
