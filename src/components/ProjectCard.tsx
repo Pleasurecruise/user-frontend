@@ -19,7 +19,7 @@ import { stringToColor } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
+import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 
 export interface ProjectCardProps {
   type_id: string;
@@ -210,9 +210,24 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   return (
     <div
-      className={"rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary-500/30 transform hover:-translate-y-1 group cursor-pointer bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-600"}
+      className={"rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary-500/30 transform hover:-translate-y-1 group cursor-pointer bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-600 relative"}
       onClick={openModal}
     >
+      {url && (
+        <div className="absolute top-2 right-2 z-10">
+          <Tooltip content={<span className="px-1 py-2">{p('openProjectHomepage')}</span>} showArrow={true} placement="top">
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center justify-center w-8 h-8 transition-colors duration-200"
+            >
+              <ArrowTopRightOnSquareIcon className="h-4 w-4 text-gray-600 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400" />
+            </a>
+          </Tooltip>
+        </div>
+      )}
       <div className="flex p-4">
         {
           image ? (
@@ -239,17 +254,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         }
         <div className="flex flex-col justify-center">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
-            {url ?
-              <Tooltip content={
-                <div className="px-1 py-2">
-                  <Link href={url} underline="hover" color="primary" target="_blank"
-                    showAnchorIcon={true}> {p('openProjectHomepage')} </Link>
-                </div>
-              } showArrow={true} placement="top-start">
-                {name}
-              </Tooltip>
-              : <div>{name}</div>
-            }
+            {name}
           </h3>
         </div>
       </div>
