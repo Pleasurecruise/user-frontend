@@ -3,6 +3,7 @@ import ProjectCard, { ProjectCardProps } from "@/components/ProjectCard";
 import ProjectIntegratedCard from "@/components/ProjectIntegratedCard";
 import { getTranslations } from "next-intl/server";
 import { SERVER_BACKEND } from "@/app/requests/misc";
+import ProjectCardView from "@/components/ProjectCardView";
 
 export default async function ProjectsPage() {
   const t = await getTranslations("Projects");
@@ -25,12 +26,7 @@ export default async function ProjectsPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.resource}
-              {...project}
-            />
-          ))}
+          <ProjectCardView projects={projects} ></ProjectCardView>
           <ProjectIntegratedCard />
         </div>
       </div>

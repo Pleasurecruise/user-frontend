@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import {
   Link,
   Tooltip,
@@ -30,11 +30,15 @@ export interface ProjectCardProps {
   image?: string;
   support: string[];
   download: boolean;
+  showModal?: boolean;
+  osParam?: string | null;
+  archParam?: string | null;
+  channelParam?: string | null;
 }
 
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { name, desc, image, url, support, resource, download } = props;
+  const { name, desc, image, url, support, resource, download, showModal, osParam, archParam, channelParam } = props;
 
   const avatarBgColor = useMemo(() => stringToColor(name), [name]);
   const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
@@ -54,6 +58,21 @@ export default function ProjectCard(props: ProjectCardProps) {
   const t = useTranslations("Download");
   const p = useTranslations("Projects");
   const common = useTranslations("Common");
+
+  if (showModal) {
+    useLayoutEffect(() => {
+      if (osParam) {
+        setOs(osParam);
+      }
+      if (archParam) {
+        setArch(archParam);
+      }
+      if (channelParam) {
+        setChannel(channelParam);
+      }
+      onOpen()
+    }, [])
+  }
 
 
   const supportOptions = useMemo(() => {
