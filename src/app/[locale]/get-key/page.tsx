@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 import LoadingState from "@/components/LoadingState";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
+import { addToast } from "@heroui/toast";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
@@ -71,6 +72,11 @@ export default function GetKey() {
                     const value = e.target.value;
                     if (/^\d*$/.test(value)) {
                       setOrderId(value);
+                    } else {
+                      addToast({
+                        color: "warning",
+                        description: t("errorOrderFormat"),
+                      })
                     }
                   }}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base dark:text-white outline outline-1 -outline-offset-1 dark:outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"

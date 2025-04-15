@@ -26,7 +26,8 @@
     "orderId": "Order ID",
     "getKey": "Query CDKey",
     "queryOrderId": "Query Order ID",
-    "loading": "Querying please wait..."
+    "loading": "Querying please wait...",
+    "errorOrderFormat": "Incorrect order number format "
   },
   "ShowKey": {
     "thanksForBuying": "Thanks for Sponsoring",
