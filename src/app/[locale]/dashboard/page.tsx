@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@heroui/react";
+import { Button, Input, Tooltip } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import YearMonthPicker from "@/components/YearMonthPicker";
 import React, { useState } from "react";
@@ -105,18 +105,23 @@ export default function Dashboard() {
                   type="text" onChange={handleRidChange}
                 />
               </div>
-              <div className="flex items-center h-full justify-center">
-                <button
-                  onClick={() => setIsUa(!isUa)}
-                  className={`flex items-center justify-center h-full w-14 rounded-md mr-1 transition-colors ${isUa ? 'bg-indigo-100 dark:bg-indigo-900' : 'bg-gray-100 dark:bg-gray-800'}`}
-                  type="button"
-                >
-                  <ComputerDesktopIcon className={`h-1/2 w-1/2 ${isUa ? "text-indigo-600 dark:text-indigo-400"
-                      : "text-gray-500 dark:text-gray-400"
-                    }`} />
+              <Tooltip content={t("tooltip")}>
 
-                </button>
-              </div>
+                <div className="flex items-center h-full justify-center">
+                  <button
+                    onClick={() => setIsUa(!isUa)}
+                    className={`flex items-center justify-center h-full w-14 rounded-md mr-1 transition-colors ${isUa ? 'bg-indigo-100 dark:bg-indigo-900' : 'bg-gray-100 dark:bg-gray-800'}`}
+                    type="button"
+                  >
+                    <ComputerDesktopIcon className={`h-1/2 w-1/2 ${isUa ? "text-indigo-600 dark:text-indigo-400"
+                      : "text-gray-500 dark:text-gray-400"
+                      }`} />
+
+
+                  </button>
+                </div>
+              </Tooltip>
+
             </div>
             <Input
               label={t("token")} name="token"

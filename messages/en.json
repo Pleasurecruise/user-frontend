@@ -121,6 +121,7 @@
     "monthInput": "Month",
     "rid": "RID",
     "token": "Token",
+    "tooltip": "Query through UserAgent",
     "confirm": "Confirm",
     "error": "Please confirm that you have entered the correct content",
     "dashboardTitle": "MirrorChyan {rid} {date} Sales Bulletin Board",
