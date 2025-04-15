@@ -68,8 +68,8 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
               {t("discussion")}
             </Link>
             <Link
-                href="/projects"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              href="/projects"
+              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               {p("title")}
             </Link>
@@ -77,11 +77,11 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           </div>
           <div className="mt-16 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <a href="https://github.com/MirrorChyan/docs" target="_blank"
-               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
+              className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("apiDoc")}<span aria-hidden="true">&nbsp;→</span>
             </a>
             <a href="https://github.com/MirrorChyan/user-frontend" target="_blank"
-               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
+              className="text-sm/6 font-semibold text-gray-900 dark:text-white">
               {t("openSource")}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
