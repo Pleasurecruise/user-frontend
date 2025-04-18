@@ -135,21 +135,21 @@ export default function Transmission() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="text-center min-w-[40rem]">
-        <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">{t("title")}</h2>
-        <div className="mt-6 text-pretty text-lg/8 text-gray-600">{t("description")}</div>
-        <div className="flex md:flex-row flex-col justify-center items-center mt-6 px-4">
+      <div className="text-center w-full max-w-md md:min-w-[48rem] px-4">
+        <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">{t("title")}</h2>
+        <div className="mt-4 md:mt-6 text-pretty text-base/7 md:text-lg/8 text-gray-600">{t("description")}</div>
+        <div className="flex flex-col md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0 md:space-x-6">
           <Input
-            className="px-2 py-1 md:py-0"
+            className="w-full md:min-w-[10rem]"
             label={t("fromOrderId")}
             value={fromOrderId}
             onChange={handleFromOrderIdChange}
             description={fromOrderDescription}
           />
-          <div className="px-2 py-1 md:py-0 flex-1 text-nowrap">{t("transferTo")}</div>
-          <div className="md:-rotate-90 px-2 py-1 md:py-0">↓</div>
+          <div className="hidden md:block px-2 py-1 md:py-0 flex-1 text-nowrap">{t("transferTo")}</div>
+          <div className="rotate-90 md:rotate-0 px-2 py-1 md:py-0">→</div>
           <Input
-            className="px-2 py-1 md:py-0"
+            className="w-full md:min-w-[10rem]"
             label={t("toOrderId")}
             value={toOrderId}
             onChange={handleToOrderIdChange}
