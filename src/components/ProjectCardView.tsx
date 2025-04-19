@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { addToast } from "@heroui/toast";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { CLIENT_BACKEND } from "@/app/requests/misc";
 
 export default function ProjectCardView({ projects }: { projects: Array<ProjectCardProps> }) {
   const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ export default function ProjectCardView({ projects }: { projects: Array<ProjectC
 
   useEffect(() => {
     if (download) {
-      const url = `/api/resources/download/${download}`;
+      const url = `${CLIENT_BACKEND}/api/resources/download/${download}`;
       window.location.href = url;
       addToast({
         description: t("downloading"),
