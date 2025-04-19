@@ -18,7 +18,7 @@ import {
 import { stringToColor } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
-import { CLIENT_BACKEND } from "@/app/requests/misc";
+import { CLIENT_BACKEND, SERVER_BACKEND } from "@/app/requests/misc";
 import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 
 export interface ProjectCardProps {
@@ -134,7 +134,7 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   const [loading, setLoading] = useState(false);
 
-  const handleDownload = async () => {
+  const queryUrl = async () => {
     if (!channel) {
       addToast({
         description: t("noChannel"),
@@ -190,22 +190,48 @@ export default function ProjectCard(props: ProjectCardProps) {
         return;
       }
 
-      window.location.href = url;
-
-      addToast({
-        description: t("downloading"),
-        color: "primary",
-      });
+      return url;
 
     } finally {
       setLoading(false);
     }
+  }
+  
+  const handleShare = async () => {
+    const url = await queryUrl();
+    if (!url) {
+      // queryUrl 里都已经弹过 toast 了
+      return;
+    }
+    const shareUrl = `${SERVER_BACKEND}/zh/projects/?download=${url}`
+    navigator.clipboard.writeText(shareUrl);
 
+    addToast({
+      description: t("shared"),
+      color: "primary",
+    });
+    console.log(`shared url ${url} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
+
+    onOpenChange();
+  }
+    
+  const handleDownload = async () => {
+    const url = await queryUrl();
+    if (!url) {
+      // queryUrl 里都已经弹过 toast 了
+      return;
+    }
+    window.location.href = url;
+
+    addToast({
+      description: t("downloading"),
+      color: "primary",
+    });
     console.log(`downloading ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
-
 
     onOpenChange();
   };
+
   const Conditioned = ({ children, condition }: {
     condition: () => boolean
     children: React.ReactElement
@@ -398,6 +424,9 @@ export default function ProjectCard(props: ProjectCardProps) {
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
                 {common("cancel")}
+              </Button>
+              <Button color="secondary" onPress={handleShare} isLoading={loading}>
+                {t("shareLink")}
               </Button>
               <Button color="primary" onPress={handleDownload} isLoading={loading}>
                 {t("download")}
