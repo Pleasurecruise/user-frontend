@@ -218,14 +218,15 @@ export default function ProjectCard(props: ProjectCardProps) {
     if (!url) {
       return;
     }
-    const shareUrl = `${window.location.host}/${locale}/projects/?download=${url}`
+    const downloadKey = url.substring(url.lastIndexOf("/") + 1);
+    const shareUrl = `${window.location.host}/${locale}/projects/?download=${downloadKey}`
     await navigator.clipboard.writeText(shareUrl);
 
     addToast({
       description: t("shared"),
       color: "primary",
     });
-    console.log(`shared url ${url} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
+    console.log(`shared key ${downloadKey} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
 
     onOpenChange();
   }

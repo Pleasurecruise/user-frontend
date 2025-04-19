@@ -14,12 +14,13 @@ export default function ProjectCardView({ projects }: { projects: Array<ProjectC
 
   useEffect(() => {
     if (download) {
-      window.location.href = download;
+      const url = `/api/resources/download/${download}`;
+      window.location.href = url;
       addToast({
         description: t("downloading"),
         color: "primary",
       });
-      console.log(`downloading ${download}`);
+      console.log(`downloading ${url}`);
     }
   }, [])
 
