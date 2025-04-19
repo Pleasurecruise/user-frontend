@@ -14,14 +14,14 @@ export default function ProjectCardView({ projects }: { projects: Array<ProjectC
 
   useEffect(() => {
     if (download) {
-      window.location.href = download;      
+      window.location.href = download;
       addToast({
         description: t("downloading"),
         color: "primary",
       });
       console.log(`downloading ${download}`);
     }
-  }, [download, rid, t])
+  }, [])
 
   return <>
     {projects.map((project) => (

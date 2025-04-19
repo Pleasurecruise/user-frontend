@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import {
   Link,
   Tooltip,
@@ -16,9 +16,9 @@ import {
   SelectItem
 } from "@heroui/react";
 import { stringToColor } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
-import { CLIENT_BACKEND, SERVER_BACKEND } from "@/app/requests/misc";
+import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 
 export interface ProjectCardProps {
@@ -44,6 +44,9 @@ export default function ProjectCard(props: ProjectCardProps) {
   const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  const locale = useLocale()
+
 
   const first = (support?.[0]?.split("-")) || [];
 
@@ -132,9 +135,15 @@ export default function ProjectCard(props: ProjectCardProps) {
   };
 
 
-  const [loading, setLoading] = useState(false);
+  // 互斥的状态
+  const [loading, setLoading] = useState<{
+    loading: boolean;
+    type?: "Share" | "Download";
+  }>({
+    loading: false,
+  });
 
-  const queryUrl = async () => {
+  const queryUrl = async (type: "Share" | "Download") => {
     if (!channel) {
       addToast({
         description: t("noChannel"),
@@ -163,7 +172,10 @@ export default function ProjectCard(props: ProjectCardProps) {
       });
       return;
     }
-    setLoading(true);
+    setLoading({
+      loading: true,
+      type: type
+    });
     try {
       const dl = `${CLIENT_BACKEND}/api/resources/${resource}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdk}&user_agent=mirrorchyan_web`;
       const response = await fetch(dl);
@@ -193,18 +205,20 @@ export default function ProjectCard(props: ProjectCardProps) {
       return url;
 
     } finally {
-      setLoading(false);
+      setLoading({
+        loading: false,
+        type: type
+      });
     }
   }
-  
+
   const handleShare = async () => {
-    const url = await queryUrl();
+    const url = await queryUrl("Share");
     if (!url) {
-      // queryUrl 里都已经弹过 toast 了
       return;
     }
-    const shareUrl = `${SERVER_BACKEND}/zh/projects/?download=${url}`
-    navigator.clipboard.writeText(shareUrl);
+    const shareUrl = `${window.location.host}/${locale}/projects/?download=${url}`
+    await navigator.clipboard.writeText(shareUrl);
 
     addToast({
       description: t("shared"),
@@ -214,11 +228,10 @@ export default function ProjectCard(props: ProjectCardProps) {
 
     onOpenChange();
   }
-    
+
   const handleDownload = async () => {
-    const url = await queryUrl();
+    const url = await queryUrl("Download");
     if (!url) {
-      // queryUrl 里都已经弹过 toast 了
       return;
     }
     window.location.href = url;
@@ -227,7 +240,6 @@ export default function ProjectCard(props: ProjectCardProps) {
       description: t("downloading"),
       color: "primary",
     });
-    console.log(`downloading ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
 
     onOpenChange();
   };
@@ -425,10 +437,10 @@ export default function ProjectCard(props: ProjectCardProps) {
               <Button color="danger" variant="light" onPress={onClose}>
                 {common("cancel")}
               </Button>
-              <Button color="secondary" onPress={handleShare} isLoading={loading}>
+              <Button color="secondary" onPress={handleShare} isLoading={loading.loading && loading.type === "Share"}>
                 {t("shareLink")}
               </Button>
-              <Button color="primary" onPress={handleDownload} isLoading={loading}>
+              <Button color="primary" onPress={handleDownload} isLoading={loading.loading && loading.type === "Download"}>
                 {t("download")}
               </Button>
             </ModalFooter>
