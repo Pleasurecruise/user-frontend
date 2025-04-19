@@ -273,6 +273,9 @@ export default function ProjectCard(props: ProjectCardProps) {
   const onModalClose = () => {
     const s = new URLSearchParams(window.location.search);
     s.delete('rid')
+    s.delete('os')
+    s.delete('arch')
+    s.delete('channel')
     window.history.replaceState(null, "", `/${locale}/projects?${s}`)
   }
 
