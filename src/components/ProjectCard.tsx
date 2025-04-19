@@ -20,7 +20,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
-import { useSearchParams } from "next/navigation";
 
 export interface ProjectCardProps {
   type_id: string;
@@ -270,7 +269,12 @@ export default function ProjectCard(props: ProjectCardProps) {
       window.history.replaceState(null, "", `/${locale}/projects?${s}`)
     }
   };
-
+    
+  const onModalClose = () => {
+    const s = new URLSearchParams(window.location.search);
+    s.delete('rid')
+    window.history.replaceState(null, "", `/${locale}/projects?${s}`)
+  }
 
   return (
     <div
@@ -329,6 +333,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        onClose={onModalClose}
         backdrop="blur"
         size="2xl"
         placement="center"

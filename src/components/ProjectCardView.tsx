@@ -3,7 +3,7 @@
 import ProjectCard, { ProjectCardProps } from "@/components/ProjectCard";
 import { useSearchParams } from "next/navigation";
 import { addToast } from "@heroui/toast";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 
@@ -12,6 +12,7 @@ export default function ProjectCardView({ projects }: { projects: Array<ProjectC
   const rid = searchParams.get("rid");
   const download = searchParams.get("download");
   const t = useTranslations("Download");
+  const locale = useLocale()
 
   useEffect(() => {
     if (download) {
@@ -22,6 +23,10 @@ export default function ProjectCardView({ projects }: { projects: Array<ProjectC
         color: "primary",
       });
       console.log(`downloading ${url}`);
+      
+      const s = new URLSearchParams(window.location.search);
+      s.delete('download')
+      window.history.replaceState(null, "", `/${locale}/projects?${s}`)
     }
   }, [])
 
