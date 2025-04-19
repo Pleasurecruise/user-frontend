@@ -80,6 +80,8 @@
     "cdkey": "CDK",
     "prepare": "准备下载",
     "download": "下载",
+    "shareLink": "分享链接",
+    "shared": "已复制分享链接（30 分钟内有效）",
     "downloading": "下载中",
     "pleaseWait": "请稍等...",
     "buyCDKey": "没有CDK？立即订阅",

@@ -80,6 +80,8 @@
     "cdkey": "CDKey",
     "prepare": "Prepare download",
     "download": "Download",
+    "shareLink": "Share link",
+    "shared": "Share link copied (Available for 30 minutes)",
     "downloading": "downloading",
     "pleaseWait": "Please wait ...",
     "buyCDKey": "No CDKey? Subscribe Now",
