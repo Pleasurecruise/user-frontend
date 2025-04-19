@@ -20,6 +20,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
+import { useSearchParams } from "next/navigation";
 
 export interface ProjectCardProps {
   type_id: string;
@@ -262,6 +263,11 @@ export default function ProjectCard(props: ProjectCardProps) {
       return;
     }
     onOpen();
+    if (!showModal) {
+      const s = new URLSearchParams(window.location.search);
+      s.set('rid', resource)
+      window.history.replaceState(null, "", `/${locale}/projects?${s}`)
+    }
   };
 
 
