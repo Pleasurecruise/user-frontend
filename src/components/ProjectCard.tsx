@@ -226,8 +226,6 @@ export default function ProjectCard(props: ProjectCardProps) {
       color: "primary",
     });
     console.log(`shared key ${downloadKey} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
-
-    onOpenChange();
   }
 
   const handleDownload = async () => {
@@ -449,7 +447,10 @@ export default function ProjectCard(props: ProjectCardProps) {
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button color="danger" variant="light" onPress={() => {
+                onModalClose();
+                onClose();
+              }}>
                 {common("cancel")}
               </Button>
               <Button color="secondary" onPress={handleShare} isLoading={loading.loading && loading.type === "Share"}>
