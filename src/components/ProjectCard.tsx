@@ -219,7 +219,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       return;
     }
     const downloadKey = url.substring(url.lastIndexOf("/") + 1);
-    const shareUrl = `${window.location.host}/${locale}/projects/?download=${downloadKey}`
+    const shareUrl = `${window.location.origin}/${locale}/projects/?download=${downloadKey}`
     await navigator.clipboard.writeText(shareUrl);
 
     addToast({
