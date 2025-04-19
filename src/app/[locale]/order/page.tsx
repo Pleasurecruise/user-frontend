@@ -14,14 +14,14 @@ export default function App() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [timeout, setTimeout] = useState(false);
+  const [timeoutValue, setTimeoutValue] = useState(false);
   const [error, setError] = useState(false);
 
   const customId = searchParams.get("customId");
   if (!customId) {
     return (
       <div className="flex h-screen justify-center items-center">
-        <Button onClick={() => router.push("/get-key")}>
+        <Button onPress={() => router.push("/get-key")}>
           {t("InputOrderId")}
         </Button>
       </div>
@@ -33,25 +33,25 @@ export default function App() {
     if (response.ok) {
       const data = await response.json();
       if (data.ec === 200) {
-        window.clearInterval(fetchIntervalTimer);
-        window.clearTimeout(timeoutTimer);
+        clearInterval(fetchIntervalTimer);
+        clearTimeout(timeoutTimer);
         const { order_id } = data.data;
         router.push(`/show-key?order_id=${order_id}`);
       }
     }
   };
 
-  const timeoutTimer = window.setTimeout(() => {
-    setTimeout(true);
+  const timeoutTimer = setTimeout(() => {
+    setTimeoutValue(true);
   }, 20 * 1000);
 
-  const stopFetchTimer = window.setTimeout(() => {
+  const stopFetchTimer = setTimeout(() => {
     setError(error);
   }, 10 * 60 * 1000);
 
-  const fetchIntervalTimer = window.setInterval(() => {
+  const fetchIntervalTimer = setInterval(() => {
     if (error) {
-      window.clearInterval(fetchIntervalTimer);
+      clearInterval(fetchIntervalTimer);
       return;
     }
     fetcher();
@@ -68,9 +68,9 @@ export default function App() {
             label={<ProcessLabel />}
             className="max-w-md"
           />
-          {(error || timeout) && (
+          {(error || timeoutValue) && (
             <div className="fixed right-4 bottom-4">
-              <Button onClick={() => router.push("/get-key")}>
+              <Button onPress={() => router.push("/get-key")}>
                 {t("InputOrderId")}
               </Button>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import {
   Link,
   Tooltip,
@@ -16,7 +16,7 @@ import {
   SelectItem
 } from "@heroui/react";
 import { stringToColor } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { addToast, ToastProps } from "@heroui/toast";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { EyeIcon, EyeSlashIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
@@ -44,6 +44,9 @@ export default function ProjectCard(props: ProjectCardProps) {
   const avatarText = useMemo(() => name.charAt(0).toUpperCase(), [name]);
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  const locale = useLocale()
+
 
   const first = (support?.[0]?.split("-")) || [];
 
@@ -132,9 +135,15 @@ export default function ProjectCard(props: ProjectCardProps) {
   };
 
 
-  const [loading, setLoading] = useState(false);
+  // 互斥的状态
+  const [loading, setLoading] = useState<{
+    loading: boolean;
+    type?: "Share" | "Download";
+  }>({
+    loading: false,
+  });
 
-  const handleDownload = async () => {
+  const queryUrl = async (type: "Share" | "Download") => {
     if (!channel) {
       addToast({
         description: t("noChannel"),
@@ -163,7 +172,10 @@ export default function ProjectCard(props: ProjectCardProps) {
       });
       return;
     }
-    setLoading(true);
+    setLoading({
+      loading: true,
+      type: type
+    });
     try {
       const dl = `${CLIENT_BACKEND}/api/resources/${resource}/latest?os=${os}&arch=${arch}&channel=${channel}&cdk=${cdk}&user_agent=mirrorchyan_web`;
       const response = await fetch(dl);
@@ -190,22 +202,49 @@ export default function ProjectCard(props: ProjectCardProps) {
         return;
       }
 
-      window.location.href = url;
-
-      addToast({
-        description: t("downloading"),
-        color: "primary",
-      });
+      return url;
 
     } finally {
-      setLoading(false);
+      setLoading({
+        loading: false,
+        type: type
+      });
     }
+  }
 
-    console.log(`downloading ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
+  const handleShare = async () => {
+    const url = await queryUrl("Share");
+    if (!url) {
+      return;
+    }
+    const downloadKey = url.substring(url.lastIndexOf("/") + 1);
+    const shareUrl = `${window.location.origin}/${locale}/projects/?download=${downloadKey}`
+    await navigator.clipboard.writeText(shareUrl);
 
+    addToast({
+      description: t("shared"),
+      color: "primary",
+    });
+    console.log(`shared key ${downloadKey} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
+
+    onOpenChange();
+  }
+
+  const handleDownload = async () => {
+    const url = await queryUrl("Download");
+    if (!url) {
+      return;
+    }
+    window.location.href = url;
+
+    addToast({
+      description: t("downloading"),
+      color: "primary",
+    });
 
     onOpenChange();
   };
+
   const Conditioned = ({ children, condition }: {
     condition: () => boolean
     children: React.ReactElement
@@ -224,8 +263,21 @@ export default function ProjectCard(props: ProjectCardProps) {
       return;
     }
     onOpen();
+    if (!showModal) {
+      const s = new URLSearchParams(window.location.search);
+      s.set('rid', resource)
+      window.history.replaceState(null, "", `/${locale}/projects?${s}`)
+    }
   };
-
+    
+  const onModalClose = () => {
+    const s = new URLSearchParams(window.location.search);
+    s.delete('rid')
+    s.delete('os')
+    s.delete('arch')
+    s.delete('channel')
+    window.history.replaceState(null, "", `/${locale}/projects?${s}`)
+  }
 
   return (
     <div
@@ -284,6 +336,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        onClose={onModalClose}
         backdrop="blur"
         size="2xl"
         placement="center"
@@ -399,7 +452,10 @@ export default function ProjectCard(props: ProjectCardProps) {
               <Button color="danger" variant="light" onPress={onClose}>
                 {common("cancel")}
               </Button>
-              <Button color="primary" onPress={handleDownload} isLoading={loading}>
+              <Button color="secondary" onPress={handleShare} isLoading={loading.loading && loading.type === "Share"}>
+                {t("shareLink")}
+              </Button>
+              <Button color="primary" onPress={handleDownload} isLoading={loading.loading && loading.type === "Download"}>
                 {t("download")}
               </Button>
             </ModalFooter>
