@@ -4,6 +4,8 @@ import ProjectIntegratedCard from "@/components/ProjectIntegratedCard";
 import { getTranslations } from "next-intl/server";
 import { SERVER_BACKEND } from "@/app/requests/misc";
 import ProjectCardView from "@/components/ProjectCardView";
+import { HomeIcon } from "@heroicons/react/16/solid";
+import { Link } from "@/i18n/routing";
 
 export default async function ProjectsPage() {
   const t = await getTranslations("Projects");
@@ -21,6 +23,11 @@ export default async function ProjectsPage() {
   return (
     <BackgroundLines className="min-h-screen">
       <div className="container mx-auto px-3 py-10">
+        <Link
+          href="/get-start"
+          className="h-8 w-8 absolute hover:opacity-80 duration-300">
+          <HomeIcon />
+        </Link>
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
         </div>
