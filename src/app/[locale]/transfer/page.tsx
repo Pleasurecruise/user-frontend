@@ -8,6 +8,7 @@ import moment from "moment";
 
 import { useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
+import HomeButton from "@/components/HomeButton";
 
 export default function Transmission() {
   const format = useFormatter();
@@ -135,7 +136,8 @@ export default function Transmission() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="text-center w-full max-w-md md:min-w-[48rem] px-4">
+      <div className="text-center w-full max-w-md md:min-w-[48rem] px-4 relative">
+        <HomeButton className="absolute left-3" />
         <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">{t("title")}</h2>
         <div className="mt-4 md:mt-6 text-pretty text-base/7 md:text-lg/8 text-gray-600">{t("description")}</div>
         <div className="flex flex-col md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0 md:space-x-6">
