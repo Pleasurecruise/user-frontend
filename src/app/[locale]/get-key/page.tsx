@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/routing";
 import LoadingState from "@/components/LoadingState";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { addToast } from "@heroui/toast";
+import HomeButton from "@/components/HomeButton";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
@@ -42,7 +43,8 @@ export default function GetKey() {
   return (
     <>
       <div className="px-3 flex min-h-screen flex-1 flex-col justify-center relative transition-colors duration-300 bg-white dark:bg-transparent">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm relative">
+          <HomeButton className="absolute bottom-0" />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {t("title")}
           </h2>
