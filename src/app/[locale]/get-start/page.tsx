@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import Announcement from "./announcement";
 import { getUSDRate } from "@/app/requests/rate";
+import { getICP } from "@/app/requests/icp";
 import { getAnnouncement } from "@/app/requests/announcement";
 import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
@@ -24,6 +25,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
 
   // 人民币->美元汇率
   const C2URate = locale === "zh" ? 1 : await getUSDRate();
+  const icp = await getICP();
 
   const customOrderId = Date.now() + Math.random().toString(36).slice(2);
 
@@ -87,8 +89,8 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           </div>
           <div className='absolute bottom-4 w-full flex items-center justify-center gap-1.5 mt-16'>
             <div className='w-32'>
-              <a href="https://beian.miit.gov.cn/" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
-                皖ICP备2025075166号
+              <a href={icp.icp_url} target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
+                {icp.icp_beian}
               </a>
             </div>
             <div className='w-32'>
