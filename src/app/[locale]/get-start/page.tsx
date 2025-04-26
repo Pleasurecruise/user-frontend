@@ -88,12 +88,14 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
             </a>
           </div>
           <div className='absolute bottom-4 w-full flex items-center justify-center gap-1.5 mt-16'>
-            <div className='w-32'>
+            <div>
               <a href={icp.icp_url} target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
                 {icp.icp_beian}
+                <span aria-hidden="true">&nbsp;&nbsp;</span>
+                {icp.icp_entity}
               </a>
             </div>
-            <div className='w-32'>
+            <div>
               <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
                 {t("disclaimer")}<span aria-hidden="true">&nbsp;</span>
               </a>

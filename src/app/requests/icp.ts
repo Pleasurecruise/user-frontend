@@ -3,6 +3,7 @@ import { SERVER_BACKEND } from "@/app/requests/misc";
 type ICP = {
   icp_beian: string;
   icp_url: string;
+  icp_entity: string;
 }
 
 let icp: ICP;
