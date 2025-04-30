@@ -29,7 +29,7 @@ export default function App() {
   }
 
   const fetcher = async () => {
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?custom_order_id=${customId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?custom_order_id=${customId}`);
     if (response.ok) {
       const data = await response.json();
       if (data.ec === 200) {

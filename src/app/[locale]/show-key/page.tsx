@@ -15,7 +15,7 @@ export default async function ShowKey({ searchParams }: Props) {
   const locale = await getLocale();
   const format = await getFormatter();
   const { order_id } = await searchParams;
-  const response = await fetch(`${SERVER_BACKEND}/api/billing/order/afdian?order_id=${order_id}`);
+  const response = await fetch(`${SERVER_BACKEND}/api/billing/order/query?order_id=${order_id}`);
 
   const { ec, msg, data } = await response.json();
   const isSuccessful = ec === 200;

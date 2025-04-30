@@ -23,7 +23,7 @@ export default function GetKey() {
 
     try {
       // Optional: validate order ID before redirecting
-      const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
+      const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
       const data = await response.json();
 
       router.push(`/show-key?order_id=${orderId}`);

@@ -23,44 +23,56 @@ export default function Transmission() {
   const [toOrderIdValid, setToOrderIdValid] = useState(false);
   const [transfering, setTransfering] = useState(false);
 
-  async function requestFromOrderId(orderId: string) {
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
+  async function handleReward(orderId: string) {
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/reward?reward_key=${orderId}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
-      if ("reward_key" in data) {
-        if (data.remaining <= 0) {
-          setFromOrderDescription(t("rewardUsedUp"));
-          return;
-        }
-        const startAt = moment(data.start_at);
-        const expiredAt = moment(data.expired_at);
-        if (startAt.isAfter(moment())) {
-          setFromOrderDescription(t("rewardNotStarted"));
-          return;
-        }
-        if (expiredAt.isBefore(moment())) {
-          setFromOrderDescription(t("rewardExpired"));
-          return;
-        }
-        const valid_days = data.valid_days;
-        setFromOrderDescription(t("rewardValidDays", { valid_days }));
-        setFromOrderIdValid(true);
+      if (data.remaining <= 0) {
+        setFromOrderDescription(t("rewardUsedUp"));
+        return;
       }
-      else {
-        const expiredAt = moment(data.expired_at);
-        const createdAt = moment(data.created_at);
-        if (expiredAt.isBefore(moment())) {
-          setFromOrderDescription(t("orderExpired"));
-          return;
-        }
-        if (createdAt.isBefore(moment().subtract(3, "day"))) {
-          setFromOrderDescription(t("orderTooOld"));
-          return;
-        }
-        const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
-        setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
-        setFromOrderIdValid(true);
+      const startAt = moment(data.start_at);
+      const expiredAt = moment(data.expired_at);
+      if (startAt.isAfter(moment())) {
+        setFromOrderDescription(t("rewardNotStarted"));
+        return;
       }
+      if (expiredAt.isBefore(moment())) {
+        setFromOrderDescription(t("rewardExpired"));
+        return;
+      }
+      const valid_days = data.valid_days;
+      setFromOrderDescription(t("rewardValidDays", { valid_days }));
+      setFromOrderIdValid(true);
+    }
+  }
+
+  function IsReward(orderId: string) {
+    return !Number(orderId) && !orderId.startsWith("YMF");
+  }
+
+  async function requestFromOrderId(orderId: string) {
+    if (IsReward(orderId)) {
+      await handleReward(orderId);
+      return;
+    }
+
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
+    const { ec, msg, data } = await response.json();
+    if (ec === 200) {
+      const expiredAt = moment(data.expired_at);
+      const createdAt = moment(data.created_at);
+      if (expiredAt.isBefore(moment())) {
+        setFromOrderDescription(t("orderExpired"));
+        return;
+      }
+      if (createdAt.isBefore(moment().subtract(3, "day"))) {
+        setFromOrderDescription(t("orderTooOld"));
+        return;
+      }
+      const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
+      setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
+      setFromOrderIdValid(true);
     }
     else {
       setFromOrderDescription(msg);
@@ -69,23 +81,23 @@ export default function Transmission() {
   }
 
   async function requestToOrderId(orderId: string) {
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
+    if (IsReward(orderId)) {
+      setToOrderDescription(t("rewardFillInLeft"));
+      setToOrderIdValid(false);
+      return;
+    }
+    
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
-      if ("reward_key" in data) {
-        setToOrderDescription(t("rewardFillInLeft"));
-        setToOrderIdValid(false);
+      const expiredAt = moment(data.expired_at);
+      if (expiredAt.isBefore(moment())) {
+        setToOrderDescription(t("orderExpired"));
+      } else {
+        const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
+        setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
       }
-      else {
-        const expiredAt = moment(data.expired_at);
-        if (expiredAt.isBefore(moment())) {
-          setToOrderDescription(t("orderExpired"));
-        } else {
-          const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
-          setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
-        }
-        setToOrderIdValid(true);
-      }
+      setToOrderIdValid(true);
     }
     else {
       setToOrderDescription(msg);
@@ -114,7 +126,7 @@ export default function Transmission() {
 
   async function handleTransfer() {
     setTransfering(true);
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian/transfer?from=${fromOrderId}&to=${toOrderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/transfer?from=${fromOrderId}&to=${toOrderId}`);
     const { ec, msg } = await response.json();
     if (ec === 200) {
       router.replace(`/show-key?order_id=${toOrderId}`);
