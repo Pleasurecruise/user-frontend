@@ -1,9 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils/css";
-import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Plan } from "@/app/requests/plan";
+import { Link } from "@/i18n/routing";
 
 type PropsType = {
   plan: Plan;
@@ -12,12 +12,6 @@ type PropsType = {
 
 export default function PlanCard({ plan, C2URate }: PropsType) {
   const t = useTranslations("GetStart");
-  const router = useRouter();
-
-  const jumpToOrder = () => {
-    router.push(`/pay?plan=${plan.plan_id}`);
-  };
-
   const planName = t.has(`planTitle.${plan.title}`)
     ? t(`planTitle.${plan.title}`)
     : plan.title;
@@ -77,11 +71,9 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
           <Countdown toTime={plan.discount.endAt} />
         </div>
       )} */}
-      <a
+      <Link
         href={`/pay?plan=${plan.plan_id}`}
-        target="_blank"
         aria-describedby={plan.plan_id}
-        onClick={jumpToOrder}
         className={cn(
           plan.popular
             ? "bg-indigo-600 text-white shadow-sm hover:bg-indigo-500"
@@ -90,7 +82,7 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
         )}
       >
         {t("buyAtAfdian")}
-      </a>
+      </Link>
       {/* <ul role="list" className="mt-8 space-y-3 text-sm/6 text-gray-600">
         {plan.features.map((feature) => (
           <li key={feature} className="flex gap-x-3">
