@@ -27,8 +27,6 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
   const C2URate = locale === "zh" ? 1 : await getUSDRate();
   const icp = await getICP();
 
-  const customOrderId = Date.now() + Math.random().toString(36).slice(2);
-
   return (
     <div className='relative' suppressHydrationWarning>
       <BackgroundBeamsWithCollision className="min-h-screen">
@@ -48,7 +46,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           {announcement.ec === 200 && (
             <Announcement summary={announcement.data.summary} details={announcement.data.details} />
           )}
-          <Plans morePlans={morePlans} homePlans={homePlans} customOrderId={customOrderId} C2URate={C2URate} />
+          <Plans morePlans={morePlans} homePlans={homePlans} C2URate={C2URate} />
           <div className="mt-12 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <Link
               href="/get-key"

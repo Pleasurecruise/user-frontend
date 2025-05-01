@@ -55,7 +55,7 @@ export default function GetKey() {
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium text-gray-700 dark:text-gray-200">
                 {t("orderId")}
-                <span style={{ float: "right" }}>
+                {/* <span style={{ float: "right" }}>
                   <Link
                     href="https://afdian.com/dashboard/order"
                     target="_blank"
@@ -63,7 +63,7 @@ export default function GetKey() {
                   >
                     <u><em>{t("queryOrderId")}</em></u>
                   </Link>
-                </span>
+                </span> */}
               </label>
               <div className="mt-4">
                 <input

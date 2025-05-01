@@ -1,11 +1,11 @@
 import { SERVER_BACKEND } from "../requests/misc";
-import { getPlanInfo } from "./planInfo";
 
-type Plan = {
-  plan_id: string
-  platform: string
+export type Plan = {
+  title: string
+  price: string
+  original_price: string
   popular: number
-  type_id: string
+  plan_id: string
 }
 
 type PlansRes = {
@@ -27,16 +27,10 @@ export const getPlans = async (type_id?: string) => {
       };
     }
     const { data }: PlansRes = await res.json();
-
-    const [homePlans, morePlans] = await Promise.all([
-      Promise.all(data.home.map((v) => getPlanInfo(v.plan_id, v.popular === 1))),
-      Promise.all(data.more.map((v) => getPlanInfo(v.plan_id, v.popular === 1))),
-    ]);
-
     return {
-      homePlans: homePlans.filter(v => v !== null),
-      morePlans: morePlans.filter(v => v !== null),
-    };
+        homePlans: data.home,
+        morePlans: data.more,
+      }
   } catch (error) {
     console.error("Get Plans error:", error);
     return {

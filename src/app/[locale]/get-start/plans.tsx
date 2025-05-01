@@ -1,15 +1,14 @@
 "use client";
 
-import { Plan } from "@/app/requests/planInfo";
 import { useTranslations } from "next-intl";
 import PlanCard from "./plan-card";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/css";
+import { Plan } from "@/app/requests/plan";
 
 type PlansProps = {
   morePlans: Plan[]
   homePlans: Plan[]
-  customOrderId: string
   C2URate: number
 }
 

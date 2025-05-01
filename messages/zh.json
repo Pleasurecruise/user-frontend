@@ -18,7 +18,7 @@
   "GetKey": {
     "title": "欢迎使用Mirror酱",
     "thanksForBuying": "感谢赞助",
-    "orderId": "订单号",
+    "orderId": "支付宝/微信商家订单号",
     "getKey": "查询CDK",
     "queryOrderId": "查询订单号",
     "loading": "正在查询……",
