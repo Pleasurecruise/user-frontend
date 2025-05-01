@@ -5,10 +5,10 @@ import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import Announcement from "./announcement";
 import { getUSDRate } from "@/app/requests/rate";
-import { getICP } from "@/app/requests/icp";
 import { getAnnouncement } from "@/app/requests/announcement";
 import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
+import IcpInfo from "./icp";
 
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string }> }) {
   const t = await getTranslations("GetStart");
@@ -25,7 +25,6 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
 
   // 人民币->美元汇率
   const C2URate = locale === "zh" ? 1 : await getUSDRate();
-  const icp = await getICP();
 
   return (
     <div className='relative' suppressHydrationWarning>
@@ -86,13 +85,8 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
             </a>
           </div>
           <div className='absolute bottom-4 w-full flex items-center justify-center gap-1.5 mt-16'>
-            <div>
-              <a href={icp.icp_url} target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
-                {icp.icp_beian}
-                <span aria-hidden="true">&nbsp;&nbsp;</span>
-                {icp.icp_entity}
-              </a>
-            </div>
+
+            <IcpInfo />
             <div>
               <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
                 {t("disclaimer")}<span aria-hidden="true">&nbsp;</span>
