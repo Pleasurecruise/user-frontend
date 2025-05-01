@@ -14,7 +14,7 @@ export async function getICP(): Promise<ICP> {
   }
 
   try {
-    const res = await fetch(`${SERVER_BACKEND}/api/misc/icp?lang=1`);
+    const res = await fetch(`${SERVER_BACKEND}/api/misc/icp?domain=${location.hostname}`);
     icp = await res.json();
 
   } catch (error) {
