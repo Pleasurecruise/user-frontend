@@ -266,7 +266,9 @@ export default function Checkout(params: CheckoutProps) {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 dark:text-gray-400">{t("productName")}</span>
-                    <span className="font-medium text-gray-900 dark:text-white">{planInfo?.title}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {gT.has(`planTitle.${planInfo?.title}`) ? gT(`planTitle.${planInfo?.title}`) : planInfo?.title}
+                    </span>
                   </div>
 
                   <div className="flex justify-between items-center ">
@@ -300,7 +302,7 @@ export default function Checkout(params: CheckoutProps) {
                     <span
                       className="text-lg font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
                     <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                      ¥{finalPrice}
+                    {gT('priceSymbol')} {finalPrice}
                     </span>
                   </div>
                 </div>

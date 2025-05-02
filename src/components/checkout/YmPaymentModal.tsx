@@ -41,6 +41,7 @@ export default function YmPaymentModal({
   qrCodeCircleColor,
   qrCodeIcon,
 }: YmPaymentModalProps) {
+  const gT = useTranslations('GetStart');
   const t = useTranslations("Checkout");
   const router = useRouter();
 
@@ -87,7 +88,7 @@ export default function YmPaymentModal({
                   >
                     {orderInfo ? t("paymentSuccess") : paymentType}
                   </DialogTitle>
-                  {
+                  {/* {
                     orderInfo &&
                     <button
                       onClick={handleHomeClick}
@@ -96,7 +97,7 @@ export default function YmPaymentModal({
                     >
                       <Home className="h-5 w-5" />
                     </button>
-                  }
+                  } */}
                 </div>
 
                 {orderInfo && orderInfo.cdk
@@ -109,10 +110,10 @@ export default function YmPaymentModal({
                           {t("scanQRCodeToPay")}
                         </p>
                         <p className="text-base text-gray-400 dark:text-gray-500">
-                          {t("productTitle")}: {planInfo?.title}
+                          {t("productTitle")}: {gT.has(`planTitle.${planInfo?.title}`) ? gT(`planTitle.${planInfo?.title}`) : planInfo?.title}
                         </p>
                         <p className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-2">
-                          {t("amountToPay")}: ¥{planInfo?.price}
+                          {t("amountToPay")}: {gT('priceSymbol')} {planInfo?.price}
                         </p>
                       </div>
 

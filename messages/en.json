@@ -59,7 +59,7 @@
     "backToHome": "Back to Home",
     "errorWithPollingOrder": "Order query failed, please retry",
     "createOrderError": "Failed to create order, please try again",
-    "paymentIssue": "Problem paying ?"
+    "paymentIssue": "Problem paying?"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
@@ -86,7 +86,7 @@
     "paymentSuccess": "Payment Successful",
     "copy": "Copy",
     "copySuccess": "Copied",
-    "joinQQGroup": "Join the problem feedback group",
+    "joinQQGroup": "Feedback QQ Group",
     "viewProjects": "Project List"
   },
   "Order": {
