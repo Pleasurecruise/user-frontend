@@ -110,7 +110,7 @@ export default function Dashboard() {
                 <div className="flex items-center h-full justify-center">
                   <button
                     onClick={() => setIsUa(!isUa)}
-                    className={`flex items-center justify-center h-full w-14 rounded-md mr-1 transition-colors ${isUa ? 'bg-indigo-100 dark:bg-indigo-900' : 'bg-gray-100 dark:bg-gray-800'}`}
+                    className={`flex items-center justify-center h-full w-14 rounded-md mr-1 transition-colors ${isUa ? "bg-indigo-100 dark:bg-indigo-900" : "bg-gray-100 dark:bg-gray-800"}`}
                     type="button"
                   >
                     <ComputerDesktopIcon className={`h-1/2 w-1/2 ${isUa ? "text-indigo-600 dark:text-indigo-400"

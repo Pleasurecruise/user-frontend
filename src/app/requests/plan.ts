@@ -28,9 +28,9 @@ export const getPlans = async (type_id?: string) => {
     }
     const { data }: PlansRes = await res.json();
     return {
-        homePlans: data.home,
-        morePlans: data.more,
-      }
+      homePlans: data.home,
+      morePlans: data.more,
+    };
   } catch (error) {
     console.error("Get Plans error:", error);
     return {

@@ -45,7 +45,7 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const locale = useLocale()
+  const locale = useLocale();
 
 
   const first = (support?.[0]?.split("-")) || [];
@@ -210,7 +210,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         type: type
       });
     }
-  }
+  };
 
   const handleShare = async () => {
     const url = await queryUrl("Share");
@@ -218,7 +218,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       return;
     }
     const downloadKey = url.substring(url.lastIndexOf("/") + 1);
-    const shareUrl = `${window.location.origin}/${locale}/projects/?download=${downloadKey}`
+    const shareUrl = `${window.location.origin}/${locale}/projects/?download=${downloadKey}`;
     await navigator.clipboard.writeText(shareUrl);
 
     addToast({
@@ -226,7 +226,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       color: "primary",
     });
     console.log(`shared key ${downloadKey} for ${name} tuple: ${os}-${arch}-${channel}${cdk ? ` cdk: ${cdk}` : ""}`);
-  }
+  };
 
   const handleDownload = async () => {
     const url = await queryUrl("Download");
@@ -263,19 +263,19 @@ export default function ProjectCard(props: ProjectCardProps) {
     onOpen();
     if (!showModal) {
       const s = new URLSearchParams(window.location.search);
-      s.set('rid', resource)
-      window.history.replaceState(null, "", `/${locale}/projects?${s}`)
+      s.set("rid", resource);
+      window.history.replaceState(null, "", `/${locale}/projects?${s}`);
     }
   };
-    
+
   const onModalClose = () => {
     const s = new URLSearchParams(window.location.search);
-    s.delete('rid')
-    s.delete('os')
-    s.delete('arch')
-    s.delete('channel')
-    window.history.replaceState(null, "", `/${locale}/projects?${s}`)
-  }
+    s.delete("rid");
+    s.delete("os");
+    s.delete("arch");
+    s.delete("channel");
+    window.history.replaceState(null, "", `/${locale}/projects?${s}`);
+  };
 
   return (
     <div

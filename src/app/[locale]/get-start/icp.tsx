@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { useEffect, useState } from "react";

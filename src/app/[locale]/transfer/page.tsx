@@ -86,7 +86,7 @@ export default function Transmission() {
       setToOrderIdValid(false);
       return;
     }
-    
+
     const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
