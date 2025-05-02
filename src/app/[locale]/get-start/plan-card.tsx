@@ -76,7 +76,7 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
           "mt-6 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         )}
       >
-        {t("sponsorNow")}
+        {t("subscribeNow")}
       </Link>
     </div>
   );
