@@ -65,14 +65,8 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
           </span>
         </p>
       )}
-      {/* {plan.discount && (
-        <div className="mt-1 text-sm/6 text-gray-900 dark:text-white">
-          {t('LimitTimeOffer')}
-          <Countdown toTime={plan.discount.endAt} />
-        </div>
-      )} */}
       <Link
-        href={`/pay?plan=${plan.plan_id}`}
+        href={`/checkout/${plan.plan_id}`}
         aria-describedby={plan.plan_id}
         className={cn(
           plan.popular
@@ -81,16 +75,8 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
           "mt-6 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         )}
       >
-        {t("buyAtAfdian")}
+        {t("sponsorNow")}
       </Link>
-      {/* <ul role="list" className="mt-8 space-y-3 text-sm/6 text-gray-600">
-        {plan.features.map((feature) => (
-          <li key={feature} className="flex gap-x-3">
-            <CheckIcon aria-hidden="true" className="h-6 w-5 flex-none text-indigo-600" />
-            {feature}
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 }
