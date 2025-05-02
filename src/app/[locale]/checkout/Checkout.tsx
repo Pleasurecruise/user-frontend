@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
 import NoOrder from "@/app/[locale]/checkout/NoOrder";
@@ -98,7 +98,7 @@ export default function Checkout(params: CheckoutProps) {
           setPlanInfo(detail);
         }
       } catch (error) {
-        console.error("获取计划信息失败", error);
+        console.error("获取Plan信息失败", error);
       } finally {
         setPlanInfoLoading(false);
       }
@@ -270,13 +270,13 @@ export default function Checkout(params: CheckoutProps) {
                   </div>
 
                   <div className="flex justify-between items-center ">
-                    <span className="text-gray-600 dark:text-gray-400">{t("originalPrice")}</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t(discount ? "originalPrice" : "Price")}</span>
                     <span
                       className={
                         discount ? "text-gray-500 dark:text-gray-400 line-through"
                           : "font-medium text-gray-900 dark:text-white"
                       }>
-                      {`${gT('priceSymbol')}${originPrice}`}
+                      {`${gT('priceSymbol')} ${originPrice}`}
                     </span>
                   </div>
 
@@ -284,7 +284,7 @@ export default function Checkout(params: CheckoutProps) {
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 dark:text-gray-400">{t("discountPrice")}</span>
                       <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                        {`${gT('priceSymbol')}${currentPrice}`}
+                        {`${gT('priceSymbol')} ${currentPrice}`}
                       </span>
                     </div>
                   )}
@@ -402,9 +402,9 @@ export default function Checkout(params: CheckoutProps) {
                   <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500" />
                   <span>{t("securePayment")}</span>
                 </div>
-                <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+                <a href="/disclaimer.html" target="_blank" className="block text-center text-xs text-gray-500 dark:text-gray-400">
                   {t("privacyNotice")}
-                </p>
+                </a>
               </div>
             </div>
           </div>
