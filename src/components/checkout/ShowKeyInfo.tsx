@@ -1,9 +1,8 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle, MessageCircle, Layers } from "lucide-react";
 import moment from "moment/moment";
 import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
 import { addToast } from "@heroui/toast";
-import { useRouter } from "@/i18n/routing";
 import { QQ_GROUP } from "@/lib/utils/constant";
 
 
@@ -11,7 +10,7 @@ export default function ShowKeyInfo(props: {
   info?: OrderInfoType
 }) {
   const t = useTranslations("ShowKey");
-  const router = useRouter();
+  const locale = useLocale();
   const info = props.info;
   if (!info) {
     return <></>;
@@ -39,7 +38,7 @@ export default function ShowKeyInfo(props: {
   };
 
   const handleViewProjects = () => {
-    router.push(`/projects`)
+    window.open(`/${locale}/projects`, '_blank');
   };
 
   return <>
