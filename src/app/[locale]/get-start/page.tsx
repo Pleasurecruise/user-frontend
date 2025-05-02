@@ -84,7 +84,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
               {t("openSource")}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
-          <div className='absolute bottom-4 w-full flex items-center justify-center gap-1.5 mt-16'>
+          <div className='absolute bottom-4 left-0 w-full flex items-center justify-center gap-1.5 mt-16'>
 
             <IcpInfo />
             <div>
