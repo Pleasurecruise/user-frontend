@@ -15,6 +15,7 @@ import PaymentOption from "@/components/checkout/PaymentOption";
 
 export interface CheckoutProps {
   planId: Array<string>;
+  rate: number;
 }
 
 export interface PlanInfoDetail {
@@ -57,6 +58,10 @@ interface OrderInfoType {
 export default function Checkout(params: CheckoutProps) {
   const t = useTranslations("Checkout");
   const router = useRouter();
+
+
+  const gT = useTranslations('GetStart');
+
   const planId = params.planId[0];
   const [loading, setLoading] = useState(false);
   const [planInfoLoading, setPlanInfoLoading] = useState(true);
@@ -88,7 +93,9 @@ export default function Checkout(params: CheckoutProps) {
             setHasError(true);
             return;
           }
-          setPlanInfo(data);
+          const detail = data as PlanInfoDetail
+          setPaymentMethod(detail.yimapay_id ? 'alipay' : 'afdian')
+          setPlanInfo(detail);
         }
       } catch (error) {
         console.error("获取计划信息失败", error);
@@ -197,7 +204,9 @@ export default function Checkout(params: CheckoutProps) {
   };
 
   const discount = planInfo?.original_price !== planInfo?.price;
-  const finalPrice = discount ? planInfo?.price : planInfo?.original_price;
+  const finalPrice = (+((discount ? planInfo?.price : planInfo?.original_price) ?? 0) * params.rate).toFixed(2);
+  const originPrice = (+(planInfo?.original_price ?? 0) * params.rate).toFixed(2)
+  const currentPrice = (+(planInfo?.price ?? 0) * params.rate).toFixed(2)
 
   const handlePaymentMethodChange = (method: PaymentMethod) => {
     setPaymentMethod(method);
@@ -245,58 +254,67 @@ export default function Checkout(params: CheckoutProps) {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-            <div className="md:col-span-3">
-              <div
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-                <div className="p-6 border-b border-gray-100 dark:border-gray-700">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center text-gray-900 dark:text-white">
-                    <ShieldCheck className="w-5 h-5 mr-2 text-indigo-600" />
-                    {t("orderSummary")}
-                  </h3>
+          <div className="max-w-2xl mx-auto">
+            <div
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden mb-6">
+              <div className="p-6 border-b border-gray-100 dark:border-gray-700">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-gray-900 dark:text-white">
+                  <ShieldCheck className="w-5 h-5 mr-2 text-indigo-600" />
+                  {t("orderSummary")}
+                </h3>
 
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-600 dark:text-gray-400">{t("productName")}</span>
-                      <span className="font-medium text-gray-900 dark:text-white">{planInfo?.title}</span>
-                    </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">{t("productName")}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{planInfo?.title}</span>
+                  </div>
 
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-600 dark:text-gray-400">{t("originalPrice")}</span>
-                      <span
-                        className={discount ? "text-gray-500 dark:text-gray-400 line-through" : "font-medium text-gray-900 dark:text-white"}>
-                        ¥{planInfo?.original_price}
+                  <div className="flex justify-between items-center ">
+                    <span className="text-gray-600 dark:text-gray-400">{t("originalPrice")}</span>
+                    <span
+                      className={
+                        discount ? "text-gray-500 dark:text-gray-400 line-through"
+                          : "font-medium text-gray-900 dark:text-white"
+                      }>
+                      {`${gT('priceSymbol')}${originPrice}`}
+                    </span>
+                  </div>
+
+                  {discount && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600 dark:text-gray-400">{t("discountPrice")}</span>
+                      <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                        {`${gT('priceSymbol')}${currentPrice}`}
                       </span>
                     </div>
+                  )}
 
-                    {discount && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-gray-600 dark:text-gray-400">{t("discountPrice")}</span>
-                        <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                          ¥{planInfo?.price}
-                        </span>
-                      </div>
-                    )}
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-400">{t("paymentMethod")}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {t(paymentMethod)}
+                    </span>
+                  </div>
 
-                    <div className="h-px bg-gray-100 dark:bg-gray-700 my-2"></div>
-
-                    <div className="flex justify-between items-center py-2">
-                      <span
-                        className="text-lg font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
-                      <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                        ¥{finalPrice}
-                      </span>
-                    </div>
+                  <div className="flex justify-between items-center">
+                    <span
+                      className="text-lg font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
+                    <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                      ¥{finalPrice}
+                    </span>
                   </div>
                 </div>
+              </div>
 
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center text-gray-900 dark:text-white">
-                    <CreditCard className="w-5 h-5 mr-2 text-indigo-600" />
-                    {t("paymentMethod")}
-                  </h3>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-gray-900 dark:text-white">
+                  <CreditCard className="w-5 h-5 mr-2 text-indigo-600" />
+                  {t("paymentMethod")}
+                </h3>
 
-                  <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {
+                    planInfo?.yimapay_id &&
                     <PaymentOption checked={paymentMethod === "alipay"}
                       onClick={() => handlePaymentMethodChange("alipay")}
                       name={t("alipay")}
@@ -310,7 +328,10 @@ export default function Checkout(params: CheckoutProps) {
                         </svg>
                       </div>
                     </PaymentOption>
+                  }
 
+                  {
+                    planInfo?.yimapay_id &&
                     <PaymentOption checked={paymentMethod === "wechatPay"}
                       onClick={() => handlePaymentMethodChange("wechatPay")}
                       name={t("wechatPay")}
@@ -324,8 +345,11 @@ export default function Checkout(params: CheckoutProps) {
                         </svg>
                       </div>
                     </PaymentOption>
+                  }
 
 
+                  {
+                    planInfo?.afdian_info &&
                     <PaymentOption checked={paymentMethod === "afdian"}
                       onClick={() => handlePaymentMethodChange("afdian")}
                       name={t("afdian")}
@@ -342,73 +366,45 @@ export default function Checkout(params: CheckoutProps) {
                         </svg>
                       </div>
                     </PaymentOption>
-                  </div>
+                  }
                 </div>
               </div>
             </div>
 
-            <div className="md:col-span-2">
-              <div
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 sticky top-6">
-                <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                  {t("orderSummary")}
-                </h3>
+            <div
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+              <Button
+                onPress={handlePayment}
+                isDisabled={loading}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white p-4 rounded-xl font-medium text-base flex items-center justify-center"
+              >
+                {loading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t("processing")}
+                  </>
+                ) : (
+                  <>
+                    {t("confirmPayment")}
+                  </>
+                )}
+              </Button>
 
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{t("productName")}</span>
-                    <span className="font-medium text-gray-900 dark:text-white">{planInfo?.title}</span>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{t("paymentMethod")}</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                      {t(paymentMethod)}
-                    </span>
-                  </div>
-
-                  <div className="h-px bg-gray-100 dark:bg-gray-700 my-2"></div>
-
-                  <div className="flex justify-between text-lg">
-                    <span
-                      className="font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">¥{finalPrice}</span>
-                  </div>
+              <div className="mt-6">
+                <div className="flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500" />
+                  <span>{t("securePayment")}</span>
                 </div>
-
-                <Button
-                  onPress={handlePayment}
-                  isDisabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white p-4 rounded-xl font-medium text-base flex items-center justify-center"
-                >
-                  {loading ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                          strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      {t("processing")}
-                    </>
-                  ) : (
-                    <>
-                      {t("confirmPayment")}
-                    </>
-                  )}
-                </Button>
-
-                <div className="mt-6">
-                  <div className="flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500" />
-                    <span>{t("securePayment")}</span>
-                  </div>
-                  <p className="text-center text-xs text-gray-500 dark:text-gray-400">
-                    {t("privacyNotice")}
-                  </p>
-                </div>
+                <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+                  {t("privacyNotice")}
+                </p>
               </div>
             </div>
           </div>
@@ -456,8 +452,6 @@ export default function Checkout(params: CheckoutProps) {
               orderInfo={orderInfo}
               isPolling={isPolling}
               onClose={handleCloseModal}
-
-
             />
           </>
         }
