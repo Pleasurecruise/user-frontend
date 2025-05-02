@@ -52,7 +52,8 @@
     "checkingPaymentStatus": "正在查询支付状态...",
     "backToHome": "返回主页",
     "errorWithPollingOrder": "订单查询失败，请重试",
-    "createOrderError": "订单创建失败，请重试"
+    "createOrderError": "订单创建失败，请重试",
+    "paymentIssue": "支付遇到问题？"
   },
   "GetKey": {
     "title": "欢迎使用Mirror酱",
@@ -77,7 +78,10 @@
       "CDK already exists": "出错啦，请重试！"
     },
     "paymentSuccess": "支付成功",
-    "copy": "复制"
+    "copy": "复制",
+    "copySuccess": "复制成功",
+    "joinQQGroup": "加入问题反馈群",
+    "viewProjects": "项目一览"
   },
   "Order": {
     "ProcessingOrder": "我们正在获取您的订单",

@@ -1,9 +1,10 @@
-import {useLocale, useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import { CheckCircle, MessageCircle, Layers } from "lucide-react";
 import moment from "moment/moment";
 import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
-import {addToast} from "@heroui/toast";
+import { addToast } from "@heroui/toast";
 import { useRouter } from "@/i18n/routing";
+import { QQ_GROUP } from "@/lib/utils/constant";
 
 
 export default function ShowKeyInfo(props: {
@@ -20,7 +21,7 @@ export default function ShowKeyInfo(props: {
       navigator.clipboard.writeText(info.cdk)
         .then(() => {
           addToast({
-            color:"success",
+            color: "success",
             description: t("copySuccess"),
           })
         }).catch(err => {
@@ -34,8 +35,7 @@ export default function ShowKeyInfo(props: {
   const relativeTime = moment.duration(moment(info.expired_at).diff(moment())).humanize();
 
   const handleJoinQQGroup = () => {
-    const group = "https://qm.qq.com/cgi-bin/qm/qr?k=tEmwz6tg9LJnHswOAGNcrBAESCIa1ju3&jump_from=webapi&authKey=8sOfUTnv02S1Cdm/KtdBz6GnPdpx4qXnLspeH48IIvFGChSte4V8C7NNkZ8i4/ra"
-    window.open(group, "_blank");
+    window.open(QQ_GROUP, "_blank");
   };
 
   const handleViewProjects = () => {
@@ -77,21 +77,21 @@ export default function ShowKeyInfo(props: {
           </span>
         </>
       )}
-      
+
       <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
         <button
-            onClick={handleJoinQQGroup}
-            className="flex items-center justify-center py-3 px-6 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg transition-colors dark:bg-indigo-900/30 dark:hover:bg-indigo-800/50 dark:text-indigo-400"
+          onClick={handleJoinQQGroup}
+          className="flex items-center justify-center py-3 px-6 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg transition-colors dark:bg-indigo-900/30 dark:hover:bg-indigo-800/50 dark:text-indigo-400"
         >
-          <MessageCircle className="w-5 h-5 mr-2"/>
+          <MessageCircle className="w-5 h-5 mr-2" />
           <span>{t("joinQQGroup")}</span>
         </button>
 
         <button
-            onClick={handleViewProjects}
-            className="flex items-center justify-center py-3 px-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg transition-colors dark:bg-emerald-900/30 dark:hover:bg-emerald-800/50 dark:text-emerald-400"
+          onClick={handleViewProjects}
+          className="flex items-center justify-center py-3 px-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg transition-colors dark:bg-emerald-900/30 dark:hover:bg-emerald-800/50 dark:text-emerald-400"
         >
-          <Layers className="w-5 h-5 mr-2"/>
+          <Layers className="w-5 h-5 mr-2" />
           <span>{t("viewProjects")}</span>
         </button>
       </div>
