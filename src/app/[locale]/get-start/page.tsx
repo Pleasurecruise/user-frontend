@@ -8,6 +8,7 @@ import { getUSDRate } from "@/app/requests/rate";
 import { getAnnouncement } from "@/app/requests/announcement";
 import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
+import IcpInfo from "./icp";
 
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string }> }) {
   const t = await getTranslations("GetStart");
@@ -24,8 +25,6 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
 
   // 人民币->美元汇率
   const C2URate = locale === "zh" ? 1 : await getUSDRate();
-
-  const customOrderId = Date.now() + Math.random().toString(36).slice(2);
 
   return (
     <div className='relative' suppressHydrationWarning>
@@ -46,7 +45,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           {announcement.ec === 200 && (
             <Announcement summary={announcement.data.summary} details={announcement.data.details} />
           )}
-          <Plans morePlans={morePlans} homePlans={homePlans} customOrderId={customOrderId} C2URate={C2URate} />
+          <Plans morePlans={morePlans} homePlans={homePlans} C2URate={C2URate} />
           <div className="mt-12 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <Link
               href="/get-key"
@@ -85,13 +84,10 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
               {t("openSource")}<span aria-hidden="true">&nbsp;</span>
             </a>
           </div>
-          <div className='absolute bottom-4 w-full flex items-center justify-center gap-1.5 mt-16'>
-            <div className='w-32'>
-              <a href="https://beian.miit.gov.cn/" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
-                皖ICP备2025075166号
-              </a>
-            </div>
-            <div className='w-32'>
+          <div className='absolute bottom-4 left-0 w-full flex items-center justify-center gap-1.5 mt-16'>
+
+            <IcpInfo />
+            <div>
               <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
                 {t("disclaimer")}<span aria-hidden="true">&nbsp;</span>
               </a>

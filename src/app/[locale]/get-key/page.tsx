@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/routing";
 import LoadingState from "@/components/LoadingState";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { addToast } from "@heroui/toast";
+import HomeButton from "@/components/HomeButton";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
@@ -22,7 +23,7 @@ export default function GetKey() {
 
     try {
       // Optional: validate order ID before redirecting
-      const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/afdian?order_id=${orderId}`);
+      const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
       const data = await response.json();
 
       router.push(`/show-key?order_id=${orderId}`);
@@ -42,7 +43,8 @@ export default function GetKey() {
   return (
     <>
       <div className="px-3 flex min-h-screen flex-1 flex-col justify-center relative transition-colors duration-300 bg-white dark:bg-transparent">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm relative">
+          <HomeButton className="absolute bottom-0" />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {t("title")}
           </h2>
@@ -53,7 +55,7 @@ export default function GetKey() {
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium text-gray-700 dark:text-gray-200">
                 {t("orderId")}
-                <span style={{ float: "right" }}>
+                {/* <span style={{ float: "right" }}>
                   <Link
                     href="https://afdian.com/dashboard/order"
                     target="_blank"
@@ -61,24 +63,13 @@ export default function GetKey() {
                   >
                     <u><em>{t("queryOrderId")}</em></u>
                   </Link>
-                </span>
+                </span> */}
               </label>
               <div className="mt-4">
                 <input
                   id="key"
                   name="key"
-                  value={orderId}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (/^\d*$/.test(value)) {
-                      setOrderId(value);
-                    } else {
-                      addToast({
-                        color: "warning",
-                        description: t("errorOrderFormat"),
-                      })
-                    }
-                  }}
+                  onChange={(e) => setOrderId(e.target.value)}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base dark:text-white outline outline-1 -outline-offset-1 dark:outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>

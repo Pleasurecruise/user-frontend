@@ -7,7 +7,8 @@
     "disclaimer": "User Agreement",
     "apiDoc": "Integration",
     "openSource": "MirrorChyan Open Source",
-    "buyAtAfdian": "Subscribe Now",
+    "subscribeNow": "Subscribe Now",
+    "buyNow": "Buy Now",
     "transfer": "Order Transfer",
     "LimitTimeOffer": "Ends in ",
     "planTitle": {
@@ -19,6 +20,46 @@
     "priceFixed": "2",
     "more": "More",
     "hide": "Hide"
+  },
+  "Checkout": {
+    "checkoutTitle": "Checkout",
+    "orderSummary": "Order Content",
+    "productName": "Product Name",
+    "Price": "Price",
+    "originalPrice": "Original Price",
+    "discountPrice": "Discount Price",
+    "totalAmount": "Total Amount",
+    "paymentMethod": "How to Pay",
+    "alipay": "Alipay",
+    "wechatPay": "WeChat Pay",
+    "afdian": "Afdian (with Paypal and Stripe)",
+    "goToAfdian": "Go to Afdian",
+    "processing": "Processing...",
+    "confirmPayment": "Confirm to Pay",
+    "privacyNotice": "By clicking Confirm to Pay, you agree to our Terms of Service and Privacy Policy",
+    "paymentError": "An error occurred during payment, please try again later",
+    "invalidOrder": "Invalid Order",
+    "backToPlans": "Reselect your plan",
+    "completeYourOrder": "Complete your order and get MirrorChyan access",
+    "securePayment": "Secure Payment",
+    "incompleteOrder": "The order information is incomplete or invalid. Please return to select the plan",
+    "alipayPayment": "Alipay Payment",
+    "afdianPayment": "Afdian Payment",
+    "scanQRCodeToPay": "Scan QR code to complete payment",
+    "productTitle": "Product",
+    "amountToPay": "Amount to Pay",
+    "generatingQRCode": "Generating QR code...",
+    "openInAlipay": "Open Alipay App to Pay",
+    "copyPaymentLink": "Copy Payment Link",
+    "copied": "Copied",
+    "loadingPlanInfo": "Loading order information",
+    "paymentNote": "After successful payment, the system will automatically generate a CDK for you",
+    "paymentSuccess": "Payment Successful",
+    "checkingPaymentStatus": "Checking payment status...",
+    "backToHome": "Back to Home",
+    "errorWithPollingOrder": "Order query failed, please retry",
+    "createOrderError": "Failed to create order, please try again",
+    "paymentIssue": "Problem paying?"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
@@ -41,12 +82,21 @@
       "Order not found": "Order does not exist",
       "order_id is required": "Please enter the order ID",
       "CDK already exists": "Error, please try again"
-    }
+    },
+    "paymentSuccess": "Payment Successful",
+    "copy": "Copy",
+    "copySuccess": "Copied",
+    "lostCDK": "If you lose your CDK, you can go to MirrorChyan's website to check it again.",
+    "joinQQGroup": "Feedback QQ Group",
+    "viewProjects": "Project List"
   },
   "Order": {
     "ProcessingOrder": "We are getting your order",
     "InputOrderId": "Manual order query",
     "ThanksForSponsoring": "Thanks for Sponsoring"
+  },
+  "Renew": {
+    "Renew CDK": "Renew CDK"
   },
   "Transmission": {
     "title": "Time Transfer",
@@ -62,7 +112,8 @@
     "rewardNotStarted": "Redeem code has not started yet",
     "rewardExpired": "Redeem code has expired",
     "rewardFillInLeft": "Please fill in the redeem code on the left",
-    "rewardUsedUp": "Redeem code has been used up"
+    "rewardUsedUp": "Redeem code has been used up",
+    "rewardValidDays": "Can redeem for {valid_days} days"
   },
   "Component": {
     "CopyButton": {
@@ -71,6 +122,7 @@
     },
     "Announcement": {
       "newAnnouncement": "Announcement",
+      "readMore": "Read more",
       "doNotShow": "Do not show",
       "close": "Close"
     }
@@ -91,7 +143,7 @@
     "7002": "Please confirm that you have entered the correct CDKey",
     "7003": "Your CDKey has reached the most downloads today",
     "7004": "Current cdk cannot download this resource, please check your cdk type",
-    "resourceName": "资源名称",
+    "resourceName": "Resource Name",
     "os": "os",
     "arch": "arch",
     "channel": "channel",
