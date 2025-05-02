@@ -24,7 +24,7 @@ export default function NoOrder() {
           className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-full font-medium flex items-center justify-center mx-auto"
       >
         <ArrowLeft className="w-4 h-4 mr-2"/>
-        {t("backToPlans") || "返回计划页面"}
+        {t("backToPlans")}
       </Button>
     </div>
   </div>

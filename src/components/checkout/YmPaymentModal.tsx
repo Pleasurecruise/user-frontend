@@ -24,6 +24,8 @@ export interface YmPaymentModalProps {
   };
   isPolling?: boolean;
   onClose?: () => void;
+  qrCodeCircleColor?: string;
+  qrCodeIcon: React.ReactNode
 }
 
 
@@ -34,7 +36,9 @@ export default function YmPaymentModal({
                                          orderInfo,
                                          planInfo,
                                          isPolling = true,
-                                         onClose
+                                         onClose,
+                                         qrCodeCircleColor,
+                                         qrCodeIcon,
                                        }: YmPaymentModalProps) {
   const t = useTranslations("Checkout");
   const router = useRouter();
@@ -48,7 +52,8 @@ export default function YmPaymentModal({
 
   return (
       <Transition appear show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => onClose?.()}>
+        <Dialog as="div" className="relative z-50" onClose={() => {
+        }}>
           <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -81,13 +86,16 @@ export default function YmPaymentModal({
                     >
                       {orderInfo ? t("paymentSuccess") : paymentType}
                     </DialogTitle>
-                    <button
-                        onClick={handleHomeClick}
-                        className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        aria-label={t("backToHome")}
-                    >
-                      <Home className="h-5 w-5"/>
-                    </button>
+                    {
+                        orderInfo &&
+                        <button
+                            onClick={handleHomeClick}
+                            className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label={t("backToHome")}
+                        >
+                            <Home className="h-5 w-5"/>
+                        </button>
+                    }
                   </div>
 
                   {orderInfo && orderInfo.cdk
@@ -109,12 +117,18 @@ export default function YmPaymentModal({
 
                             <div className="flex justify-center mb-4">
                               {paymentUrl ? (
-                                  <div className="p-4 bg-white rounded-lg">
-                                    <QRCode
-                                        size={240}
-                                        value={paymentUrl}
-                                        viewBox={`0 0 256 256`}
-                                    />
+                                  <div
+                                      className={`relative p-1 rounded-lg ${paymentType.includes('支付宝') ? 'bg-[#009FE8] border-2 border-[#009FE8]' : 'bg-[#15BA11] border-2 border-[#15BA11]'}`}>
+                                    <div className="relative bg-white p-3 rounded-md">
+                                      <QRCode
+                                          size={240}
+                                          value={paymentUrl}
+                                          viewBox={`0 0 256 256`}
+                                      />
+                                      <div className="absolute inset-0 flex items-center justify-center">
+                                        {qrCodeIcon}
+                                      </div>
+                                    </div>
                                   </div>
                               ) : (
                                   <div

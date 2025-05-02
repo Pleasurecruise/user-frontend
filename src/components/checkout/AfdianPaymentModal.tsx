@@ -29,7 +29,7 @@ export default function AfdianPaymentModal({open, isLoading = true, onClose, ord
 
   return (
       <Transition appear show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => onClose?.()}>
+        <Dialog as="div" className="relative z-50" onClose={() => {}}>
           <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -62,13 +62,16 @@ export default function AfdianPaymentModal({open, isLoading = true, onClose, ord
                     >
                       {t("afdianPayment")}
                     </DialogTitle>
-                    <button
-                        onClick={handleHomeClick}
-                        className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        aria-label={t("backToHome") || "返回主页"}
-                    >
-                      <Home className="h-5 w-5"/>
-                    </button>
+                    {
+                        orderInfo &&
+                        <button
+                            onClick={handleHomeClick}
+                            className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label={t("backToHome") || "返回主页"}
+                        >
+                            <Home className="h-5 w-5"/>
+                        </button>
+                    }
                   </div>
 
                   {isLoading ? (
@@ -87,7 +90,7 @@ export default function AfdianPaymentModal({open, isLoading = true, onClose, ord
                             </div>
                           </>
                       ) :
-                      <ShowKeyInfo info={orderInfo} ></ShowKeyInfo>
+                      <ShowKeyInfo info={orderInfo}></ShowKeyInfo>
                   }
 
 
