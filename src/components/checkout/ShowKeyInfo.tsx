@@ -76,7 +76,11 @@ export default function ShowKeyInfo(props: {
           </span>
         </>
       )}
-
+      <div className="mt-4 flex items-center justify-center">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+            {t("lostCDK")}
+        </span>
+      </div>
       <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={handleJoinQQGroup}
