@@ -55,10 +55,6 @@ interface OrderInfoType {
 
 
 export default function Checkout(params: CheckoutProps) {
-  if (!params.planId || params.planId.length > 1) {
-    return <NoOrder/>
-  }
-
   const t = useTranslations("Checkout");
   const router = useRouter();
   const gt = useTranslations('GetStart');
@@ -150,7 +146,7 @@ export default function Checkout(params: CheckoutProps) {
     }
   }, [customOrderId]);
 
-  if (!planId) {
+  if (!params.planId || params.planId.length > 1 || !planId) {
     return <NoOrder/>
   }
 

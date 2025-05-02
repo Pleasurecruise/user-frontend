@@ -7,6 +7,7 @@ import {OrderInfoType} from "@/components/checkout/YmPaymentModal";
 export default function ShowKeyInfo(props: {
   info?: OrderInfoType
 }) {
+  const t = useTranslations("ShowKey");
   const info = props.info;
   if (!info) {
     return <></>;
@@ -26,7 +27,6 @@ export default function ShowKeyInfo(props: {
 
   const relativeTime = moment.duration(moment(info.expired_at).diff(moment())).humanize()
 
-  const t = useTranslations("ShowKey");
   return <>
     <div className="text-center mb-6">
       <div className="flex justify-center mb-6">
