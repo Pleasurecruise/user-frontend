@@ -1,13 +1,16 @@
-import { useTranslations } from "next-intl";
-import { CheckCircle } from "lucide-react";
+import {useLocale, useTranslations} from "next-intl";
+import { CheckCircle, MessageCircle, Layers } from "lucide-react";
 import moment from "moment/moment";
 import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
+import {addToast} from "@heroui/toast";
+import { useRouter } from "@/i18n/routing";
 
 
 export default function ShowKeyInfo(props: {
   info?: OrderInfoType
 }) {
   const t = useTranslations("ShowKey");
+  const router = useRouter();
   const info = props.info;
   if (!info) {
     return <></>;
@@ -16,9 +19,12 @@ export default function ShowKeyInfo(props: {
     if (info.cdk) {
       navigator.clipboard.writeText(info.cdk)
         .then(() => {
-          // 可以在这里添加复制成功的提示
+          addToast({
+            color:"success",
+            description: t("copySuccess"),
+          })
         }).catch(err => {
-          console.error("复制失败:", err);
+          console.error(err);
         });
     }
   };
@@ -26,6 +32,15 @@ export default function ShowKeyInfo(props: {
   const time = moment(info.expired_at).format("YYYY-MM-DD HH:mm:ss");
 
   const relativeTime = moment.duration(moment(info.expired_at).diff(moment())).humanize();
+
+  const handleJoinQQGroup = () => {
+    const group = "https://qm.qq.com/cgi-bin/qm/qr?k=tEmwz6tg9LJnHswOAGNcrBAESCIa1ju3&jump_from=webapi&authKey=8sOfUTnv02S1Cdm/KtdBz6GnPdpx4qXnLspeH48IIvFGChSte4V8C7NNkZ8i4/ra"
+    window.open(group, "_blank");
+  };
+
+  const handleViewProjects = () => {
+    router.push(`/projects`)
+  };
 
   return <>
     <div className="text-center mb-6">
@@ -48,7 +63,6 @@ export default function ShowKeyInfo(props: {
         </span>
         <button
           className="ml-2 text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
-          onClick={copyToClipboard}
         >
           {t("copy")}
         </button>
@@ -63,6 +77,24 @@ export default function ShowKeyInfo(props: {
           </span>
         </>
       )}
+      
+      <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <button
+            onClick={handleJoinQQGroup}
+            className="flex items-center justify-center py-3 px-6 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg transition-colors dark:bg-indigo-900/30 dark:hover:bg-indigo-800/50 dark:text-indigo-400"
+        >
+          <MessageCircle className="w-5 h-5 mr-2"/>
+          <span>{t("joinQQGroup")}</span>
+        </button>
+
+        <button
+            onClick={handleViewProjects}
+            className="flex items-center justify-center py-3 px-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg transition-colors dark:bg-emerald-900/30 dark:hover:bg-emerald-800/50 dark:text-emerald-400"
+        >
+          <Layers className="w-5 h-5 mr-2"/>
+          <span>{t("viewProjects")}</span>
+        </button>
+      </div>
     </div>
   </>;
 }
