@@ -57,8 +57,7 @@ interface OrderInfoType {
 export default function Checkout(params: CheckoutProps) {
   const t = useTranslations("Checkout");
   const router = useRouter();
-  const gt = useTranslations("GetStart");
-  const planId = params.planId;
+  const planId = params.planId[0];
   const [loading, setLoading] = useState(false);
   const [planInfoLoading, setPlanInfoLoading] = useState(true);
   const [planInfo, setPlanInfo] = useState<PlanInfoDetail | undefined>();
@@ -70,6 +69,9 @@ export default function Checkout(params: CheckoutProps) {
   const [orderInfo, setOrderInfo] = useState<OrderInfoType>();
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
   const [isPolling, setIsPolling] = useState(false);
+
+  const [hasError, setHasError] = useState(false);
+
 
   useEffect(() => {
     (async () => {
@@ -83,6 +85,7 @@ export default function Checkout(params: CheckoutProps) {
               color: "warning",
               description: t("errorWithPollingOrder"),
             });
+            setHasError(true);
             return;
           }
           setPlanInfo(data);
@@ -147,7 +150,7 @@ export default function Checkout(params: CheckoutProps) {
     }
   }, [customOrderId]);
 
-  if (!params.planId || params.planId.length > 1 || !planId) {
+  if (!params.planId || params.planId.length > 1 || hasError) {
     return <NoOrder />;
   }
 
@@ -213,7 +216,7 @@ export default function Checkout(params: CheckoutProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
         <div className="mb-8">
           <button
-            onClick={() => router.back()}
+            onClick={() => router.replace('/')}
             className="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
