@@ -312,7 +312,7 @@ export default function Checkout(params: CheckoutProps) {
                   {t("paymentMethod")}
                 </h3>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="space-y-4">
                   {
                     planInfo?.yimapay_id &&
                     <PaymentOption checked={paymentMethod === "alipay"}
