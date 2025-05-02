@@ -50,7 +50,9 @@
     "paymentNote": "付款成功后，系统将自动为您生成CDK",
     "paymentSuccess": "支付成功",
     "checkingPaymentStatus": "正在查询支付状态...",
-    "backToHome": "返回主页"
+    "backToHome": "返回主页",
+    "errorWithPollingOrder": "订单查询失败，请重试",
+    "createOrderError": "订单创建失败，请重试"
   },
   "GetKey": {
     "title": "欢迎使用Mirror酱",

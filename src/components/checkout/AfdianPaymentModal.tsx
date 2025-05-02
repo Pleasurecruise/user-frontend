@@ -67,7 +67,7 @@ export default function AfdianPaymentModal({open, isLoading = true, onClose, ord
                         <button
                             onClick={handleHomeClick}
                             className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                            aria-label={t("backToHome") || "返回主页"}
+                            aria-label={t("backToHome")}
                         >
                             <Home className="h-5 w-5"/>
                         </button>

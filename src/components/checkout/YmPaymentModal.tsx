@@ -118,7 +118,7 @@ export default function YmPaymentModal({
                             <div className="flex justify-center mb-4">
                               {paymentUrl ? (
                                   <div
-                                      className={`relative p-1 rounded-lg ${paymentType.includes('支付宝') ? 'bg-[#009FE8] border-2 border-[#009FE8]' : 'bg-[#15BA11] border-2 border-[#15BA11]'}`}>
+                                      className={`relative p-1 rounded-lg ${qrCodeCircleColor} `}>
                                     <div className="relative bg-white p-3 rounded-md">
                                       <QRCode
                                           size={240}

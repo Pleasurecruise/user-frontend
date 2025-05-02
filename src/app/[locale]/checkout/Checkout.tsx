@@ -80,7 +80,8 @@ export default function Checkout(params: CheckoutProps) {
           const {ec, data} = await response.json();
           if (ec !== 200) {
             addToast({
-              title: "Error",
+              color: "warning",
+              description: t('errorWithPollingOrder'),
             })
             return
           }
@@ -102,7 +103,7 @@ export default function Checkout(params: CheckoutProps) {
       const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?custom_order_id=${customOrderId}`);
       if (response.ok) {
         const {code, data} = await response.json();
-        console.log(data, code, intervalIdRef.current);
+        console.log(data, code);
         if (code === 0) {
           setOrderInfo({
             cdk: data.cdk,
@@ -120,8 +121,8 @@ export default function Checkout(params: CheckoutProps) {
       }
     } catch (error) {
       addToast({
-        title: "Error",
-        description: 'Error',
+        color: 'warning',
+        description: t('errorWithPollingOrder'),
       })
     }
   };
@@ -159,7 +160,8 @@ export default function Checkout(params: CheckoutProps) {
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
         if (resp.status !== 200) {
           addToast({
-            title: '',
+            color: 'warning',
+            description: t('createOrderError'),
           })
           return
         }
@@ -183,7 +185,8 @@ export default function Checkout(params: CheckoutProps) {
     } catch (error) {
       console.log(error);
       addToast({
-        title: "error",
+        color: 'warning',
+        description: t('createOrderError'),
       })
     } finally {
       setLoading(false);
@@ -365,7 +368,7 @@ export default function Checkout(params: CheckoutProps) {
 
                       <div className="flex justify-between text-lg">
                         <span
-                            className="font-semibold text-gray-900 dark:text-white">{t("totalAmount") || "总计"}</span>
+                            className="font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
                         <span className="font-bold text-indigo-600 dark:text-indigo-400">¥{finalPrice}</span>
                       </div>
                     </div>
@@ -397,7 +400,7 @@ export default function Checkout(params: CheckoutProps) {
                     <div className="mt-6">
                       <div className="flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 mb-4">
                         <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500"/>
-                        <span>{t("securePayment") || "安全支付保障"}</span>
+                        <span>{t("securePayment")}</span>
                       </div>
                       <p className="text-center text-xs text-gray-500 dark:text-gray-400">
                         {t("privacyNotice")}
@@ -412,7 +415,7 @@ export default function Checkout(params: CheckoutProps) {
               planInfo &&
               <>
                   <YmPaymentModal
-                      qrCodeCircleColor={'bg-[#009FE8]'}
+                      qrCodeCircleColor={'bg-[#009FE8] border-2 border-[#009FE8]'}
                       qrCodeIcon={
                         <div className="w-10 h-10 bg-white  rounded-lg flex items-center justify-center mr-3">
                           <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -432,7 +435,7 @@ export default function Checkout(params: CheckoutProps) {
                       onClose={handleCloseModal}
                   />
                   <YmPaymentModal
-                      qrCodeCircleColor={'bg-[#15BA11]'}
+                      qrCodeCircleColor={'bg-[#15BA11] border-2 border-[#15BA11]'}
                       qrCodeIcon={
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
                           <svg className="icon" viewBox="0 0 1228 1024" version="1.1"
