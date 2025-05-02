@@ -302,7 +302,7 @@ export default function Checkout(params: CheckoutProps) {
                     <span
                       className="text-lg font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
                     <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                    {gT('priceSymbol')} {finalPrice}
+                      {gT('priceSymbol')} {finalPrice}
                     </span>
                   </div>
                 </div>
@@ -431,6 +431,7 @@ export default function Checkout(params: CheckoutProps) {
               paymentType={t("alipay")}
               open={showModal == "alipay"}
               planInfo={planInfo}
+              rate={params.rate}
               orderInfo={orderInfo}
               isPolling={isPolling}
               onClose={handleCloseModal}
@@ -451,6 +452,7 @@ export default function Checkout(params: CheckoutProps) {
               paymentType={t("wechatPay")}
               open={showModal == "wechatPay"}
               planInfo={planInfo}
+              rate={params.rate}
               orderInfo={orderInfo}
               isPolling={isPolling}
               onClose={handleCloseModal}

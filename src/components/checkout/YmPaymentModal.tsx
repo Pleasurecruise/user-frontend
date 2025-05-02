@@ -5,7 +5,7 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@
 import { Fragment } from "react";
 import QRCode from "react-qr-code";
 import ShowKeyInfo from "@/components/checkout/ShowKeyInfo";
-import { Home, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import { QQ_GROUP } from "@/lib/utils/constant";
 
@@ -23,6 +23,7 @@ export interface YmPaymentModalProps {
     title: string;
     price: string;
   };
+  rate: number;
   isPolling?: boolean;
   onClose?: () => void;
   qrCodeCircleColor?: string;
@@ -37,7 +38,7 @@ export default function YmPaymentModal({
   orderInfo,
   planInfo,
   isPolling = true,
-  onClose,
+  rate,
   qrCodeCircleColor,
   qrCodeIcon,
 }: YmPaymentModalProps) {
@@ -45,13 +46,7 @@ export default function YmPaymentModal({
   const t = useTranslations("Checkout");
   const router = useRouter();
 
-  const handleHomeClick = () => {
-    if (onClose) {
-      onClose();
-    }
-    router.push("/");
-  };
-
+  const currentPrice = (+(planInfo?.price ?? 0) * rate).toFixed(2)
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={() => {
@@ -88,16 +83,6 @@ export default function YmPaymentModal({
                   >
                     {orderInfo ? t("paymentSuccess") : paymentType}
                   </DialogTitle>
-                  {/* {
-                    orderInfo &&
-                    <button
-                      onClick={handleHomeClick}
-                      className="rounded-full p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                      aria-label={t("backToHome")}
-                    >
-                      <Home className="h-5 w-5" />
-                    </button>
-                  } */}
                 </div>
 
                 {orderInfo && orderInfo.cdk
@@ -113,7 +98,7 @@ export default function YmPaymentModal({
                           {t("productTitle")}: {gT.has(`planTitle.${planInfo?.title}`) ? gT(`planTitle.${planInfo?.title}`) : planInfo?.title}
                         </p>
                         <p className="text-lg font-medium text-indigo-600 dark:text-indigo-400 mt-2">
-                          {t("amountToPay")}: {gT('priceSymbol')} {planInfo?.price}
+                          {t("amountToPay")}: {gT('priceSymbol')} {currentPrice}
                         </p>
                       </div>
 
