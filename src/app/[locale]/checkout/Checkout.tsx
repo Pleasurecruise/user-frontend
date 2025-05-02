@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@heroui/react";
-import { useTranslations } from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
@@ -76,6 +76,8 @@ export default function Checkout(params: CheckoutProps) {
   const [isPolling, setIsPolling] = useState(false);
 
   const [hasError, setHasError] = useState(false);
+
+  const locale = useLocale();
 
 
   useEffect(() => {
@@ -351,7 +353,7 @@ export default function Checkout(params: CheckoutProps) {
 
 
                   {
-                    planInfo?.afdian_info &&
+                    ( locale !== 'zh' &&  planInfo?.afdian_info) &&
                     <PaymentOption checked={paymentMethod === "afdian"}
                       onClick={() => handlePaymentMethodChange("afdian")}
                       name={t("afdian")}
