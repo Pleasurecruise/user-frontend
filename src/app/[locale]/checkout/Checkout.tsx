@@ -339,6 +339,7 @@ export default function Checkout(params: CheckoutProps) {
                     <PaymentOption checked={paymentMethod === "alipay"}
                       onClick={() => handlePaymentMethodChange("alipay")}
                       name={t("alipay")}
+                      recommended={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
                         <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
