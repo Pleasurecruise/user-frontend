@@ -59,7 +59,8 @@
     "backToHome": "Back to Home",
     "errorWithPollingOrder": "Order query failed, please retry",
     "createOrderError": "Failed to create order, please try again",
-    "paymentIssue": "Problem paying?"
+    "paymentIssue": "Problem paying?",
+    "recommended": "recommended"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
