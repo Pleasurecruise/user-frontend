@@ -5,7 +5,7 @@ import moment from "moment";
 import CopyButton from "@/components/CopyButton";
 import { Link } from "@/i18n/routing";
 import { SERVER_BACKEND } from "@/app/requests/misc";
-import { QQ_GROUP } from "@/lib/utils/constant";
+import QQGroupLink from "@/components/QQGroupLink";
 
 type Props = {
   searchParams: Promise<{ order_id: string }>
@@ -52,9 +52,7 @@ export default async function ShowKey({ searchParams }: Props) {
               </p>
             </div>
             <p className="text-sm text-center mt-6">
-              <a href={QQ_GROUP} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-                {t("haveQuestion")}
-              </a>
+              <QQGroupLink text={t("haveQuestion")} />
             </p>
           </div>
         </div>
@@ -76,9 +74,7 @@ export default async function ShowKey({ searchParams }: Props) {
             </button>
           </Link>
           <p className="text-sm text-center mt-6">
-            <a href={QQ_GROUP} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-              {t("haveQuestion")}
-            </a>
+            <QQGroupLink text={t("haveQuestion")} />
           </p>
         </div>
       </div>
