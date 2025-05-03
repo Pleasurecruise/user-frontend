@@ -335,7 +335,7 @@ export default function Checkout(params: CheckoutProps) {
                   }
 
                   {
-                   false && planInfo?.yimapay_id &&
+                    planInfo?.yimapay_id &&
                     <PaymentOption checked={paymentMethod === "wechatPay"}
                       onClick={() => handlePaymentMethodChange("wechatPay")}
                       name={t("wechatPay")}
