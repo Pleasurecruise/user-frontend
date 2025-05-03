@@ -54,7 +54,9 @@ export default function GetKey() {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="key" className="block text-sm/6 font-medium text-gray-700 dark:text-gray-200">
-                {t("orderId")}
+                {t.rich("orderId", {
+                  br: () => <br />
+                })}
                 {/* <span style={{ float: "right" }}>
                   <Link
                     href="https://afdian.com/dashboard/order"

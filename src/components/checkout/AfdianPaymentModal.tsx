@@ -63,7 +63,7 @@ export default function AfdianPaymentModal({ open, isLoading = true, onClose, or
                   >
                     {t("afdianPayment")}
                   </DialogTitle>
-                  {
+                  {/* {
                     orderInfo &&
                     <button
                       onClick={handleHomeClick}
@@ -72,7 +72,7 @@ export default function AfdianPaymentModal({ open, isLoading = true, onClose, or
                     >
                       <Home className="h-5 w-5" />
                     </button>
-                  }
+                  } */}
                 </div>
 
                 {isLoading ? (
