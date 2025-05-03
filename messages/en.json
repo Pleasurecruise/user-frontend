@@ -67,6 +67,7 @@
     "thanksForBuying": "Thanks for Sponsoring",
     "orderId": "Order ID",
     "getKey": "Query CDKey",
+    "haveQuestion": "Problem with query?",
     "queryOrderId": "Query Order ID",
     "loading": "Querying please wait...",
     "errorOrderFormat": "Incorrect order number format "
@@ -79,6 +80,7 @@
     "expireAt": "Valid until {time}",
     "timeLeft": " ( {relativeTime} remain )",
     "goBack": "Go Back",
+    "haveQuestion": "Question about the query result?",
     "msg": {
       "Order not found": "Order does not exist",
       "order_id is required": "Please enter the order ID",

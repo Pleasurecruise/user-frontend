@@ -7,6 +7,7 @@ import LoadingState from "@/components/LoadingState";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { addToast } from "@heroui/toast";
 import HomeButton from "@/components/HomeButton";
+import { QQ_GROUP } from "@/lib/utils/constant";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
@@ -83,6 +84,11 @@ export default function GetKey() {
             >
               {t("getKey")}
             </button>
+            <p className="text-sm text-center mt-3">
+              <a href={QQ_GROUP} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
+                {t("haveQuestion")}
+              </a>
+            </p>
           </form>
         </div>
       </div>
