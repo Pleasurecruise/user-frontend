@@ -7,7 +7,7 @@ import { Home } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import ShowKeyInfo from "@/components/checkout/ShowKeyInfo";
 import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
-import { QQ_GROUP } from "@/lib/utils/constant";
+import QQGroupLink from "@/components/QQGroupLink";
 
 interface AfdianPaymentModalProps {
   open: boolean;
@@ -89,9 +89,7 @@ export default function AfdianPaymentModal({ open, isLoading = true, onClose, or
                         {t("paymentNote")}
                       </p>
                       <p className="text-sm text-center mt-3">
-                        <a href={QQ_GROUP} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-                          {t("paymentIssue")}
-                        </a>
+                        <QQGroupLink text={t("paymentIssue")} />
                       </p>
                     </div>
                   </>

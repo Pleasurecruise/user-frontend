@@ -5,6 +5,7 @@ import moment from "moment";
 import CopyButton from "@/components/CopyButton";
 import { Link } from "@/i18n/routing";
 import { SERVER_BACKEND } from "@/app/requests/misc";
+import QQGroupLink from "@/components/QQGroupLink";
 
 type Props = {
   searchParams: Promise<{ order_id: string }>
@@ -50,6 +51,9 @@ export default async function ShowKey({ searchParams }: Props) {
                 <span>{t("timeLeft", { relativeTime })}</span>
               </p>
             </div>
+            <p className="text-sm text-center mt-6">
+              <QQGroupLink text={t("haveQuestion")} />
+            </p>
           </div>
         </div>
       </div>
@@ -69,6 +73,9 @@ export default async function ShowKey({ searchParams }: Props) {
               {t("goBack")}
             </button>
           </Link>
+          <p className="text-sm text-center mt-6">
+            <QQGroupLink text={t("haveQuestion")} />
+          </p>
         </div>
       </div>
     </div>
