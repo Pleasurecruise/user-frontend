@@ -450,7 +450,7 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("alipay")}
-              open={showModal == "alipay" && !isMobile}
+              open={showModal === "alipay" && !isMobile}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
@@ -471,7 +471,7 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("wechatPay")}
-              open={showModal == "wechatPay"}
+              open={showModal === "wechatPay"}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
@@ -483,7 +483,7 @@ export default function Checkout(params: CheckoutProps) {
         {
           planInfo && isMobile &&
           <WaitForPayModal
-            open={showModal == "alipay"}
+            open={showModal === "alipay"}
             paymentType={t("alipay")}
             isLoading={isPolling}
             orderInfo={orderInfo}
@@ -493,7 +493,7 @@ export default function Checkout(params: CheckoutProps) {
         {
           planInfo?.afdian_info &&
           <WaitForPayModal
-            open={showModal == "afdian"}
+            open={showModal === "afdian"}
             paymentType={t("afdianPayment")}
             isLoading={isPolling}
             orderInfo={orderInfo}
