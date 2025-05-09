@@ -7,10 +7,11 @@ import { Link, useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
 import NoOrder from "@/app/[locale]/checkout/NoOrder";
-import YmPaymentModal from "@/components/checkout/YmPaymentModal";
-import AfdianPaymentModal from "@/components/checkout/AfdianPaymentModal";
+import QRCodePayModal from "@/components/checkout/QRCodePayModal";
+import WaitForPayModal from "@/components/checkout/WaitForPayModal";
 import { addToast } from "@heroui/toast";
 import PaymentOption from "@/components/checkout/PaymentOption";
+import { isMobile } from "react-device-detect"
 
 
 export interface CheckoutProps {
@@ -418,7 +419,7 @@ export default function Checkout(params: CheckoutProps) {
         {
           planInfo &&
           <>
-            <YmPaymentModal
+            <QRCodePayModal
               qrCodeCircleColor={"bg-[#009FE8] border-2 border-[#009FE8]"}
               qrCodeIcon={
                 <div className="w-10 h-10 bg-white  rounded-lg flex items-center justify-center mr-3">
@@ -439,7 +440,7 @@ export default function Checkout(params: CheckoutProps) {
               isPolling={isPolling}
               onClose={handleCloseModal}
             />
-            <YmPaymentModal
+            <QRCodePayModal
               qrCodeCircleColor={"bg-[#15BA11] border-2 border-[#15BA11]"}
               qrCodeIcon={
                 <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
@@ -465,7 +466,7 @@ export default function Checkout(params: CheckoutProps) {
 
         {
           planInfo?.afdian_info &&
-          <AfdianPaymentModal
+          <WaitForPayModal
             open={showModal == "afdian"}
             isLoading={isPolling}
             orderInfo={orderInfo}

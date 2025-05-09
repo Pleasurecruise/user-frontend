@@ -1,7 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle, MessageCircle, Layers } from "lucide-react";
 import moment from "moment/moment";
-import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
+import { OrderInfoType } from "@/components/checkout/QRCodePayModal";
 import { addToast } from "@heroui/toast";
 import { QQ_GROUP } from "@/lib/utils/constant";
 
