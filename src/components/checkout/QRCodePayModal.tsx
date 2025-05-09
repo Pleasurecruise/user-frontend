@@ -14,7 +14,7 @@ export interface OrderInfoType {
   expired_at?: string;
 }
 
-export interface YmPaymentModalProps {
+export interface QRCodePayModalProps {
   open: boolean;
   paymentUrl?: string;
   paymentType: string;
@@ -31,7 +31,7 @@ export interface YmPaymentModalProps {
 }
 
 
-export default function YmPaymentModal({
+export default function QRCodePayModal({
   open,
   paymentType,
   paymentUrl,
@@ -41,7 +41,7 @@ export default function YmPaymentModal({
   rate,
   qrCodeCircleColor,
   qrCodeIcon,
-}: YmPaymentModalProps) {
+}: QRCodePayModalProps) {
   const gT = useTranslations('GetStart');
   const t = useTranslations("Checkout");
   const router = useRouter();

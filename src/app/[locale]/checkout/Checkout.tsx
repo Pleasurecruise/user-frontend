@@ -7,10 +7,11 @@ import { Link, useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
 import NoOrder from "@/app/[locale]/checkout/NoOrder";
-import YmPaymentModal from "@/components/checkout/YmPaymentModal";
-import AfdianPaymentModal from "@/components/checkout/AfdianPaymentModal";
+import QRCodePayModal from "@/components/checkout/QRCodePayModal";
+import WaitForPayModal from "@/components/checkout/WaitForPayModal";
 import { addToast } from "@heroui/toast";
 import PaymentOption from "@/components/checkout/PaymentOption";
+import { isMobile } from "react-device-detect"
 
 
 export interface CheckoutProps {
@@ -42,10 +43,10 @@ const Qrcode: Record<PaymentMethod | any, YmPayType> = {
 };
 
 type CreateOrderType = {
-  "pay_url": string,
-  "custom_order_id": string,
-  "amount": number,
-  "title": string,
+  pay_url: string,
+  custom_order_id: string,
+  amount: number,
+  title: string,
 }
 
 interface OrderInfoType {
@@ -57,10 +58,11 @@ interface OrderInfoType {
 
 export default function Checkout(params: CheckoutProps) {
   const t = useTranslations("Checkout");
+  const gT = useTranslations('GetStart');
+
+
   const router = useRouter();
 
-
-  const gT = useTranslations('GetStart');
 
   const planId = params.planId[0];
   const [loading, setLoading] = useState(false);
@@ -147,6 +149,10 @@ export default function Checkout(params: CheckoutProps) {
       setIsPolling(true);
       intervalIdRef.current = setInterval(fetchOrderStatus, 1500);
 
+      setTimeout(() => {
+        location.reload();
+      }, 40 * 1000 * 60)
+
       return () => {
         if (intervalIdRef.current) {
           clearInterval(intervalIdRef.current);
@@ -161,9 +167,26 @@ export default function Checkout(params: CheckoutProps) {
     return <NoOrder />;
   }
 
+  const handleAfdianPayment = () => {
+    const customOrderId = Date.now() + Math.random().toString(36).slice(2);
+    const base = "https://ifdian.net/order/create?product_type=1";
+    const planId = planInfo?.afdian_info.plan_id;
+    const skuId = planInfo?.afdian_info.sku_id;
+    const url = base + `&plan_id=${planId}&sku=%5B%7B%22sku_id%22%3A%22${skuId}%22%2C%22count%22%3A1%7D%5D&viokrz_ex=0&custom_order_id=${customOrderId}`;
+    window.open(url, "_blank");
+
+    setShowModal(paymentMethod);
+    setCustomOrderId(customOrderId);
+  }
+
   const handlePayment = async () => {
     setLoading(true);
     try {
+      if (paymentMethod === "afdian") {
+        handleAfdianPayment()
+        return;
+      }
+
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
 
         const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
@@ -177,20 +200,15 @@ export default function Checkout(params: CheckoutProps) {
         }
         const orderInfo = await resp.json().then(e => e.data) as CreateOrderType;
 
+        if (isMobile && paymentMethod === "alipay") {
+          window.open(orderInfo.pay_url, "_blank");
+        }
+
         setPaymentUrl(orderInfo.pay_url);
         setCustomOrderId(orderInfo.custom_order_id);
         setShowModal(paymentMethod);
 
-      } else if (paymentMethod === "afdian") {
-        const customOrderId = Date.now() + Math.random().toString(36).slice(2);
-        const base = "https://ifdian.net/order/create?product_type=1";
-        const planId = planInfo?.afdian_info.plan_id;
-        const skuId = planInfo?.afdian_info.sku_id;
-        const url = base + `&plan_id=${planId}&sku=%5B%7B%22sku_id%22%3A%22${skuId}%22%2C%22count%22%3A1%7D%5D&viokrz_ex=0&custom_order_id=${customOrderId}`;
-        window.open(url, "_blank");
 
-        setShowModal(paymentMethod);
-        setCustomOrderId(customOrderId);
       }
     } catch (error) {
       console.log(error);
@@ -272,7 +290,8 @@ export default function Checkout(params: CheckoutProps) {
                   </div>
 
                   <div className="flex justify-between items-center ">
-                    <span className="text-gray-600 dark:text-gray-400">{t(discount ? "originalPrice" : "Price")}</span>
+                    <span
+                      className="text-gray-600 dark:text-gray-400">{t(discount ? "originalPrice" : "Price")}</span>
                     <span
                       className={
                         discount ? "text-gray-500 dark:text-gray-400 line-through"
@@ -321,7 +340,7 @@ export default function Checkout(params: CheckoutProps) {
                     <PaymentOption checked={paymentMethod === "wechatPay"}
                       onClick={() => handlePaymentMethodChange("wechatPay")}
                       name={t("wechatPay")}
-                      recommended={true}
+                      recommend={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
                         <svg className="icon" viewBox="0 0 1228 1024" version="1.1"
@@ -339,7 +358,8 @@ export default function Checkout(params: CheckoutProps) {
                     <PaymentOption checked={paymentMethod === "alipay"}
                       onClick={() => handlePaymentMethodChange("alipay")}
                       name={t("alipay")}
-                      recommended={true}
+                      recommend={true}
+                      mobilePay={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
                         <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -407,7 +427,8 @@ export default function Checkout(params: CheckoutProps) {
                   <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500" />
                   <span>{t("securePayment")}</span>
                 </div>
-                <a href="/disclaimer.html" target="_blank" className="block text-center text-xs text-gray-500 dark:text-gray-400">
+                <a href="/disclaimer.html" target="_blank"
+                  className="block text-center text-xs text-gray-500 dark:text-gray-400">
                   {t("privacyNotice")}
                 </a>
               </div>
@@ -418,7 +439,7 @@ export default function Checkout(params: CheckoutProps) {
         {
           planInfo &&
           <>
-            <YmPaymentModal
+            <QRCodePayModal
               qrCodeCircleColor={"bg-[#009FE8] border-2 border-[#009FE8]"}
               qrCodeIcon={
                 <div className="w-10 h-10 bg-white  rounded-lg flex items-center justify-center mr-3">
@@ -432,14 +453,14 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("alipay")}
-              open={showModal == "alipay"}
+              open={showModal === "alipay" && !isMobile}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
               isPolling={isPolling}
               onClose={handleCloseModal}
             />
-            <YmPaymentModal
+            <QRCodePayModal
               qrCodeCircleColor={"bg-[#15BA11] border-2 border-[#15BA11]"}
               qrCodeIcon={
                 <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
@@ -453,7 +474,7 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("wechatPay")}
-              open={showModal == "wechatPay"}
+              open={showModal === "wechatPay"}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
@@ -462,11 +483,21 @@ export default function Checkout(params: CheckoutProps) {
             />
           </>
         }
-
+        {
+          planInfo && isMobile &&
+          <WaitForPayModal
+            open={showModal === "alipay"}
+            paymentType={t("alipay")}
+            isLoading={isPolling}
+            orderInfo={orderInfo}
+            onClose={handleCloseModal}
+          />
+        }
         {
           planInfo?.afdian_info &&
-          <AfdianPaymentModal
-            open={showModal == "afdian"}
+          <WaitForPayModal
+            open={showModal === "afdian"}
+            paymentType={t("afdianPayment")}
             isLoading={isPolling}
             orderInfo={orderInfo}
             onClose={handleCloseModal}
