@@ -1,7 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle, MessageCircle, Layers } from "lucide-react";
 import moment from "moment/moment";
-import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
+import { OrderInfoType } from "@/components/checkout/QRCodePayModal";
 import { addToast } from "@heroui/toast";
 import { QQ_GROUP } from "@/lib/utils/constant";
 
@@ -71,9 +71,9 @@ export default function ShowKeyInfo(props: {
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {t.rich("expireAt", { time })}
           </span>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {t.rich("timeLeft", { relativeTime })}
-          </span>
+          </div>
         </>
       )}
       <div className="mt-4 flex items-center justify-center">

@@ -6,17 +6,18 @@ import { Fragment } from "react";
 import { Home } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import ShowKeyInfo from "@/components/checkout/ShowKeyInfo";
-import { OrderInfoType } from "@/components/checkout/YmPaymentModal";
+import { OrderInfoType } from "@/components/checkout/QRCodePayModal";
 import QQGroupLink from "@/components/QQGroupLink";
 
-interface AfdianPaymentModalProps {
+interface WaitForPayModalProps {
   open: boolean;
+  paymentType: string;
   isLoading?: boolean;
   onClose?: () => void;
   orderInfo?: OrderInfoType;
 }
 
-export default function AfdianPaymentModal({ open, isLoading = true, onClose, orderInfo }: AfdianPaymentModalProps) {
+export default function WaitForPayModal({ open, paymentType, isLoading = true, onClose, orderInfo }: WaitForPayModalProps) {
   const t = useTranslations("Checkout");
   const orderT = useTranslations("Order");
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function AfdianPaymentModal({ open, isLoading = true, onClose, or
                     as="h3"
                     className="text-xl font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    {t("afdianPayment")}
+                    {paymentType}
                   </DialogTitle>
                   {/* {
                     orderInfo &&
