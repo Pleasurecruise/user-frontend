@@ -165,7 +165,24 @@ export default function Checkout(params: CheckoutProps) {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
+      if (isMobile && paymentMethod === "alipay") {
+        const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
+        if (resp.status !== 200) {
+          addToast({
+            color: "warning",
+            description: t("createOrderError"),
+          });
+          return;
+        }
+        const orderInfo = await resp.json().then(e => e.data) as CreateOrderType;
+        window.open(orderInfo.pay_url, "_blank");
+
+        setPaymentUrl(orderInfo.pay_url);
+        setCustomOrderId(orderInfo.custom_order_id);
+        setShowModal(paymentMethod);
+      }
+      else if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
 
         const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
@@ -433,7 +450,7 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("alipay")}
-              open={showModal == "alipay"}
+              open={showModal == "alipay" && !isMobile}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
@@ -463,11 +480,21 @@ export default function Checkout(params: CheckoutProps) {
             />
           </>
         }
-
+        {
+          planInfo && isMobile &&
+          <WaitForPayModal
+            open={showModal == "alipay"}
+            paymentType={t("alipay")}
+            isLoading={isPolling}
+            orderInfo={orderInfo}
+            onClose={handleCloseModal}
+          />
+        }
         {
           planInfo?.afdian_info &&
           <WaitForPayModal
             open={showModal == "afdian"}
+            paymentType={t("afdianPayment")}
             isLoading={isPolling}
             orderInfo={orderInfo}
             onClose={handleCloseModal}

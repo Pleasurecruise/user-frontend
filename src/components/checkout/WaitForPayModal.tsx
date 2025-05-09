@@ -11,12 +11,13 @@ import QQGroupLink from "@/components/QQGroupLink";
 
 interface WaitForPayModalProps {
   open: boolean;
+  paymentType: string;
   isLoading?: boolean;
   onClose?: () => void;
   orderInfo?: OrderInfoType;
 }
 
-export default function WaitForPayModal({ open, isLoading = true, onClose, orderInfo }: WaitForPayModalProps) {
+export default function WaitForPayModal({ open, paymentType, isLoading = true, onClose, orderInfo }: WaitForPayModalProps) {
   const t = useTranslations("Checkout");
   const orderT = useTranslations("Order");
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function WaitForPayModal({ open, isLoading = true, onClose, order
                     as="h3"
                     className="text-xl font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    {t("afdianPayment")}
+                    {paymentType}
                   </DialogTitle>
                   {/* {
                     orderInfo &&
