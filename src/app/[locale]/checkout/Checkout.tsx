@@ -43,10 +43,10 @@ const Qrcode: Record<PaymentMethod | any, YmPayType> = {
 };
 
 type CreateOrderType = {
-  "pay_url": string,
-  "custom_order_id": string,
-  "amount": number,
-  "title": string,
+  pay_url: string,
+  custom_order_id: string,
+  amount: number,
+  title: string,
 }
 
 interface OrderInfoType {
@@ -58,10 +58,11 @@ interface OrderInfoType {
 
 export default function Checkout(params: CheckoutProps) {
   const t = useTranslations("Checkout");
+  const gT = useTranslations('GetStart');
+
+
   const router = useRouter();
 
-
-  const gT = useTranslations('GetStart');
 
   const planId = params.planId[0];
   const [loading, setLoading] = useState(false);
@@ -148,6 +149,10 @@ export default function Checkout(params: CheckoutProps) {
       setIsPolling(true);
       intervalIdRef.current = setInterval(fetchOrderStatus, 1500);
 
+      setTimeout(() => {
+        location.reload();
+      }, 40 * 1000 * 60)
+
       return () => {
         if (intervalIdRef.current) {
           clearInterval(intervalIdRef.current);
@@ -162,27 +167,27 @@ export default function Checkout(params: CheckoutProps) {
     return <NoOrder />;
   }
 
+  const handleAfdianPayment = () => {
+    const customOrderId = Date.now() + Math.random().toString(36).slice(2);
+    const base = "https://ifdian.net/order/create?product_type=1";
+    const planId = planInfo?.afdian_info.plan_id;
+    const skuId = planInfo?.afdian_info.sku_id;
+    const url = base + `&plan_id=${planId}&sku=%5B%7B%22sku_id%22%3A%22${skuId}%22%2C%22count%22%3A1%7D%5D&viokrz_ex=0&custom_order_id=${customOrderId}`;
+    window.open(url, "_blank");
+
+    setShowModal(paymentMethod);
+    setCustomOrderId(customOrderId);
+  }
+
   const handlePayment = async () => {
     setLoading(true);
     try {
-      if (isMobile && paymentMethod === "alipay") {
-        const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
-        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
-        if (resp.status !== 200) {
-          addToast({
-            color: "warning",
-            description: t("createOrderError"),
-          });
-          return;
-        }
-        const orderInfo = await resp.json().then(e => e.data) as CreateOrderType;
-        window.open(orderInfo.pay_url, "_blank");
-
-        setPaymentUrl(orderInfo.pay_url);
-        setCustomOrderId(orderInfo.custom_order_id);
-        setShowModal(paymentMethod);
+      if (paymentMethod === "afdian") {
+        handleAfdianPayment()
+        return;
       }
-      else if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
+
+      if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
 
         const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
@@ -195,20 +200,15 @@ export default function Checkout(params: CheckoutProps) {
         }
         const orderInfo = await resp.json().then(e => e.data) as CreateOrderType;
 
+        if (isMobile && paymentMethod === "alipay") {
+          window.open(orderInfo.pay_url, "_blank");
+        }
+
         setPaymentUrl(orderInfo.pay_url);
         setCustomOrderId(orderInfo.custom_order_id);
         setShowModal(paymentMethod);
 
-      } else if (paymentMethod === "afdian") {
-        const customOrderId = Date.now() + Math.random().toString(36).slice(2);
-        const base = "https://ifdian.net/order/create?product_type=1";
-        const planId = planInfo?.afdian_info.plan_id;
-        const skuId = planInfo?.afdian_info.sku_id;
-        const url = base + `&plan_id=${planId}&sku=%5B%7B%22sku_id%22%3A%22${skuId}%22%2C%22count%22%3A1%7D%5D&viokrz_ex=0&custom_order_id=${customOrderId}`;
-        window.open(url, "_blank");
 
-        setShowModal(paymentMethod);
-        setCustomOrderId(customOrderId);
       }
     } catch (error) {
       console.log(error);
@@ -290,7 +290,8 @@ export default function Checkout(params: CheckoutProps) {
                   </div>
 
                   <div className="flex justify-between items-center ">
-                    <span className="text-gray-600 dark:text-gray-400">{t(discount ? "originalPrice" : "Price")}</span>
+                    <span
+                      className="text-gray-600 dark:text-gray-400">{t(discount ? "originalPrice" : "Price")}</span>
                     <span
                       className={
                         discount ? "text-gray-500 dark:text-gray-400 line-through"
@@ -425,7 +426,8 @@ export default function Checkout(params: CheckoutProps) {
                   <ShieldCheck className="w-4 h-4 mr-2 text-emerald-500" />
                   <span>{t("securePayment")}</span>
                 </div>
-                <a href="/disclaimer.html" target="_blank" className="block text-center text-xs text-gray-500 dark:text-gray-400">
+                <a href="/disclaimer.html" target="_blank"
+                  className="block text-center text-xs text-gray-500 dark:text-gray-400">
                   {t("privacyNotice")}
                 </a>
               </div>
