@@ -1,13 +1,15 @@
 import React from "react";
-import { CheckCircle, ThumbsUp } from "lucide-react";
+import { ThumbsUp, Smartphone } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { isMobile } from "react-device-detect";
 
-export default function PaymentOption({ checked, name, onClick, children, recommend = false }: {
+export default function PaymentOption({ checked, name, onClick, children, recommend = false, mobilePay = false }: {
   checked: boolean,
   children?: React.ReactNode,
   onClick: () => void,
   name: string,
-  recommend?: boolean
+  recommend?: boolean,
+  mobilePay?: boolean
 }) {
   const t = useTranslations('Checkout');
   return (<label
@@ -18,6 +20,13 @@ export default function PaymentOption({ checked, name, onClick, children, recomm
       <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full flex items-center shadow-sm">
         <ThumbsUp className="w-3 h-3 mr-1" />
         <span>{t('recommend')}</span>
+      </div>
+    )}
+
+    {mobilePay && isMobile && (
+      <div className="absolute -top-2 right-16 bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center shadow-sm">
+        <Smartphone className="w-3 h-3 mr-1" />
+        <span>{t('mobilePay')}</span>
       </div>
     )}
 

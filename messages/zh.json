@@ -55,7 +55,8 @@
     "errorWithPollingOrder": "订单查询失败，请重试",
     "createOrderError": "订单创建失败，请重试",
     "paymentIssue": "支付遇到问题？",
-    "recommend": "推荐"
+    "recommend": "推荐",
+    "mobilePay": "移动支付"
   },
   "GetKey": {
     "title": "欢迎使用Mirror酱",
