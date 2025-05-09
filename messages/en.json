@@ -60,7 +60,7 @@
     "errorWithPollingOrder": "Order query failed, please retry",
     "createOrderError": "Failed to create order, please try again",
     "paymentIssue": "Problem paying?",
-    "recommended": "recommended"
+    "recommend": "Recommend"
   },
   "GetKey": {
     "title": "Welcome to MirrorChyan",
