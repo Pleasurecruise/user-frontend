@@ -71,9 +71,9 @@ export default function ShowKeyInfo(props: {
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {t.rich("expireAt", { time })}
           </span>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {t.rich("timeLeft", { relativeTime })}
-          </span>
+          </div>
         </>
       )}
       <div className="mt-4 flex items-center justify-center">
