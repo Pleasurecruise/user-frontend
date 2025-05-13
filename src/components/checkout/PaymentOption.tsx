@@ -23,12 +23,12 @@ export default function PaymentOption({ checked, name, onClick, children, recomm
       </div>
     )}
 
-    {mobilePay && isMobile && (
+    {/* {mobilePay && isMobile && (
       <div className="absolute -top-2 right-16 bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center shadow-sm">
         <Smartphone className="w-3 h-3 mr-1" />
         <span>{t('mobilePay')}</span>
       </div>
-    )}
+    )} */}
 
     <input
       type="radio"
