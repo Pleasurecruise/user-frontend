@@ -35,11 +35,16 @@ type PaymentMethod = "alipay" | "wechatPay" | "afdian";
 
 type ShowedType = "none" | PaymentMethod;
 
-type YmPayType = "AlipayQRCode" | "WeChatQRCode"
+type YmPayType = "AlipayQRCode" | "WeChatQRCode" | "AlipayH5" | "WeChatH5"
 
-const Qrcode: Record<PaymentMethod | any, YmPayType> = {
+const PayWithQrcode: Record<PaymentMethod | any, YmPayType> = {
   alipay: "AlipayQRCode",
   wechatPay: "WeChatQRCode",
+};
+
+const PayWithH5: Record<PaymentMethod | any, YmPayType> = {
+  alipay: "AlipayH5",
+  wechatPay: "WeChatH5",
 };
 
 type CreateOrderType = {
@@ -79,6 +84,7 @@ export default function Checkout(params: CheckoutProps) {
 
   const [hasError, setHasError] = useState(false);
 
+  const usePayWithH5 = isMobile;
 
   useEffect(() => {
     (async () => {
@@ -188,8 +194,7 @@ export default function Checkout(params: CheckoutProps) {
       }
 
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
-
-        const params = `pay=${Qrcode[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+        const params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
         if (resp.status !== 200) {
           addToast({
@@ -200,15 +205,13 @@ export default function Checkout(params: CheckoutProps) {
         }
         const orderInfo = await resp.json().then(e => e.data) as CreateOrderType;
 
-        if (isMobile && paymentMethod === "alipay") {
+        if (usePayWithH5) {
           window.open(orderInfo.pay_url, "_blank");
         }
 
         setPaymentUrl(orderInfo.pay_url);
         setCustomOrderId(orderInfo.custom_order_id);
         setShowModal(paymentMethod);
-
-
       }
     } catch (error) {
       console.log(error);
@@ -341,6 +344,7 @@ export default function Checkout(params: CheckoutProps) {
                       onClick={() => handlePaymentMethodChange("wechatPay")}
                       name={t("wechatPay")}
                       recommend={true}
+                      mobilePay={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
                         <svg className="icon" viewBox="0 0 1228 1024" version="1.1"
@@ -437,7 +441,7 @@ export default function Checkout(params: CheckoutProps) {
         )}
 
         {
-          planInfo &&
+          planInfo && !usePayWithH5 &&
           <>
             <QRCodePayModal
               qrCodeCircleColor={"bg-[#009FE8] border-2 border-[#009FE8]"}
@@ -453,7 +457,7 @@ export default function Checkout(params: CheckoutProps) {
               }
               paymentUrl={paymentUrl}
               paymentType={t("alipay")}
-              open={showModal === "alipay" && !isMobile}
+              open={showModal === "alipay"}
               planInfo={planInfo}
               rate={params.rate}
               orderInfo={orderInfo}
@@ -484,14 +488,23 @@ export default function Checkout(params: CheckoutProps) {
           </>
         }
         {
-          planInfo && isMobile &&
-          <WaitForPayModal
-            open={showModal === "alipay"}
-            paymentType={t("alipay")}
-            isLoading={isPolling}
-            orderInfo={orderInfo}
-            onClose={handleCloseModal}
-          />
+          planInfo && usePayWithH5 &&
+          <>
+            <WaitForPayModal
+              open={showModal === "wechatPay"}
+              paymentType={t("wechatPay")}
+              isLoading={isPolling}
+              orderInfo={orderInfo}
+              onClose={handleCloseModal}
+            />
+            <WaitForPayModal
+              open={showModal === "alipay"}
+              paymentType={t("alipay")}
+              isLoading={isPolling}
+              orderInfo={orderInfo}
+              onClose={handleCloseModal}
+            />
+          </>
         }
         {
           planInfo?.afdian_info &&
