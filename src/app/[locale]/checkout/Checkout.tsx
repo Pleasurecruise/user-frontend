@@ -11,7 +11,7 @@ import QRCodePayModal from "@/components/checkout/QRCodePayModal";
 import WaitForPayModal from "@/components/checkout/WaitForPayModal";
 import { addToast } from "@heroui/toast";
 import PaymentOption from "@/components/checkout/PaymentOption";
-import { isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect"
 
 
 export interface CheckoutProps {
@@ -63,7 +63,7 @@ interface OrderInfoType {
 
 export default function Checkout(params: CheckoutProps) {
   const t = useTranslations("Checkout");
-  const gT = useTranslations("GetStart");
+  const gT = useTranslations('GetStart');
 
 
   const router = useRouter();
@@ -101,8 +101,8 @@ export default function Checkout(params: CheckoutProps) {
             setHasError(true);
             return;
           }
-          const detail = data as PlanInfoDetail;
-          setPaymentMethod(detail.yimapay_id ? "wechatPay" : "afdian");
+          const detail = data as PlanInfoDetail
+          setPaymentMethod(detail.yimapay_id ? 'wechatPay' : 'afdian')
           setPlanInfo(detail);
         }
       } catch (error) {
@@ -111,10 +111,9 @@ export default function Checkout(params: CheckoutProps) {
         setPlanInfoLoading(false);
       }
     })();
-  }, [planId, t]);
+  }, []);
 
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchOrderStatus = async () => {
     if (!customOrderId) return;
 
@@ -158,7 +157,7 @@ export default function Checkout(params: CheckoutProps) {
 
       setTimeout(() => {
         location.reload();
-      }, 40 * 1000 * 60);
+      }, 40 * 1000 * 60)
 
       return () => {
         if (intervalIdRef.current) {
@@ -168,7 +167,7 @@ export default function Checkout(params: CheckoutProps) {
         }
       };
     }
-  }, [customOrderId, fetchOrderStatus]);
+  }, [customOrderId]);
 
   if (!params.planId || params.planId.length > 1 || hasError) {
     return <NoOrder />;
@@ -184,13 +183,13 @@ export default function Checkout(params: CheckoutProps) {
 
     setShowModal(paymentMethod);
     setCustomOrderId(customOrderId);
-  };
+  }
 
   const handlePayment = async () => {
     setLoading(true);
     try {
       if (paymentMethod === "afdian") {
-        handleAfdianPayment();
+        handleAfdianPayment()
         return;
       }
 
@@ -227,8 +226,8 @@ export default function Checkout(params: CheckoutProps) {
 
   const discount = planInfo?.original_price !== planInfo?.price;
   const finalPrice = (+((discount ? planInfo?.price : planInfo?.original_price) ?? 0) * params.rate).toFixed(2);
-  const originPrice = (+(planInfo?.original_price ?? 0) * params.rate).toFixed(2);
-  const currentPrice = (+(planInfo?.price ?? 0) * params.rate).toFixed(2);
+  const originPrice = (+(planInfo?.original_price ?? 0) * params.rate).toFixed(2)
+  const currentPrice = (+(planInfo?.price ?? 0) * params.rate).toFixed(2)
 
   const handlePaymentMethodChange = (method: PaymentMethod) => {
     setPaymentMethod(method);
@@ -247,7 +246,7 @@ export default function Checkout(params: CheckoutProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
         <div className="mb-8">
           <button
-            onClick={() => router.replace("/")}
+            onClick={() => router.replace('/')}
             className="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -301,7 +300,7 @@ export default function Checkout(params: CheckoutProps) {
                         discount ? "text-gray-500 dark:text-gray-400 line-through"
                           : "font-medium text-gray-900 dark:text-white"
                       }>
-                      {`${gT("priceSymbol")} ${originPrice}`}
+                      {`${gT('priceSymbol')} ${originPrice}`}
                     </span>
                   </div>
 
@@ -309,7 +308,7 @@ export default function Checkout(params: CheckoutProps) {
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 dark:text-gray-400">{t("discountPrice")}</span>
                       <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                        {`${gT("priceSymbol")} ${currentPrice}`}
+                        {`${gT('priceSymbol')} ${currentPrice}`}
                       </span>
                     </div>
                   )}
@@ -325,7 +324,7 @@ export default function Checkout(params: CheckoutProps) {
                     <span
                       className="text-lg font-semibold text-gray-900 dark:text-white">{t("totalAmount")}</span>
                     <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-                      {gT("priceSymbol")} {finalPrice}
+                      {gT('priceSymbol')} {finalPrice}
                     </span>
                   </div>
                 </div>
