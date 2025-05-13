@@ -16,6 +16,7 @@ export type RevenueType = {
   buy_count: number
   plan: string
   user_agent: string
+  platform: string
 }
 
 export type RevenueResponse = {
