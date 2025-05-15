@@ -100,7 +100,7 @@
   },
   "Transmission": {
     "title": "合成大西瓜",
-    "description": "转移有效时间转移到另一个 CDK 上",
+    "description": "转移有效时间到另一个 CDK 上",
     "fromCdk": "CDK/兑换码",
     "transferTo": "转移到",
     "toCdk": "CDK",
