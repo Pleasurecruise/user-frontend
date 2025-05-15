@@ -68,7 +68,7 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
             ...item,
             percentage: parseFloat(((item.count / total) * 100).toFixed(1))
         }))
-            .sort((a, b) => b.count - a.count);
+            .sort((a, b) => b.count == a.count ? b.amount - a.amount : b.count - a.count);
     }
 
     // Function to prepare chart data by grouping
@@ -118,9 +118,9 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     // CSV export handler
     const handleExport = debounce(async () => {
         const filename = `MirrorChyan Sales ${rid} ${date}.csv`;
-        const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,buy_count,amount\n" +
+        const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,platform,buy_count,amount\n" +
             revenueData.map(d =>
-                `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.buy_count},${d.amount}`)
+                `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.platform},${d.buy_count},${d.amount}`)
                 .join("\n");
 
         const blob = new Blob([csvContent], { type: "text/csv" });

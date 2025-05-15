@@ -15,121 +15,127 @@ export default function Transmission() {
   const t = useTranslations("Transmission");
   const router = useRouter();
 
-  const [fromOrderId, setFromOrderId] = useState("");
-  const [fromOrderDescription, setFromOrderDescription] = useState("");
-  const [fromOrderIdValid, setFromOrderIdValid] = useState(false);
-  const [toOrderId, setToOrderId] = useState("");
-  const [toOrderDescription, setToOrderDescription] = useState("");
-  const [toOrderIdValid, setToOrderIdValid] = useState(false);
+  const [fromCdk, setFromCdk] = useState("");
+  const [fromCdkDescription, setFromCdkDescription] = useState("");
+  const [fromCdkValid, setFromCdkValid] = useState(false);
+  const [toCdk, setToCdk] = useState("");
+  const [toCdkDescription, setToCdkDescription] = useState("");
+  const [toCdkValid, setToCdkValid] = useState(false);
+  const [showOrderId, setShowOrderId] = useState("");
   const [transfering, setTransfering] = useState(false);
 
-  async function handleReward(orderId: string) {
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/reward?reward_key=${orderId}`);
+  async function handleReward(key: string) {
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/reward?reward_key=${key}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
       if (data.remaining <= 0) {
-        setFromOrderDescription(t("rewardUsedUp"));
+        setFromCdkDescription(t("rewardUsedUp"));
         return;
       }
       const startAt = moment(data.start_at);
       const expiredAt = moment(data.expired_at);
       if (startAt.isAfter(moment())) {
-        setFromOrderDescription(t("rewardNotStarted"));
+        setFromCdkDescription(t("rewardNotStarted"));
         return;
       }
       if (expiredAt.isBefore(moment())) {
-        setFromOrderDescription(t("rewardExpired"));
+        setFromCdkDescription(t("rewardExpired"));
         return;
       }
       const valid_days = data.valid_days;
-      setFromOrderDescription(t("rewardValidDays", { valid_days }));
-      setFromOrderIdValid(true);
+      setFromCdkDescription(t("rewardValidDays", { valid_days }));
+      setFromCdkValid(true);
+    }
+    else {
+      setFromCdkDescription(t("fromNotFound"));
+      setFromCdkValid(false);
     }
   }
 
-  function IsReward(orderId: string) {
-    return !Number(orderId) && !orderId.startsWith("YMF");
+  function IsReward(cdk: string) {
+    return cdk.length != 24;
   }
 
-  async function requestFromOrderId(orderId: string) {
-    if (IsReward(orderId)) {
-      await handleReward(orderId);
+  async function requestFromCdk(cdk: string) {
+    if (IsReward(cdk)) {
+      await handleReward(cdk);
       return;
     }
 
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?cdk=${cdk}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
       const expiredAt = moment(data.expired_at);
       const createdAt = moment(data.created_at);
       if (expiredAt.isBefore(moment())) {
-        setFromOrderDescription(t("orderExpired"));
+        setFromCdkDescription(t("cdkExpired"));
         return;
       }
       if (createdAt.isBefore(moment().subtract(3, "day"))) {
-        setFromOrderDescription(t("orderTooOld"));
+        setFromCdkDescription(t("cdkTooOld"));
         return;
       }
       const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
-      setFromOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
-      setFromOrderIdValid(true);
+      setFromCdkDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
+      setFromCdkValid(true);
     }
     else {
-      setFromOrderDescription(msg);
-      setFromOrderIdValid(false);
+      setFromCdkDescription(msg);
+      setFromCdkValid(false);
     }
   }
 
-  async function requestToOrderId(orderId: string) {
-    if (IsReward(orderId)) {
-      setToOrderDescription(t("rewardFillInLeft"));
-      setToOrderIdValid(false);
+  async function requestToCdk(cdk: string) {
+    if (IsReward(cdk)) {
+      setToCdkDescription(t("rewardFillInLeft"));
+      setToCdkValid(false);
       return;
     }
 
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?cdk=${cdk}`);
     const { ec, msg, data } = await response.json();
     if (ec === 200) {
       const expiredAt = moment(data.expired_at);
       if (expiredAt.isBefore(moment())) {
-        setToOrderDescription(t("orderExpired"));
+        setToCdkDescription(t("cdkExpired"));
       } else {
         const relativeTime = format.relativeTime(expiredAt.toDate(), { unit: "day" });
-        setToOrderDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
+        setToCdkDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
       }
-      setToOrderIdValid(true);
+      setToCdkValid(true);
+      setShowOrderId(data.custom_order_id);
     }
     else {
-      setToOrderDescription(msg);
-      setToOrderIdValid(false);
+      setToCdkDescription(msg);
+      setToCdkValid(false);
     }
   }
 
-  const requestFromOrderIdDebounced = useCallback(debounce(requestFromOrderId, 2000), []);
-  const requestToOrderIdDebounced = useCallback(debounce(requestToOrderId, 2000), []);
+  const requestFromCdkDebounced = useCallback(debounce(requestFromCdk, 2000), []);
+  const requestToCdkDebounced = useCallback(debounce(requestToCdk, 2000), []);
 
-  async function handleFromOrderIdChange(e: ChangeEvent<HTMLInputElement>) {
+  async function handleFromCdkChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    setFromOrderId(value);
-    setFromOrderDescription("");
-    setFromOrderIdValid(false);
-    requestFromOrderIdDebounced(value);
+    setFromCdk(value);
+    setFromCdkDescription("");
+    setFromCdkValid(false);
+    requestFromCdkDebounced(value);
   }
 
-  async function handleToOrderIdChange(e: ChangeEvent<HTMLInputElement>) {
+  async function handleToCdkChange(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    setToOrderId(value);
-    setToOrderDescription("");
-    setToOrderIdValid(false);
-    requestToOrderIdDebounced(value);
+    setToCdk(value);
+    setToCdkDescription("");
+    setToCdkValid(false);
+    requestToCdkDebounced(value);
   }
 
   async function handleTransfer() {
     setTransfering(true);
-    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/transfer?from=${fromOrderId}&to=${toOrderId}`);
+    const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/transfer?from=${fromCdk}&to=${toCdk}`);
     const { ec, msg } = await response.json();
     if (ec === 200) {
-      router.replace(`/show-key?order_id=${toOrderId}`);
+      router.replace(`/show-key?order_id=${showOrderId}`);
     } else {
       alert(msg);
     }
@@ -155,19 +161,19 @@ export default function Transmission() {
         <div className="flex flex-col md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0 md:space-x-6">
           <Input
             className="w-full md:min-w-[10rem]"
-            label={t("fromOrderId")}
-            value={fromOrderId}
-            onChange={handleFromOrderIdChange}
-            description={fromOrderDescription}
+            label={t("fromCdk")}
+            value={fromCdk}
+            onChange={handleFromCdkChange}
+            description={fromCdkDescription}
           />
           <div className="hidden md:block px-2 py-1 md:py-0 flex-1 text-nowrap">{t("transferTo")}</div>
           <div className="rotate-90 md:rotate-0 px-2 py-1 md:py-0">→</div>
           <Input
             className="w-full md:min-w-[10rem]"
-            label={t("toOrderId")}
-            value={toOrderId}
-            onChange={handleToOrderIdChange}
-            description={toOrderDescription}
+            label={t("toCdk")}
+            value={toCdk}
+            onChange={handleToCdkChange}
+            description={toCdkDescription}
           />
         </div>
         <div className="mt-4">
@@ -178,7 +184,7 @@ export default function Transmission() {
           onClick={handleTransfer}
           color="primary"
           isLoading={transfering}
-          isDisabled={!fromOrderIdValid || !toOrderIdValid}
+          isDisabled={!fromCdkValid || !toCdkValid}
         >
           {t("transfer")}
         </Button>
