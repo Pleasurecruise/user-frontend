@@ -102,7 +102,7 @@
     "description": "转移有效时间转移到另一个 CDK 上",
     "fromCdk": "CDK/兑换码",
     "transferTo": "转移到",
-    "toCDK": "CDK",
+    "toCdk": "CDK",
     "transfer": "转移",
     "timeRemain": "剩余时长: {duration}",
     "expireAt": "在 {time} 内可用，共计{duration}",

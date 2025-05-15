@@ -84,6 +84,7 @@ export default function Transmission() {
     }
   }
 
+  let showOrderId: string = "";
   async function requestToCdk(cdk: string) {
     if (IsReward(cdk)) {
       setToCdkDescription(t("rewardFillInLeft"));
@@ -102,6 +103,7 @@ export default function Transmission() {
         setToCdkDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
       }
       setToCdkValid(true);
+      showOrderId = data.custom_order_id;
     }
     else {
       setToCdkDescription(msg);
@@ -131,9 +133,9 @@ export default function Transmission() {
   async function handleTransfer() {
     setTransfering(true);
     const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/transfer?from=${fromCdk}&to=${toCdk}`);
-    const { ec, msg, data } = await response.json();
+    const { ec, msg } = await response.json();
     if (ec === 200) {
-      router.replace(`/show-key?order_id=${data.custom_order_id}`);
+      router.replace(`/show-key?order_id=${showOrderId}`);
     } else {
       alert(msg);
     }
