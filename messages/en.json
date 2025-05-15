@@ -104,20 +104,21 @@
   },
   "Transmission": {
     "title": "Time Transfer",
-    "description": "Transfer the validity period of an order to another order",
-    "fromOrderId": "Order ID or Redeem code",
+    "description": "Transfer the validity period to another CDKey",
+    "fromCdk": "CDKey or Redeem code",
     "transferTo": "Transfer to",
-    "toOrderId": "Order ID",
+    "toCdk": "CDKey",
     "transfer": "Transfer",
     "timeRemain": "Remaining time: {duration}",
     "expireAt": "Valid within {time}, total {duration}",
-    "orderExpired": "Order has expired",
-    "orderTooOld": "Order creation date is more than 3 days ago",
+    "cdkExpired": "CDKey has expired",
+    "cdkTooOld": "CDKey creation date is more than 3 days ago",
     "rewardNotStarted": "Redeem code has not started yet",
     "rewardExpired": "Redeem code has expired",
     "rewardFillInLeft": "Please fill in the redeem code on the left",
     "rewardUsedUp": "Redeem code has been used up",
-    "rewardValidDays": "Can redeem for {valid_days} days"
+    "rewardValidDays": "Can redeem for {valid_days} days",
+    "fromNotFound": "Invalid key, Please check!"
   },
   "Component": {
     "CopyButton": {
