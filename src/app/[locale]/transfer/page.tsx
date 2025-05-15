@@ -22,6 +22,7 @@ export default function Transmission() {
   const [toCdkDescription, setToCdkDescription] = useState("");
   const [toCdkValid, setToCdkValid] = useState(false);
   const [transfering, setTransfering] = useState(false);
+  let showOrderId: string = "";
 
   async function handleReward(key: string) {
     const response = await fetch(`${CLIENT_BACKEND}/api/billing/reward?reward_key=${key}`);
@@ -84,7 +85,6 @@ export default function Transmission() {
     }
   }
 
-  let showOrderId: string = "";
   async function requestToCdk(cdk: string) {
     if (IsReward(cdk)) {
       setToCdkDescription(t("rewardFillInLeft"));
