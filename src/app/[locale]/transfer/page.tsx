@@ -21,8 +21,8 @@ export default function Transmission() {
   const [toCdk, setToCdk] = useState("");
   const [toCdkDescription, setToCdkDescription] = useState("");
   const [toCdkValid, setToCdkValid] = useState(false);
+  const [showOrderId, setShowOrderId] = useState("");
   const [transfering, setTransfering] = useState(false);
-  let showOrderId: string = "";
 
   async function handleReward(key: string) {
     const response = await fetch(`${CLIENT_BACKEND}/api/billing/reward?reward_key=${key}`);
@@ -103,7 +103,7 @@ export default function Transmission() {
         setToCdkDescription(`${relativeTime} (${timeFormat(expiredAt.toDate())})`);
       }
       setToCdkValid(true);
-      showOrderId = data.custom_order_id;
+      setShowOrderId(data.custom_order_id);
     }
     else {
       setToCdkDescription(msg);
