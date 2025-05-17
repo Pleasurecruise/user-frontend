@@ -85,6 +85,7 @@
     "msg": {
       "order_id not match": "Order format incorrect",
       "Order not found": "Order does not exist",
+      "order not found": "Order does not exist",
       "order_id is required": "Please enter the order ID",
       "CDK already exists": "Error, please try again"
     },
