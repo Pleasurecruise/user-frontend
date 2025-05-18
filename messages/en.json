@@ -80,6 +80,13 @@
     "orderExpired": "CDKey has expired",
     "expireAt": "Valid until {time}",
     "timeLeft": " ( {relativeTime} remain )",
+    "timeConfettiBefore": "CDK available within {time} ({days} days remaining)",
+    "timeConfettiAfter": "✨ Improved! Now available within {time}",
+    "confettiText": "🎉 Congrats! {randomDays} extra days unlocked!",
+    "remainingDays": "Remaining days: {originDay}",
+    "confettiGotText": "Extra {days} days added!",
+    "getRandomDaysText": "Get Random Bonus Days",
+    "day": "day(s)",
     "goBack": "Go Back",
     "haveQuestion": "Question about the query result?",
     "msg": {
