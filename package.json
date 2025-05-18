@@ -18,6 +18,8 @@
       "@heroui/theme": "^2.4.12",
       "@heroui/toast": "^2.0.6",
       "@heroui/use-theme": "2.1.2",
+      "@types/canvas-confetti": "^1.9.0",
+      "canvas-confetti": "^1.9.3",
       "clsx": "^2.1.1",
       "date-fns": "^4.1.0",
       "framer-motion": "^12.5.0",
