@@ -75,7 +75,7 @@
     "orderExpired": "CDKey已过期",
     "expireAt": "在 {time} 内可用",
     "timeLeft": "（剩余 {relativeTime}）",
-    "timeConfettiBefore": "CDK在 {time} 内可用（剩余 {days} 天）",
+    "timeConfettiBefore": "CDK 在 {time} 内可用（剩余 {days} 天）",
     "timeConfettiAfter": "✨已刷新至 {time} 内可用",
     "confettiText": "\uD83C\uDF89 恭喜获得额外{randomDays}天使用时间！",
     "remainingDays": " 剩余天数: {originDay}天",
