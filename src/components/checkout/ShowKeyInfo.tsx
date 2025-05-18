@@ -130,11 +130,10 @@ export default function ShowKeyInfo(props: {
                   addDay: extraDays,
                   time: expiredTime.format("YYYY-MM-DD HH:mm:ss"),
                 })}
-                <div className="mt-2 text-xs text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1">
+                <div className="mt-2 text-sm text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1">
                   {t.rich('remainingDays', { originDay: relativeDays })}
                   <TrendingUp className="h-3 w-3 mx-1" />
                   <span className="font-semibold">{relativeDays + extraDays} {t('day')}</span>
-                  <span className="ml-1 font-bold">（+{extraDays}）</span>
                 </div>
               </span>
               :

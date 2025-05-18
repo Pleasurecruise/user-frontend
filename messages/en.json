@@ -81,7 +81,7 @@
     "expireAt": "Valid until {time}",
     "timeLeft": " ( {relativeTime} remain )",
     "timeConfettiBefore": "CDK available within {time} ({days} days remaining)",
-    "timeConfettiAfter": "✨ Refreshed! Now available within {time}",
+    "timeConfettiAfter": "✨ Updated! Now available within {time}",
     "confettiText": "🎉 Congrats! {randomDays} extra days unlocked!",
     "remainingDays": "Remaining days: {originDay}",
     "confettiGotText": "Extra {days} days added!",
