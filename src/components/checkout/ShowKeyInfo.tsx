@@ -4,7 +4,7 @@ import moment from "moment/moment";
 import { OrderInfoType } from "@/components/checkout/QRCodePayModal";
 import { addToast } from "@heroui/toast";
 import { QQ_GROUP } from "@/lib/utils/constant";
-import { useState } from "react";
+import {useMemo, useState} from "react";
 import confetti from 'canvas-confetti';
 
 
@@ -19,6 +19,8 @@ export default function ShowKeyInfo(props: {
   const randomDays = 1;
 
   const [expiredTime, setExpiredTime] = useState(moment(info?.expired_at).add(-1, 'd'));
+
+  const relativeDays =  useMemo( () => Math.round(moment.duration(moment(expiredTime).diff(moment())).asDays()),[expiredTime])
 
   if (!info) {
     return <></>;
@@ -38,7 +40,6 @@ export default function ShowKeyInfo(props: {
     }
   };
 
-  const relativeDays = Math.round(moment.duration(moment(info.expired_at).diff(moment())).asDays())
 
   const handleJoinQQGroup = () => {
     window.open(QQ_GROUP, "_blank");
@@ -140,7 +141,7 @@ export default function ShowKeyInfo(props: {
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {t.rich("timeConfettiBefore", {
                   time: expiredTime.format("YYYY-MM-DD HH:mm:ss"),
-                  days: relativeDays
+                  days:relativeDays
                 })}
               </span>
           }
