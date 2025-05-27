@@ -11,7 +11,7 @@ import QQGroupLink from "@/components/QQGroupLink";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
-  const [inputOrderId, setOrderId] = useState("");
+  const [inputOrderId, setInputOrderId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -72,7 +72,7 @@ export default function GetKey() {
                 <input
                   id="key"
                   name="key"
-                  onChange={(e) => setOrderId(e.target.value)}
+                  onChange={(e) => setInputOrderId(e.target.value)}
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base dark:text-white outline outline-1 -outline-offset-1 dark:outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
