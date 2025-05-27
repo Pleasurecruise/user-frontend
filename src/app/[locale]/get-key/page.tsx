@@ -11,14 +11,14 @@ import QQGroupLink from "@/components/QQGroupLink";
 
 export default function GetKey() {
   const t = useTranslations("GetKey");
-  const [orderId, setOrderId] = useState("");
+  const [inputOrderId, setOrderId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    if (!orderId.trim()) return;
+    const orderId = inputOrderId.trim();
 
     setIsLoading(true);
 
