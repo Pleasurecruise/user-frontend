@@ -198,13 +198,16 @@ export default function Checkout(params: CheckoutProps) {
 
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
         let params: string = "";
+        let platform = "";
         if (useNativeWeixin) {
           params = `plan_id=${planInfo?.weixin_id}`
+          platform = "weixin";
         }
         else {
           params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+          platform = "yimapay";
         }
-        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
+        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/${platform}/create?${params}`);
         if (resp.status !== 200) {
           addToast({
             color: "warning",
@@ -371,7 +374,7 @@ export default function Checkout(params: CheckoutProps) {
                     <PaymentOption checked={paymentMethod === "alipay"}
                       onClick={() => handlePaymentMethodChange("alipay")}
                       name={t("alipay")}
-                      recommend={true}
+                      recommend={false}
                       mobilePay={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
