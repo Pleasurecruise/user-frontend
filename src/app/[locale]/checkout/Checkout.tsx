@@ -29,6 +29,7 @@ export interface PlanInfoDetail {
     sku_id: string;
   };
   yimapay_id: string;
+  weixin_id: string;
 }
 
 type PaymentMethod = "alipay" | "wechatPay" | "afdian";
@@ -193,8 +194,16 @@ export default function Checkout(params: CheckoutProps) {
         return;
       }
 
+      const useNativeWeixin = planInfo?.weixin_id && !usePayWithH5 && paymentMethod === "wechatPay";
+
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
-        const params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+        let params: string = "";
+        if (useNativeWeixin) {
+          params = `plan_id=${planInfo?.weixin_id}`
+        }
+        else {
+          params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+        }
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
         if (resp.status !== 200) {
           addToast({
