@@ -29,6 +29,7 @@ export interface PlanInfoDetail {
     sku_id: string;
   };
   yimapay_id: string;
+  weixin_id: string;
 }
 
 type PaymentMethod = "alipay" | "wechatPay" | "afdian";
@@ -193,9 +194,20 @@ export default function Checkout(params: CheckoutProps) {
         return;
       }
 
+      const useNativeWeixin = planInfo?.weixin_id && !usePayWithH5 && paymentMethod === "wechatPay";
+
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
-        const params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
-        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/yimapay/create?${params}`);
+        let params: string = "";
+        let platform = "";
+        if (useNativeWeixin) {
+          params = `plan_id=${planInfo?.weixin_id}`
+          platform = "weixin";
+        }
+        else {
+          params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
+          platform = "yimapay";
+        }
+        const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/${platform}/create?${params}`);
         if (resp.status !== 200) {
           addToast({
             color: "warning",
@@ -362,7 +374,7 @@ export default function Checkout(params: CheckoutProps) {
                     <PaymentOption checked={paymentMethod === "alipay"}
                       onClick={() => handlePaymentMethodChange("alipay")}
                       name={t("alipay")}
-                      recommend={true}
+                      recommend={false}
                       mobilePay={true}
                     >
                       <div className="w-10 h-10  rounded-lg flex items-center justify-center mr-3">
