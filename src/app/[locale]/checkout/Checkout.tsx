@@ -23,6 +23,7 @@ export interface PlanInfoDetail {
   title: string;
   price: string;
   original_price: string;
+  checkout_price: string;
   popular: boolean;
   afdian_info: {
     plan_id: string;
@@ -202,8 +203,7 @@ export default function Checkout(params: CheckoutProps) {
         if (useNativeWeixin) {
           params = `plan_id=${planInfo?.weixin_id}`
           platform = "weixin";
-        }
-        else {
+        } else {
           params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
           platform = "yimapay";
         }
@@ -236,9 +236,9 @@ export default function Checkout(params: CheckoutProps) {
     }
   };
 
-  const discount = planInfo?.original_price !== planInfo?.price;
-  const finalPrice = (+((discount ? planInfo?.price : planInfo?.original_price) ?? 0) * params.rate).toFixed(2);
-  const originPrice = (+(planInfo?.original_price ?? 0) * params.rate).toFixed(2)
+  const discount = planInfo?.checkout_price !== planInfo?.price;
+  const finalPrice = (+((discount ? planInfo?.price : planInfo?.checkout_price) ?? 0) * params.rate).toFixed(2);
+  const originPrice = (+(planInfo?.checkout_price ?? 0) * params.rate).toFixed(2)
   const currentPrice = (+(planInfo?.price ?? 0) * params.rate).toFixed(2)
 
   const handlePaymentMethodChange = (method: PaymentMethod) => {
