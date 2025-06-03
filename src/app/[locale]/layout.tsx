@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import React from "react";
+import Script from "next/script";
 
 import { routing } from "@/i18n/routing";
 
@@ -34,6 +35,18 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <Script strategy="afterInteractive" id="baidu-analytics">
+          {`
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a4f105236f1f9b2f14ad1653d2a45723";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();`}
+        </Script>
+      </head>
       <body>
         <Providers>
           <NextIntlClientProvider messages={messages}>
