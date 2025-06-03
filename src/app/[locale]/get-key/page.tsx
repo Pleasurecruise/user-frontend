@@ -12,34 +12,15 @@ import QQGroupLink from "@/components/QQGroupLink";
 export default function GetKey() {
   const t = useTranslations("GetKey");
   const [inputOrderId, setInputOrderId] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-
     const orderId = inputOrderId.trim();
-
-    setIsLoading(true);
-
-    try {
-      // Optional: validate order ID before redirecting
-      const response = await fetch(`${CLIENT_BACKEND}/api/billing/order/query?order_id=${orderId}`);
-      const data = await response.json();
-
-      router.push(`/show-key?order_id=${orderId}`);
-    } catch (error) {
-      console.error("Error:", error);
-      setIsLoading(false);
-    }
+    router.push(`/show-key?order_id=${orderId}`);
   };
 
-  if (isLoading) {
-    return <LoadingState
-      title={t("thanksForBuying")}
-      description={t("loading")}
-    />;
-  }
+
 
   return (
     <>

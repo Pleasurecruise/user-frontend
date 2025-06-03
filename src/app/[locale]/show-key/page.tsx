@@ -6,18 +6,18 @@ import CopyButton from "@/components/CopyButton";
 import { Link } from "@/i18n/routing";
 import { SERVER_BACKEND } from "@/app/requests/misc";
 import QQGroupLink from "@/components/QQGroupLink";
+import { Suspense } from "react";
+import LoadingState from "@/components/LoadingState";
 
 type Props = {
   searchParams: Promise<{ order_id: string }>
 }
 
-export default async function ShowKey({ searchParams }: Props) {
+async function OrderContent({ order_id }: { order_id: string }) {
   const t = await getTranslations("ShowKey");
   const locale = await getLocale();
   const format = await getFormatter();
-  const { order_id } = await searchParams;
   const response = await fetch(`${SERVER_BACKEND}/api/billing/order/query?order_id=${order_id}`);
-
   const { ec, msg, data } = await response.json();
   const isSuccessful = ec === 200;
   const isExpired = isSuccessful && moment(data.expired_at).isBefore(moment());
@@ -79,5 +79,23 @@ export default async function ShowKey({ searchParams }: Props) {
         </div>
       </div>
     </div>
+  );
+}
+
+export default async function ShowKey({ searchParams }: Props) {
+  const t = await getTranslations("GetKey");
+  const { order_id } = await searchParams;
+
+  return (
+    <Suspense fallback={
+      <LoadingState
+        title={t("thanksForBuying")}
+        description={t("loading")}
+      />
+    }>
+      <OrderContent
+        order_id={order_id}
+      />
+    </Suspense>
   );
 }
