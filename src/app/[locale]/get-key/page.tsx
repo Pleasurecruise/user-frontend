@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/routing";
-import LoadingState from "@/components/LoadingState";
-import { CLIENT_BACKEND } from "@/app/requests/misc";
-import { addToast } from "@heroui/toast";
+import { useRouter } from "@/i18n/routing";
 import HomeButton from "@/components/HomeButton";
 import QQGroupLink from "@/components/QQGroupLink";
 
