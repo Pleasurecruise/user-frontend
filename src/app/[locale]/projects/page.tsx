@@ -5,8 +5,9 @@ import { getTranslations } from "next-intl/server";
 import { SERVER_BACKEND } from "@/app/requests/misc";
 import ProjectCardView from "@/components/ProjectCardView";
 import HomeButton from "@/components/HomeButton";
+import SourceTracker from "@/components/SourceTracker";
 
-export default async function ProjectsPage() {
+export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ source?: string }> }) {
   const t = await getTranslations("Projects");
   const resp = await fetch(`${SERVER_BACKEND}/api/misc/project`);
   const projects: Array<ProjectCardProps> = [];
@@ -18,8 +19,10 @@ export default async function ProjectsPage() {
   } catch (e) {
     console.log(e);
   }
+  const { source } = await searchParams;
 
-  return (
+  return <>
+    <SourceTracker source={source} />
     <BackgroundLines className="min-h-screen">
       <div className="container mx-auto px-3 py-10">
         <HomeButton className="absolute" />
@@ -28,10 +31,10 @@ export default async function ProjectsPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
-          <ProjectCardView projects={projects} ></ProjectCardView>
+          <ProjectCardView projects={projects}></ProjectCardView>
           <ProjectIntegratedCard />
         </div>
       </div>
     </BackgroundLines>
-  );
+  </>;
 }
