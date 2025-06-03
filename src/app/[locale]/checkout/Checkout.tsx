@@ -202,8 +202,7 @@ export default function Checkout(params: CheckoutProps) {
         if (useNativeWeixin) {
           params = `plan_id=${planInfo?.weixin_id}`
           platform = "weixin";
-        }
-        else {
+        } else {
           params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
           platform = "yimapay";
         }
