@@ -9,7 +9,9 @@ interface SourceTrackerProps {
 
 export default function SourceTracker({ source }: SourceTrackerProps) {
   useEffect(() => {
-    source && window.sessionStorage.setItem("source", source);
+    if (source) {
+      window.sessionStorage.setItem("source", source);
+    }
   })
   return null
 }
