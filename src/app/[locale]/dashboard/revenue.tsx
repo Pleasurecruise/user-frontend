@@ -271,12 +271,12 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                             </Card>
                             <Card>
                                 <div className="p-2">
-                                    <SalesPieChart data={userAgentData} title={t("userAgent")} />
+                                    <SalesPieChart data={planData} title={t("plan")} />
                                 </div>
                             </Card>
                             <Card>
                                 <div className="p-2">
-                                    <SalesPieChart data={planData} title={t("plan")} />
+                                    <SalesPieChart data={userAgentData} title={t("userAgent")} />
                                 </div>
                             </Card>
                             <Card>
