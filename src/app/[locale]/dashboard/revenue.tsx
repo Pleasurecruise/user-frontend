@@ -54,6 +54,11 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
         return calculatePercentages(data);
     }, [revenueData]);
 
+    const sourceData = useMemo(() => {
+        const data = prepareChartData(revenueData, "source");
+        return calculatePercentages(data);
+    }, [revenueData]);
+
     function calculatePercentages(data: ChartDataItem[]): ChartDataItem[] {
         const total = data.reduce((sum, item) => sum + item.count, 0);
 
@@ -118,9 +123,9 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     // CSV export handler
     const handleExport = debounce(async () => {
         const filename = `MirrorChyan Sales ${rid} ${date}.csv`;
-        const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,platform,buy_count,amount\n" +
+        const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,source,platform,buy_count,amount\n" +
             revenueData.map(d =>
-                `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.platform},${d.buy_count},${d.amount}`)
+                `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.source},${d.platform},${d.buy_count},${d.amount}`)
                 .join("\n");
 
         const blob = new Blob([csvContent], { type: "text/csv" });
@@ -199,26 +204,22 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
         return (
             <div className="p-6 space-y-8 max-w-7xl mx-auto">
                 <Skeleton className="w-1/2 h-20 rounded-lg" />
-                <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className={clsx(
-                            "rounded-xl", i === 2 ? "h-20" : "h-52"
-                        )} />
-                    ))}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="lg:col-span-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            {[1, 2].map((_, i) => (
+                                <Skeleton key={i} className="h-20 rounded-lg" />
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-6">
+                            {[1, 2, 3, 4].map((_, i) => (
+                                <Skeleton key={i} className="h-60 rounded-lg" />
+                            ))}
+                        </div>
+                    </div>
+                    <Skeleton className="lg:col-span-1 mb-6 rounded-lg min-h-96" />
                 </div>
-                <div className="grid grid-cols-3 gap-6">
-                    {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className="h-52 rounded-xl" />
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
-                    {[1, 2].map((_, i) => (
-                        <Skeleton key={i} className={clsx(
-                            "h-52 rounded-xl",
-                            i === 0 ? "lg:col-span-1" : "lg:col-span-2"
-                        )} />
-                    ))}
-                </div>
+                <Skeleton className="h-96 rounded-lg" />
             </div>
         );
     }
@@ -227,77 +228,79 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
         <div className="dark:bg-gray-900">
             <div className="p-6 max-w-7xl mx-auto">
                 {/* 标题区 */}
-                <h1 className="text-4xl indent-0 font-bold mb-6 sm:indent-6 dark:text-white">
-                    {t("dashboardTitle", { rid, date })}
-                </h1>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                    <h1 className="text-4xl font-bold dark:text-white flex-grow">
+                        {t("dashboardTitle", { rid, date })}
+                    </h1>
+                    {/* 导出按钮移动到标题右侧 */}
+                    <Button className="w-full sm:w-auto" color="secondary" variant="ghost" onClick={handleExport}>
+                        {t("export")}
+                    </Button>
+                </div>
 
-                <div className="max-w-7xl mx-auto">
-                    {/* Stats cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                        <Card>
-                            <div className="p-4 sm:p-8">
-                                <h3 className="text-gray-500">{t("totalCount")}</h3>
-                                <p className="text-2xl sm:text-3xl font-bold">
-                                    {revenueData.reduce((acc, cur) => acc + Number(cur.buy_count), 0)}份
-                                </p>
-                            </div>
-                        </Card>
-                        <Card>
-                            <div className="p-4 sm:p-8">
-                                <h3 className="text-gray-500">{t("totalAmount")}</h3>
-                                <p className="text-2xl sm:text-3xl font-bold">
-                                    {revenueData.reduce(
-                                        (acc, cur) => acc + Number(cur.amount), 0
-                                    ).toFixed(2)}元
-                                </p>
-                            </div>
-                        </Card>
-                        <div className="flex items-center justify-center p-4">
-                            <Button className="w-full sm:w-auto" color="secondary" variant="ghost" onClick={handleExport}>
-                                {t("export")}
-                            </Button>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="max-w-7xl mx-auto w-full lg:col-span-2">
+                        {/* Stats cards */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <Card>
+                                <div className="p-4 sm:p-8">
+                                    <h3 className="text-gray-500">{t("totalCount")}</h3>
+                                    <p className="text-2xl sm:text-3xl font-bold">
+                                        {revenueData.reduce((acc, cur) => acc + Number(cur.buy_count), 0)}份
+                                    </p>
+                                </div>
+                            </Card>
+                            <Card>
+                                <div className="p-4 sm:p-8">
+                                    <h3 className="text-gray-500">{t("totalAmount")}</h3>
+                                    <p className="text-2xl sm:text-3xl font-bold">
+                                        {revenueData.reduce(
+                                            (acc, cur) => acc + Number(cur.amount), 0
+                                        ).toFixed(2)}元
+                                    </p>
+                                </div>
+                            </Card>
+                        </div>
+
+                        {/* Chart section */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-6">
+                            <Card>
+                                <div className="p-2">
+                                    <SalesPieChart data={applicationData} title={t("application")} />
+                                </div>
+                            </Card>
+                            <Card>
+                                <div className="p-2">
+                                    <SalesPieChart data={userAgentData} title={t("userAgent")} />
+                                </div>
+                            </Card>
+                            <Card>
+                                <div className="p-2">
+                                    <SalesPieChart data={planData} title={t("plan")} />
+                                </div>
+                            </Card>
+                            <Card>
+                                <div className="p-2">
+                                    <SalesPieChart data={sourceData} title={t("source")} />
+                                </div>
+                            </Card>
                         </div>
                     </div>
-
-                    {/* Chart section */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
-                        <Card>
-                            <div className="p-2">
-                                <SalesPieChart data={applicationData} title={t("application")} />
+                    <Card className="lg:col-span-1 mb-6">
+                        <div className="p-4 flex flex-col h-96 lg:h-[48.01rem]">
+                            <h3>{t("dailyRecord.title")}</h3>
+                            <div className="flex-1 overflow-y-auto custom-scrollbar">
+                                <SalesList listData={revenueData} date={date} />
                             </div>
-                        </Card>
-                        <Card>
-                            <div className="p-2">
-                                <SalesPieChart data={userAgentData} title={t("userAgent")} />
-                            </div>
-                        </Card>
-                        <Card>
-                            <div className="p-2">
-                                <SalesPieChart data={planData} title={t("plan")} />
-                            </div>
-                        </Card>
-                    </div>
-
-                    {/* 数据表格区 - 桌面1+2列/手机单列 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                        {/* 日销售记录 (桌面1列) */}
-                        <Card className="lg:col-span-1">
-                            <div className="p-4">
-                                <h3>{t("dailyRecord.title")}</h3>
-                                <div className="w-full h-64">
-                                    <SalesList listData={revenueData} date={date} />
-                                </div>
-                            </div>
-                        </Card>
-
-                        {/* 折线图 (桌面2列) */}
-                        <Card className="lg:col-span-2">
-                            <div className="w-full h-96 p-4 sm:h-64">
-                                <SalesLineChart revenueData={revenueData} date={date} />
-                            </div>
-                        </Card>
-                    </div>
+                        </div>
+                    </Card>
                 </div>
+                {/* 折线图 (桌面2列) */}
+                <Card>
+                    <div className="w-full h-96 sm:h-80 p-4">
+                        <SalesLineChart revenueData={revenueData} date={date} />
+                    </div>
+                </Card>
             </div>
         </div>
     );

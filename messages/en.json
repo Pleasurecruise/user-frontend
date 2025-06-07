@@ -173,7 +173,7 @@
     "title": "Project List",
     "joinUs": "Join us",
     "contactUs": "Integrate Mirrorchyan into your project",
-    "openProjectHomepage": "open project repo",
+    "openProjectHomepage": "Visit project website for detailed documentation and usage guide",
     "onlyInternalUpdate": "{name} currently only be updated through the application itself"
   },
   "Common": {
@@ -186,7 +186,7 @@
     "networkError": "Network error, please try again later"
   },
   "Dashboard": {
-    "title": "MirrorChyan Revenue",
+    "title": "MirrorChyan Dashboard",
     "monthInput": "Month",
     "rid": "RID",
     "token": "Token",
@@ -199,6 +199,7 @@
     "export": "Export CSV file",
     "application": "Application",
     "userAgent": "User Agent",
+    "source": "Source",
     "plan": "Plan",
     "dailyRecord": {
       "title": "Daily sales record",

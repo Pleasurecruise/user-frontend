@@ -9,15 +9,16 @@ import { getAnnouncement } from "@/app/requests/announcement";
 import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
 import IcpInfo from "./icp";
+import SourceTracker from "@/components/SourceTracker";
 
-export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string }> }) {
+export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string, source?: string }> }) {
   const t = await getTranslations("GetStart");
 
   const p = await getTranslations("Projects");
 
   const locale = await getLocale();
 
-  const { type_id } = await searchParams;
+  const { type_id, source } = await searchParams;
 
   const { homePlans, morePlans } = await getPlans(type_id);
 
@@ -28,6 +29,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
 
   return (
     <div className='relative' suppressHydrationWarning>
+      <SourceTracker source={source} />
       <BackgroundBeamsWithCollision className="min-h-screen">
         <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="px-6 py-12 sm:px-6 sm:py-8 lg:px-8">

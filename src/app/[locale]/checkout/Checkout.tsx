@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 import { CLIENT_BACKEND } from "@/app/requests/misc";
 import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
 import NoOrder from "@/app/[locale]/checkout/NoOrder";
@@ -12,6 +12,7 @@ import WaitForPayModal from "@/components/checkout/WaitForPayModal";
 import { addToast } from "@heroui/toast";
 import PaymentOption from "@/components/checkout/PaymentOption";
 import { isMobile } from "react-device-detect"
+import { getSource } from "@/components/SourceTracker";
 
 
 export interface CheckoutProps {
@@ -198,15 +199,18 @@ export default function Checkout(params: CheckoutProps) {
       const useNativeWeixin = planInfo?.weixin_id && !usePayWithH5 && paymentMethod === "wechatPay";
 
       if (paymentMethod === "alipay" || paymentMethod === "wechatPay") {
-        let params: string = "";
-        let platform = "";
-        if (useNativeWeixin) {
-          params = `plan_id=${planInfo?.weixin_id}`
-          platform = "weixin";
-        } else {
-          params = `pay=${(usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]}&plan_id=${planInfo?.yimapay_id}`;
-          platform = "yimapay";
+        const params = new URLSearchParams();
+
+        params.append('plan_id', useNativeWeixin ? planInfo?.weixin_id : planInfo?.yimapay_id as string);
+
+        if (!useNativeWeixin) {
+          params.append('pay', (usePayWithH5 ? PayWithH5 : PayWithQrcode)[paymentMethod]);
         }
+
+        params.append('source', getSource());
+
+        const platform = useNativeWeixin ? "weixin" : "yimapay";
+
         const resp = await fetch(`${CLIENT_BACKEND}/api/billing/order/${platform}/create?${params}`);
         if (resp.status !== 200) {
           addToast({
