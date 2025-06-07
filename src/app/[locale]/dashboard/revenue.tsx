@@ -204,26 +204,22 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
         return (
             <div className="p-6 space-y-8 max-w-7xl mx-auto">
                 <Skeleton className="w-1/2 h-20 rounded-lg" />
-                <div className="grid grid-cols-3 gap-4">
-                    {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className={clsx(
-                            "rounded-xl", i === 2 ? "h-20" : "h-52"
-                        )} />
-                    ))}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="lg:col-span-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            {[1, 2].map((_, i) => (
+                                <Skeleton key={i} className="h-20 rounded-lg" />
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-6 mb-6">
+                            {[1, 2, 3, 4].map((_, i) => (
+                                <Skeleton key={i} className="h-60 rounded-lg" />
+                            ))}
+                        </div>
+                    </div>
+                    <Skeleton className="lg:col-span-1 mb-6 rounded-lg min-h-96" />
                 </div>
-                <div className="grid grid-cols-3 gap-6">
-                    {[1, 2, 3].map((_, i) => (
-                        <Skeleton key={i} className="h-52 rounded-xl" />
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-1 gap-6 mb-6">
-                    {[1, 2].map((_, i) => (
-                        <Skeleton key={i} className={clsx(
-                            "h-52 rounded-xl",
-                            i === 0 ? "lg:col-span-1" : "lg:col-span-2"
-                        )} />
-                    ))}
-                </div>
+                <Skeleton className="h-96 rounded-lg" />
             </div>
         );
     }
