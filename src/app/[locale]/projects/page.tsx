@@ -8,7 +8,7 @@ import HomeButton from "@/components/HomeButton";
 import SourceTracker from "@/components/SourceTracker";
 
 export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ source?: string }> }) {
-  const t = await getTranslations("Projects");
+  const t = await getTranslations("GetStart");
   const resp = await fetch(`${SERVER_BACKEND}/api/misc/project`);
   const projects: Array<ProjectCardProps> = [];
   try {
@@ -26,8 +26,17 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
     <BackgroundLines className="min-h-screen">
       <div className="container mx-auto px-3 py-10">
         <HomeButton className="absolute" />
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
+        <div className="px-6 py-12 sm:px-6 sm:py-8 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl text-gray-900 dark:text-white">
+              {t("title")}
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-pretty text-lg/8 text-gray-600">
+              {t.rich("description", {
+                  br: () => <br />
+              })}
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
