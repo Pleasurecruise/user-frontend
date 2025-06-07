@@ -123,9 +123,9 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
     // CSV export handler
     const handleExport = debounce(async () => {
         const filename = `MirrorChyan Sales ${rid} ${date}.csv`;
-        const csvContent = "\uFEFF" + "activated_at,application,user_agent,plan,source,platform,buy_count,amount\n" +
+        const csvContent = "\uFEFF" + "activated_at,application,plan,user_agent,source,platform,amount\n" +
             revenueData.map(d =>
-                `${d.activated_at},${d.application},${d.user_agent},${d.plan},${d.source},${d.platform},${d.buy_count},${d.amount}`)
+                `${d.activated_at},${d.application},${d.plan},${d.user_agent},${d.source},${d.platform},${d.amount}`)
                 .join("\n");
 
         const blob = new Blob([csvContent], { type: "text/csv" });
