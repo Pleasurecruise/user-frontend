@@ -181,7 +181,7 @@
     "networkError": "网络错误，请稍后重试"
   },
   "Dashboard": {
-    "title": "Mirror酱の营收",
+    "title": "Mirror酱の看板",
     "monthInput": "月份",
     "rid": "RID",
     "token": "Token",
@@ -193,8 +193,8 @@
     "totalAmount": "月销售总额",
     "export": "导出csv文件",
     "application": "应用",
-    "userAgent": "签到来源",
-    "source": "付费来源",
+    "userAgent": "签到源",
+    "source": "付费源",
     "plan": "方案",
     "dailyRecord": {
       "title": "日销售记录",

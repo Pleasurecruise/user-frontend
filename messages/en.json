@@ -186,7 +186,7 @@
     "networkError": "Network error, please try again later"
   },
   "Dashboard": {
-    "title": "MirrorChyan Revenue",
+    "title": "MirrorChyan Dashboard",
     "monthInput": "Month",
     "rid": "RID",
     "token": "Token",
