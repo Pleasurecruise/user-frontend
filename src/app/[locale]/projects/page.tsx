@@ -39,7 +39,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
+        <div className="mt-12 md:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
           <ProjectCardView projects={projects}></ProjectCardView>
           <ProjectIntegratedCard />
         </div>
