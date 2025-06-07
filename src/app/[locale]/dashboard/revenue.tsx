@@ -290,10 +290,10 @@ export default function Revenue({ revenueData, onLogOut, rid, date }: PropsType)
                             </Card>
                         </div>
                     </div>
-                    <Card className="lg:col-span-1">
-                        <div className="p-4">
+                    <Card className="lg:col-span-1 mb-6">
+                        <div className="p-4 flex flex-col h-96 lg:h-[48.01rem]">
                             <h3>{t("dailyRecord.title")}</h3>
-                            <div className="w-full h-96 overflow-y-auto">
+                            <div className="w-full flex-grow overflow-y-auto">
                                 <SalesList listData={revenueData} date={date} />
                             </div>
                         </div>
