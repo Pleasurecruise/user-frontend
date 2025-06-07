@@ -189,7 +189,7 @@ export default function SalesLineChart({ revenueData, date }: PropsType) {
   };
 
   const startIndex = 0;
-  const endIndex = timeRange === "day" ? Math.floor(processedData.length * 0.5) : Math.floor(processedData.length * 0.1);
+  const endIndex = timeRange === "day" ? (processedData.length - 1) : Math.floor(processedData.length * 0.25);
 
   return (
     <div className="relative h-full">
