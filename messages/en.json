@@ -199,6 +199,7 @@
     "export": "Export CSV file",
     "application": "Application",
     "userAgent": "User Agent",
+    "source": "Source",
     "plan": "Plan",
     "dailyRecord": {
       "title": "Daily sales record",

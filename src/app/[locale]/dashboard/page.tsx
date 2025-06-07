@@ -17,6 +17,7 @@ export type RevenueType = {
   plan: string
   user_agent: string
   platform: string
+  source: string
 }
 
 export type RevenueResponse = {
