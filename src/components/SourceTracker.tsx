@@ -39,6 +39,7 @@ export function getSource(): string {
     }
     return value;
   } catch {
+    localStorage.removeItem("source");
     return "";
   }
 }
