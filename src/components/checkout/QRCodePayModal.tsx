@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
 import { Fragment } from "react";
-import QRCode from "react-qr-code";
+import QRCodeImage from "@/components/checkout/QRCodeImage";
 import ShowKeyInfo from "@/components/checkout/ShowKeyInfo";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
@@ -106,15 +106,12 @@ export default function QRCodePayModal({
                         {paymentUrl ? (
                           <div
                             className={`relative p-1 rounded-lg ${qrCodeCircleColor} `}>
-                            <div className="relative bg-white p-3 rounded-md">
-                              <QRCode
+                            <div className="relative bg-white p-1 rounded-md">
+                              <QRCodeImage
                                 size={240}
                                 value={paymentUrl}
-                                viewBox={"0 0 256 256"}
+                                logo={qrCodeIcon}
                               />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                {qrCodeIcon}
-                              </div>
                             </div>
                           </div>
                         ) : (
