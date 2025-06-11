@@ -14,7 +14,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
   try {
     const { ec, data } = await resp.json();
     if (ec === 200) {
-      Array.prototype.push.apply(projects, data);
+      projects.push(...data);
     }
   } catch (e) {
     console.log(e);
