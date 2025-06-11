@@ -14,7 +14,8 @@
     "priceSymbol": "¥ ",
     "priceFixed": "1",
     "more": "更多",
-    "hide": "收起"
+    "hide": "收起",
+    "viewProjects": "🎉 已接入的应用："
   },
   "Checkout": {
     "checkoutTitle": "收银台",
@@ -165,7 +166,6 @@
     "alpha": "内测版"
   },
   "Projects": {
-    "title": "项目一览",
     "joinUs": "加入我们",
     "contactUs": "集成Mirror酱到您的项目",
     "openProjectHomepage": "访问项目官网查看详细文档和使用说明",

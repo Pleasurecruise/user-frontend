@@ -42,7 +42,7 @@ export default function Plans({
   }, [homePlansRef.current, homePlans]);
 
   return (
-    <div className="mx-auto mt-10 max-w-md md:max-w-2xl lg:max-w-4xl xl:mx-0 xl:max-w-6xl self-center">
+    <div className="mx-auto mt-16 max-w-md md:max-w-2xl lg:max-w-4xl xl:mx-0 xl:max-w-6xl self-center">
       <div className="relative">
         <div ref={homePlansRef} className={cn(
           "isolate self-center px-2",
