@@ -67,7 +67,6 @@ export default function PlanCard({ plan, C2URate }: PropsType) {
       )}
       <Link
         href={`/checkout/${plan.plan_id}`}
-        target={"_blank"}
         aria-describedby={plan.plan_id}
         className={cn(
           plan.popular

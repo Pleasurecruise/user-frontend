@@ -10,11 +10,10 @@ import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
 import IcpInfo from "./icp";
 import SourceTracker from "@/components/SourceTracker";
+import ProjectBanner from "@/components/ProjectsBanner";
 
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string, source?: string }> }) {
   const t = await getTranslations("GetStart");
-
-  const p = await getTranslations("Projects");
 
   const locale = await getLocale();
 
@@ -47,6 +46,9 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           {announcement.ec === 200 && (
             <Announcement summary={announcement.data.summary} details={announcement.data.details} />
           )}
+
+          <ProjectBanner />
+
           <Plans morePlans={morePlans} homePlans={homePlans} C2URate={C2URate} />
           <div className="mt-12 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <Link
@@ -68,18 +70,12 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
             >
               {t("discussion")}
             </Link>
-            <Link
-              href="/projects"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              {p("title")}
-            </Link>
 
           </div>
           <div className="mt-16 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <a href="https://github.com/MirrorChyan/docs" target="_blank"
               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
-              {t("apiDoc")}<span aria-hidden="true">&nbsp;→</span>
+              {t("apiDoc")}<span aria-hidden="true">&nbsp;</span>
             </a>
             <a href="https://github.com/MirrorChyan/user-frontend" target="_blank"
               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
