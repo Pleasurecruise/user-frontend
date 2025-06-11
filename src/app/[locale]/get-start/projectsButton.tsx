@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { SERVER_BACKEND } from "@/app/requests/misc";
 import { ProjectCardProps } from "@/components/ProjectCard";
-import Image from "next/image";
 
 
 export default async function ProjectButton() {
@@ -44,10 +43,9 @@ export default async function ProjectButton() {
                 key={`${project.name}-${index}`}
                 className="relative mx-[-2px] h-12 w-12 rounded-full bg-gray-200"
               >
-                <Image
+                <img
                   src={project.image}
                   alt={project.name}
-                  fill
                   className="rounded-full object-cover"
                 />
               </div>
