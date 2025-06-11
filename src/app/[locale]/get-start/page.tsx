@@ -1,5 +1,4 @@
 import { getLocale } from "next-intl/server";
-import { cn } from "@/lib/utils/css";
 
 import { BackgroundBeamsWithCollision } from "@/components/BackgroundBeamsWithCollision";
 import { Link } from "@/i18n/routing";
@@ -11,7 +10,7 @@ import { getPlans } from "@/app/requests/plan";
 import Plans from "./plans";
 import IcpInfo from "./icp";
 import SourceTracker from "@/components/SourceTracker";
-import ProjectButton from "./projectsButton";
+import ProjectBanner from "@/components/ProjectsBanner";
 
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string, source?: string }> }) {
   const t = await getTranslations("GetStart");
@@ -48,7 +47,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
             <Announcement summary={announcement.data.summary} details={announcement.data.details} />
           )}
 
-          <ProjectButton />
+          <ProjectBanner />
 
           <Plans morePlans={morePlans} homePlans={homePlans} C2URate={C2URate} />
           <div className="mt-12 md:mt-10 flex flex-wrap items-center justify-center gap-6">
