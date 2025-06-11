@@ -76,7 +76,7 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
           <div className="mt-16 md:mt-10 flex flex-wrap items-center justify-center gap-6">
             <a href="https://github.com/MirrorChyan/docs" target="_blank"
               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
-              {t("apiDoc")}<span aria-hidden="true">&nbsp;→</span>
+              {t("apiDoc")}<span aria-hidden="true">&nbsp;</span>
             </a>
             <a href="https://github.com/MirrorChyan/user-frontend" target="_blank"
               className="text-sm/6 font-semibold text-gray-900 dark:text-white">
