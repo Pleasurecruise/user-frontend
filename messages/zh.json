@@ -15,7 +15,7 @@
     "priceFixed": "1",
     "more": "更多",
     "hide": "收起",
-    "viewProjects": "🎉 已接入的应用"
+    "viewProjects": "🎉 已接入 {appCount}+ 款应用"
   },
   "Checkout": {
     "checkoutTitle": "收银台",

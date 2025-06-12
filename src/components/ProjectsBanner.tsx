@@ -22,6 +22,8 @@ export default async function ProjectBanner() {
   const displayProjects = projects.slice(0, displayCount);
   const hasMore = projects.length > displayCount;
 
+  const appCount = projects.length - (projects.length % 5);
+
   return (
     <div className="flex justify-center mt-5">
       <Link
@@ -49,7 +51,7 @@ export default async function ProjectBanner() {
         <div className="absolute -inset-x-4 -inset-y-4 bg-gradient-to-r from-gray-300 to-gray-400 dark:from-gray-400 dark:to-gray-600 opacity-0 blur-3xl sm:group-hover:opacity-20 dark:sm:group-hover:opacity-10 transition-opacity duration-1000" />
 
         <span className="relative z-10 flex items-center gap-2 transition-all duration-300">
-          {t("viewProjects")}
+          {t("viewProjects", { appCount })}
           <svg className="w-5 h-5 translate-x-1 sm:translate-x-0 sm:group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
@@ -106,7 +108,7 @@ export default async function ProjectBanner() {
             >
               <div className="w-full h-full rounded-full bg-gray-600 dark:bg-gray-500 flex items-center justify-center">
                 <span className="text-white text-xs font-semibold">
-                  {projects.length}+
+                  +{projects.length - displayCount}
                 </span>
               </div>
             </div>
