@@ -19,9 +19,12 @@ export default async function GetStart({ searchParams }: { searchParams: Promise
 
   const { type_id, source } = await searchParams;
 
-  const { homePlans, morePlans } = await getPlans(type_id);
+  const [plans, announcement] = await Promise.all([
+    getPlans(type_id),
+    getAnnouncement(locale as "zh" | "en"),
+  ])
+  const { homePlans, morePlans } = plans;
 
-  const announcement = await getAnnouncement(locale as "zh" | "en");
 
   // 人民币->美元汇率
   const C2URate = locale === "zh" ? 1 : await getUSDRate();
