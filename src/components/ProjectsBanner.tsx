@@ -106,7 +106,7 @@ export default async function ProjectBanner() {
             >
               <div className="w-full h-full rounded-full bg-gray-600 dark:bg-gray-500 flex items-center justify-center">
                 <span className="text-white text-xs font-semibold">
-                  +{projects.length - displayCount}
+                  {projects.length}+
                 </span>
               </div>
             </div>
