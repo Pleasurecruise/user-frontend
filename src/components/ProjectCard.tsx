@@ -392,7 +392,7 @@ export default function ProjectCard(props: ProjectCardProps) {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-row gap-4">
                   <div className="flex-1">
                     <Select
                       label={t("channel")}
@@ -457,7 +457,7 @@ export default function ProjectCard(props: ProjectCardProps) {
                   </>
                 </div>
 
-                <div className="flex items-end gap-3">
+                <div className="flex flex-row gap-3">
                   <div className="flex-1">
                     <Input
                       label="CDK"
