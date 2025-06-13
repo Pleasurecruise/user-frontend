@@ -3,7 +3,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { Card, Button, Skeleton } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { clsx } from "clsx";
 import { debounce } from "lodash";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend, TooltipProps } from "recharts";

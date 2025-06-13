@@ -12,13 +12,12 @@ import {
 } from "recharts";
 import {
   eachDayOfInterval,
-  eachHourOfInterval, eachMinuteOfInterval,
+  eachHourOfInterval,
   endOfMonth,
   format,
   parseISO,
   startOfDay,
   startOfHour,
-  startOfMinute,
   startOfMonth
 } from "date-fns";
 import { RevenueType } from "@/app/[locale]/dashboard/page";
