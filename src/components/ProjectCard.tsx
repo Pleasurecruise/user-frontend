@@ -498,20 +498,15 @@ export default function ProjectCard(props: ProjectCardProps) {
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="mt-6 bottom-4 w-full text-center">
-                  <a
-                    href="/disclaimer.html"
-                    target="_blank"
-                    className="text-xs text-gray-500 dark:text-gray-400"
-                  >
-                    {t.rich("disclaimer", {
-                      rid: name,
-                      br: () => <br />,
-                    })}
-                    <span aria-hidden="true">&nbsp;</span>
-                  </a>
-                </div>
+              <div className="mt-10 bottom-4 w-full text-center text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                {t.rich("disclaimer", {
+                  rid: name,
+                  br: () => <br />,
+                })}
+                <a href="/disclaimer.html" target="_blank">
+                  {t("disclaimerLink")}
+                  <span aria-hidden="true">&nbsp;</span>
+                </a>
               </div>
             </ModalBody>
             <ModalFooter>
