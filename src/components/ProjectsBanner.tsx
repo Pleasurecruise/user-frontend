@@ -27,7 +27,7 @@ export default async function ProjectBanner() {
   return (
     <div className="flex justify-center mt-5">
       <Link
-        href={`/projects?source=project-banner`}
+        href={`/projects`}
         className={cn(
           "relative inline-flex items-center justify-center",
           "flex-col sm:flex-row",
