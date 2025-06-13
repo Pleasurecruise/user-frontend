@@ -3,14 +3,14 @@ import { getLocale } from "next-intl/server";
 import { BackgroundBeamsWithCollision } from "@/components/BackgroundBeamsWithCollision";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
-import Announcement from "./announcement";
 import { getUSDRate } from "@/app/requests/rate";
 import { getAnnouncement } from "@/app/requests/announcement";
 import { getPlans } from "@/app/requests/plan";
-import Plans from "./plans";
-import IcpInfo from "./icp";
 import SourceTracker from "@/components/SourceTracker";
 import ProjectBanner from "@/components/ProjectsBanner";
+import Announcement from "@/components/home/Announcement";
+import Plans from "@/components/home/Plans";
+import IcpInfo from "@/components/home/IcpInfo";
 
 export default async function GetStart({ searchParams }: { searchParams: Promise<{ type_id?: string, source?: string }> }) {
   const t = await getTranslations("GetStart");
