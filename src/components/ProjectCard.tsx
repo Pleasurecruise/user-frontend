@@ -335,7 +335,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         onClose={onModalClose}
-        backdrop="blur"
+        backdrop="opaque"
         size="2xl"
         placement="center"
         scrollBehavior="inside"
