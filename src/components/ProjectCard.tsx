@@ -335,7 +335,7 @@ export default function ProjectCard(props: ProjectCardProps) {
           </h3>
         </div>
       </div>
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 mt-3.5">
         <p className="text-gray-600 dark:text-gray-300 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
           {desc}
         </p>
@@ -386,7 +386,7 @@ export default function ProjectCard(props: ProjectCardProps) {
                       {name}
                     </h3>
                   </div> */}
-                  <div className="px-4 pb-4 mt-3.5">
+                  <div className="px-4 pb-4">
                     <p className="text-gray-600 dark:text-gray-300 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
                       {desc}
                     </p>
