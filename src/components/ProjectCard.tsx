@@ -303,7 +303,7 @@ export default function ProjectCard(props: ProjectCardProps) {
             <div className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
               style={{ width: "80px", height: "80px" }}>
               <img
-                src={image}
+                src={CLIENT_BACKEND + image}
                 alt={name}
                 className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
               />

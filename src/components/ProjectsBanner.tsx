@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils/css";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-import { SERVER_BACKEND } from "@/app/requests/misc";
+import { SERVER_BACKEND, CLIENT_BACKEND } from "@/app/requests/misc";
 import { ProjectCardProps } from "@/components/ProjectCard";
 
 
@@ -80,7 +80,7 @@ export default async function ProjectBanner() {
               >
                 <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-200">
                   <img
-                    src={project.image}
+                    src={CLIENT_BACKEND + project.image}
                     alt={project.name}
                     className="rounded-full object-cover"
                   />
