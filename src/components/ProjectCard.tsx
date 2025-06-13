@@ -279,12 +279,20 @@ export default function ProjectCard(props: ProjectCardProps) {
 
   return (
     <div
-      className={"rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary-500/30 transform hover:-translate-y-1 group cursor-pointer bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-600 relative"}
+      className={
+        "rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary-500/30 transform hover:-translate-y-1 group cursor-pointer bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-600 relative"
+      }
       onClick={openModal}
     >
       {url && (
         <div className="absolute top-2 right-2 z-10">
-          <Tooltip content={<span className="px-1 py-2">{p("openProjectHomepage")}</span>} showArrow={true} placement="top">
+          <Tooltip
+            content={
+              <span className="px-1 py-2">{p("openProjectHomepage")}</span>
+            }
+            showArrow={true}
+            placement="top"
+          >
             <a
               href={url}
               target="_blank"
@@ -298,29 +306,29 @@ export default function ProjectCard(props: ProjectCardProps) {
         </div>
       )}
       <div className="flex p-4">
-        {
-          image ? (
-            <div className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
-              style={{ width: "80px", height: "80px" }}>
-              <img
-                src={CLIENT_BACKEND + image}
-                alt={name}
-                className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
-              />
-            </div>
-          ) : (
-            <div
-              className="relative overflow-hidden flex-shrink-0 mr-4 rounded-md shadow-sm flex items-center justify-center text-white font-bold text-2xl"
-              style={{
-                width: "80px",
-                height: "80px",
-                backgroundColor: avatarBgColor
-              }}
-            >
-              {avatarText}
-            </div>
-          )
-        }
+        {image ? (
+          <div
+            className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
+            style={{ width: "80px", height: "80px" }}
+          >
+            <img
+              src={CLIENT_BACKEND + image}
+              alt={name}
+              className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
+            />
+          </div>
+        ) : (
+          <div
+            className="relative overflow-hidden flex-shrink-0 mr-4 rounded-md shadow-sm flex items-center justify-center text-white font-bold text-2xl"
+            style={{
+              width: "80px",
+              height: "80px",
+              backgroundColor: avatarBgColor,
+            }}
+          >
+            {avatarText}
+          </div>
+        )}
         <div className="flex flex-col justify-center">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
             {name}
@@ -328,7 +336,9 @@ export default function ProjectCard(props: ProjectCardProps) {
         </div>
       </div>
       <div className="px-4 pb-4 mt-3.5">
-        <p className="text-gray-600 dark:text-gray-300 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">{desc}</p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
+          {desc}
+        </p>
       </div>
 
       <Modal
@@ -347,124 +357,192 @@ export default function ProjectCard(props: ProjectCardProps) {
             </ModalHeader>
             <ModalBody>
               <div className="space-y-4">
-                <div>
-                  <Select
-                    label={t("channel")}
-                    placeholder={t("noChannel")}
-                    onChange={e => handleChannelChange(e.target.value)}
-                    className="w-full"
-                    isDisabled={availableChannel.length === 0}
-                    selectedKeys={[channel]}
-                  >
-                    {availableChannel.map(channelOption => (
-                      <SelectItem key={channelOption} value={channelOption}>
-                        {t(channelOption)}
-                      </SelectItem>
-                    ))}
-                  </Select>
+                <div className="flex p-4">
+                  {image ? (
+                    <div
+                      className="relative overflow-hidden flex-shrink-0 mr-4 bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm"
+                      style={{ width: "80px", height: "80px" }}
+                    >
+                      <img
+                        src={CLIENT_BACKEND + image}
+                        alt={name}
+                        className="w-full h-full object-cover rounded-md opacity-90 transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:opacity-100"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="relative overflow-hidden flex-shrink-0 mr-4 rounded-md shadow-sm flex items-center justify-center text-white font-bold text-2xl"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor: avatarBgColor,
+                      }}
+                    >
+                      {avatarText}
+                    </div>
+                  )}
+                  {/* <div className="flex flex-col justify-center">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+                      {name}
+                    </h3>
+                  </div> */}
+                  <div className="px-4 pb-4 mt-3.5">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
+                      {desc}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <Select
+                      label={t("channel")}
+                      placeholder={t("noChannel")}
+                      onChange={(e) => handleChannelChange(e.target.value)}
+                      className="w-full"
+                      isDisabled={availableChannel.length === 0}
+                      selectedKeys={[channel]}
+                    >
+                      {availableChannel.map((channelOption) => (
+                        <SelectItem key={channelOption} value={channelOption}>
+                          {t(channelOption)}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
+
+                  <>
+                    <Conditioned
+                      condition={() => renderFixedSelect(availableOS)}
+                    >
+                      <div className="flex-1">
+                        <Select
+                          label={t("os")}
+                          placeholder={t("noOs")}
+                          onChange={(e) => handleOSChange(e.target.value)}
+                          className="w-full"
+                          items={availableOS}
+                          selectedKeys={[os]}
+                        >
+                          {(item) => (
+                            <SelectItem key={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          )}
+                        </Select>
+                      </div>
+                    </Conditioned>
+                  </>
+
+                  <>
+                    <Conditioned
+                      condition={() => renderFixedSelect(availableArch)}
+                    >
+                      <div className="flex-1">
+                        <Select
+                          label={t("arch")}
+                          placeholder={t("noArch")}
+                          onChange={(e) => handleArchChange(e.target.value)}
+                          className="w-full"
+                          items={availableArch}
+                          selectedKeys={[arch]}
+                        >
+                          {(item) => (
+                            <SelectItem key={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          )}
+                        </Select>
+                      </div>
+                    </Conditioned>
+                  </>
                 </div>
 
-                <>
-                  <Conditioned condition={() => renderFixedSelect(availableOS)}>
-                    <Select
-                      label={t("os")}
-                      placeholder={t("noOs")}
-                      onChange={e => handleOSChange(e.target.value)}
+                <div className="flex items-end gap-3">
+                  <div className="flex-1">
+                    <Input
+                      label="CDK"
+                      placeholder={t("noCDKey")}
+                      value={cdk}
+                      type={isPasswordVisible ? "text" : "password"}
+                      onChange={(e) => setCdk(e.target.value)}
                       className="w-full"
-                      items={availableOS}
-                      selectedKeys={[os]}
+                      endContent={
+                        <div className="h-5/6 flex ">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setIsPasswordVisible(!isPasswordVisible)
+                            }
+                            className="focus:outline-none dark:text-gray-300"
+                          >
+                            {isPasswordVisible ? (
+                              <EyeSlashIcon className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
+                            ) : (
+                              <EyeIcon className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
+                            )}
+                          </button>
+                        </div>
+                      }
+                    />
+                  </div>
+                  <div className="whitespace-nowrap self-center">
+                    <Link
+                      href="/"
+                      target="_blank"
+                      size="sm"
+                      color="primary"
+                      underline="hover"
                     >
-                      {item => (
-                        <SelectItem key={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      )}
-                    </Select>
-                  </Conditioned>
-                </>
-
-                <>
-                  <Conditioned condition={() => renderFixedSelect(availableArch)}>
-                    <Select
-                      label={t("arch")}
-                      placeholder={t("noArch")}
-                      onChange={e => handleArchChange(e.target.value)}
-                      className="w-full"
-                      items={availableArch}
-                      selectedKeys={[arch]}
-                    >
-                      {item => (
-                        <SelectItem key={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      )}
-                    </Select>
-                  </Conditioned>
-                </>
-
-                <div>
-                  <Input
-                    label="CDK"
-                    placeholder={t("noCDKey")}
-                    value={cdk}
-                    type={isPasswordVisible ? "text" : "password"}
-                    onChange={e => setCdk(e.target.value)}
-                    className="w-full"
-                    endContent={
-                      <div className="h-5/6 flex ">
-                        <button
-                          type="button"
-                          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                          className="focus:outline-none dark:text-gray-300"
-                        >
-                          {isPasswordVisible ?
-                            <EyeSlashIcon
-                              className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
-                            :
-                            <EyeIcon
-                              className="h-5 w-5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300" />
-                          }
-                        </button>
-                      </div>
-                    }
-                  />
-                  <div className="mt-10 text-right">
-                    <Link href="/" target="_blank" size="sm" color="primary" underline="hover">
                       {t("buyCDKey")}
                     </Link>
                   </div>
                 </div>
               </div>
               <div>
-                <div className="mt-10 bottom-4 w-full text-center">
-                  <a href="/disclaimer.html" target="_blank" className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="mt-6 bottom-4 w-full text-center">
+                  <a
+                    href="/disclaimer.html"
+                    target="_blank"
+                    className="text-xs text-gray-500 dark:text-gray-400"
+                  >
                     {t.rich("disclaimer", {
                       rid: name,
-                      br: () => <br />
-                    })}<span aria-hidden="true">&nbsp;</span>
+                      br: () => <br />,
+                    })}
+                    <span aria-hidden="true">&nbsp;</span>
                   </a>
                 </div>
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={() => {
-                onModalClose();
-                onClose();
-              }}>
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  onModalClose();
+                  onClose();
+                }}
+              >
                 {common("cancel")}
               </Button>
-              <Button color="secondary" onPress={handleShare} isLoading={loading.loading && loading.type === "Share"}>
+              <Button
+                color="secondary"
+                onPress={handleShare}
+                isLoading={loading.loading && loading.type === "Share"}
+              >
                 {t("shareLink")}
               </Button>
-              <Button color="primary" onPress={handleDownload} isLoading={loading.loading && loading.type === "Download"}>
+              <Button
+                color="primary"
+                onPress={handleDownload}
+                isLoading={loading.loading && loading.type === "Download"}
+              >
                 {t("download")}
               </Button>
             </ModalFooter>
           </>
         </ModalContent>
       </Modal>
-
     </div>
-
   );
 }
